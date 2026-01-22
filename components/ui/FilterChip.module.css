@@ -1,0 +1,81 @@
+/* FilterChip Component Styles */
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 32px;
+    padding: 0 var(--space-3);
+    border-radius: 9999px;
+    border: 1px solid var(--border-subtle);
+    background-color: var(--bg-surface);
+    color: var(--fg-neutral);
+    /* Typography via utility class (text-body-strong) */
+    cursor: pointer;
+    transition: all 0.15s ease;
+    outline: none;
+}
+
+.chip:hover:not(:disabled) {
+    border-color: var(--border-subtle);
+    background-color: var(--bg-surface);
+}
+
+.chip:focus-visible {
+    box-shadow: 0 0 0 2px var(--bg-accent-subtle);
+    border-color: var(--fg-accent);
+}
+
+/* Selected State */
+.selected {
+    background-color: var(--bg-accent-subtle);
+    border-color: var(--fg-accent);
+    color: var(--fg-accent-light);
+}
+
+.selected:hover:not(:disabled) {
+    background-color: var(--bg-accent-subtle);
+    border-color: var(--fg-accent);
+}
+
+.selected .icon {
+    color: var(--fg-accent);
+}
+
+/* Multiple Selected (with count) */
+.multiple {
+    background-color: var(--bg-accent-subtle);
+    border-color: var(--fg-accent);
+    color: var(--fg-accent-light);
+}
+
+.count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 var(--space-1);
+    border-radius: 9999px;
+    background-color: var(--fg-accent);
+    color: var(--fg-on-accent);
+    /* Typography via utility class (text-caption-small) */
+}
+
+/* Disabled State */
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Label */
+.label {
+    white-space: nowrap;
+}
+
+/* Icon */
+.icon {
+    color: var(--fg-subtle);
+    flex-shrink: 0;
+}

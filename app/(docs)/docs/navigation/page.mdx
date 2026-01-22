@@ -1,0 +1,99 @@
+import NavigationShowcase from '@/components/docs/NavigationShowcase';
+
+# Navigation
+
+Navigation components provide the structural framework for applications. They help users understand where they are and move between different sections.
+
+---
+
+## Overview
+
+The navigation system includes:
+- **App Sidebar** (S-Drone prototype) - Fixed left sidebar with branding and navigation tabs
+- **App Header** - Sticky header with page title, metadata, and actions
+
+---
+
+## Preview
+
+<NavigationShowcase />
+
+---
+
+## Properties
+
+### AppSidebar
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | — | Override class for positioning |
+
+### AppHeader
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `className` | `string` | — | Override class for styling |
+
+---
+
+## Specification
+
+### App Sidebar
+
+| Property | Value |
+|----------|-------|
+| Width | `240px` (`--sidebar-width`) |
+| Padding | `16px` (`--space-4`) |
+| Logo Left Padding | `24px` (`--space-6`) |
+| Background | `--bg-subtle` |
+| Border | `1px solid var(--border-subtle)` |
+
+#### Tab Styling
+
+| Property | Value |
+|----------|-------|
+| Shape | Pill (`border-radius: 9999px`) |
+| Padding | `8px 24px` |
+| Gap (between tabs) | `16px` |
+| Icon-Text Gap | `16px` |
+| Typography | `text-body-strong` (14px Medium) |
+
+#### Tab States
+
+| State | Background | Text Color | Icon Color |
+|-------|------------|------------|------------|
+| Default | transparent | `--fg-subtle` | `--fg-subtle` |
+| Hover | `--bg-strong` | `--fg-neutral` | `--fg-neutral` |
+| Active | `--bg-accent-subtle` | `--fg-accent-light` | `--fg-accent` |
+
+### App Header
+
+| Property | Value |
+|----------|-------|
+| Height | `64px` |
+| Padding | `0 24px` |
+| Background | `--bg-subtle` |
+| Border | `1px solid var(--border-subtle)` bottom |
+| Position | `sticky` (top: 0) |
+
+---
+
+## Usage
+
+```tsx
+// In layout.tsx
+import AppSidebar from '@/components/prototype/AppSidebar';
+import AppHeader from '@/components/prototype/AppHeader';
+
+export default function Layout({ children }) {
+  return (
+    <div className="app-shell">
+      <AppSidebar />
+      <main className="main-content">
+        <AppHeader />
+        {children}
+      </main>
+    </div>
+  );
+}
+```

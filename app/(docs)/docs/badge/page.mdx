@@ -1,0 +1,115 @@
+import Badge from '@/components/ui/Badge';
+
+# Badge
+
+Badges are used to highlight status, category, or other metadata. They are non-interactive and provide at-a-glance information.
+
+---
+
+## Overview
+
+The `Badge` component displays short labels with color-coded backgrounds. Use badges to:
+- Indicate status (e.g., "Pending", "Approved", "Rejected")
+- Categorize items (e.g., "New", "Featured")
+- Show counts or tags
+
+---
+
+## Preview
+
+### Colors
+
+All available color variants in their default **subtle** emphasis:
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
+  <Badge color="information">Information</Badge>
+  <Badge color="negative">Negative</Badge>
+  <Badge color="neutral">Neutral</Badge>
+  <Badge color="notice">Notice</Badge>
+  <Badge color="positive">Positive</Badge>
+  <Badge color="primary">Primary</Badge>
+</div>
+
+### Emphasis
+
+**Subtle** (default) vs **Intense**:
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
+  <Badge color="positive" emphasis="subtle">Subtle</Badge>
+  <Badge color="positive" emphasis="intense">Intense</Badge>
+</div>
+
+### Sizes
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+  <div>
+    <Badge size="xsmall">XSmall</Badge>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>20px</div>
+  </div>
+  <div>
+    <Badge size="small">Small</Badge>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>24px</div>
+  </div>
+  <div>
+    <Badge size="medium">Medium</Badge>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>28px</div>
+  </div>
+  <div>
+    <Badge size="large">Large</Badge>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>32px</div>
+  </div>
+</div>
+
+---
+
+## Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | — | Label text (required) |
+| `color` | `string` | `"neutral"` | `information`, `negative`, `neutral`, `notice`, `positive`, `primary` |
+| `size` | `string` | `"medium"` | `xsmall`, `small`, `medium`, `large` |
+| `emphasis` | `string` | `"subtle"` | `subtle`, `intense` |
+
+---
+
+## Specification
+
+### Size Mapping
+
+| Size | Height | Padding (H) | Font Size |
+|------|--------|-------------|-----------|
+| `xsmall` | 20px | 4px | 10px |
+| `small` | 24px | 8px | 12px |
+| `medium` | 28px | 12px | 12px |
+| `large` | 32px | 16px | 14px |
+
+### Color Tokens
+
+Badges use semantic status tokens that adapt to Light/Dark themes:
+
+| Color | Subtle BG | Subtle FG | Intense BG | Intense FG |
+|-------|-----------|-----------|------------|------------|
+| `information` | `--bg-information-subtle` | `--fg-information-subtle` | `--bg-information-intense` | `--fg-information-intense` |
+| `negative` | `--bg-negative-subtle` | `--fg-negative-subtle` | `--bg-negative-intense` | `--fg-negative-intense` |
+| `neutral` | `--bg-neutral-subtle` | `--fg-neutral-subtle` | `--bg-neutral-intense` | `--fg-neutral-intense` |
+| `notice` | `--bg-notice-subtle` | `--fg-notice-subtle` | `--bg-notice-intense` | `--fg-notice-intense` |
+| `positive` | `--bg-positive-subtle` | `--fg-positive-subtle` | `--bg-positive-intense` | `--fg-positive-intense` |
+| `primary` | `--bg-primary-subtle` | `--fg-primary-subtle` | `--bg-primary-intense` | `--fg-primary-intense` |
+
+---
+
+## Usage
+
+```tsx
+import Badge from '@/components/ui/Badge';
+
+// Basic usage
+<Badge>Default</Badge>
+
+// With color and emphasis
+<Badge color="positive" emphasis="intense">Approved</Badge>
+
+// With size
+<Badge color="negative" size="small">Error</Badge>
+```

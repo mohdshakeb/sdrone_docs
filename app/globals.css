@@ -1,42 +1,399 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /*
+   * PRIMITIVE TOKENS
+   */
+
+  /* Spacing (Proportional 4px Scale) */
+  --space-0: 0px;
+  --space-0_5: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+
+  /* Layout & Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* Dashboard Layout */
+  --sidebar-width: 240px;
+  --content-max-width-central: 800px;
+
+  /* Grid Specs (Desktop) */
+  --grid-columns: 12;
+  --grid-gutter: var(--space-4);
+  --grid-margin: var(--space-6);
+
+  --container-width-lg: 1200px;
+  --container-padding: var(--grid-margin);
+
+  /* Base */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-primary-alpha-20: rgba(240, 108, 0, 0.2);
+
+  /* Cool Gray */
+  --color-cool-50: #FAFAFA;
+  --color-cool-100: #EBEBEB;
+  --color-cool-200: #D1D1D1;
+  --color-cool-300: #B8B8B8;
+  --color-cool-400: #9E9E9E;
+  --color-cool-500: #858585;
+  --color-cool-600: #6B6B6B;
+  --color-cool-700: #525252;
+  --color-cool-800: #383838;
+  --color-cool-900: #1E1E1E;
+  --color-cool-950: #171717;
+
+  /* Primary (Orange) */
+  --color-primary-50: #FFF7F0;
+  --color-primary-100: #FFDBBD;
+  --color-primary-200: #FFBE8A;
+  --color-primary-300: #FFA257;
+  --color-primary-400: #FF8624;
+  --color-primary-500: #F06C00;
+  --color-primary-600: #BD5500;
+  --color-primary-700: #8A3E00;
+  --color-primary-800: #572700;
+  --color-primary-900: #241000;
+  --color-primary-950: #0A0500;
+
+  /* Warm Gray */
+  --color-warm-50: #FBFAF9;
+  --color-warm-100: #F7F5F3;
+  --color-warm-200: #F0EDEA;
+  --color-warm-300: #E5E0DC;
+  --color-warm-400: #CEC6C0;
+  --color-warm-500: #AFA49D;
+  --color-warm-600: #8C7C73;
+  --color-warm-700: #6D5D55;
+  --color-warm-800: #4C3F39;
+  --color-warm-900: #352A27;
+  --color-warm-950: #241C19;
+
+  /* Blue (Information) */
+  --color-blue-100: #DBEAFE;
+  --color-blue-600: #2563EB;
+  --color-blue-900: #1E3A8A;
+
+  /* Red (Negative) */
+  --color-red-100: #FEE2E2;
+  --color-red-600: #DC2626;
+  --color-red-900: #7F1D1D;
+
+  /* Yellow (Notice) */
+  --color-yellow-100: #FEF3C7;
+  --color-yellow-600: #D97706;
+  --color-yellow-900: #78350F;
+
+  /* Green (Positive) */
+  --color-green-100: #D1FAE5;
+  --color-green-600: #059669;
+  --color-green-900: #064E3B;
+
+  /* Purple (Neutral Status) */
+  --color-purple-100: #E0E7FF;
+  --color-purple-600: #4F46E5;
+  --color-purple-900: #312E81;
+
+  /*
+   * SEMANTIC TOKENS (Default / Light Mode)
+   */
+  --bg-accent: var(--color-primary-600);
+  --bg-accent-subtle: var(--color-primary-alpha-20);
+  --bg-page: var(--color-warm-50);
+  --bg-strong: var(--color-warm-100);
+  --bg-subtle: var(--color-white);
+  --bg-surface: var(--color-white);
+
+  --border-strong: var(--color-warm-400);
+  --border-subtle: var(--color-warm-100);
+
+  --fg-accent: var(--color-primary-500);
+  --fg-accent-light: var(--color-primary-900);
+  /* Darker for better contrast/visibility against light backgrounds if used as text, or user preference */
+  --fg-accent-subtle: var(--color-primary-700);
+  --fg-muted: var(--color-warm-300);
+  /* Warm 300 */
+  --fg-neutral: var(--color-warm-900);
+  /* Warm 900 */
+  --fg-subtle: var(--color-warm-600);
+  /* Warm 600 */
+  --fg-on-accent: var(--color-white);
+
+  /* Status Colors - Subtle (Light BG, Dark Text) */
+  --bg-information-subtle: var(--color-blue-100);
+  --fg-information-subtle: var(--color-blue-900);
+  --bg-negative-subtle: var(--color-red-100);
+  --fg-negative-subtle: var(--color-red-900);
+  --bg-neutral-subtle: var(--color-purple-100);
+  --fg-neutral-subtle: var(--color-purple-900);
+  --bg-notice-subtle: var(--color-yellow-100);
+  --fg-notice-subtle: var(--color-yellow-900);
+  --bg-positive-subtle: var(--color-green-100);
+  --fg-positive-subtle: var(--color-green-900);
+  --bg-primary-subtle: var(--bg-accent-subtle);
+  --fg-primary-subtle: var(--fg-accent-light);
+
+  /* Status Colors - Intense (Dark BG, Light Text) */
+  --bg-information-intense: var(--color-blue-600);
+  --fg-information-intense: var(--color-white);
+  --bg-negative-intense: var(--color-red-600);
+  --fg-negative-intense: var(--color-white);
+  --bg-neutral-intense: var(--color-purple-600);
+  --fg-neutral-intense: var(--color-white);
+  --bg-notice-intense: var(--color-yellow-600);
+  --fg-notice-intense: var(--color-white);
+  --bg-positive-intense: var(--color-green-600);
+  --fg-positive-intense: var(--color-white);
+  --bg-primary-intense: var(--bg-accent);
+  --fg-primary-intense: var(--fg-on-accent);
+
+  /* Typography Defaults */
+  --font-base: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: monospace;
+
+  /* Typography Tokens */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  --text-24: 24px;
+  --text-16: 16px;
+  --text-14: 14px;
+  --text-12: 12px;
+  --text-10: 10px;
+
+  --lh-120: 1.2;
+  --lh-140: 1.4;
+  --lh-16px: 16px;
+  --lh-12px: 12px;
 }
 
+/* Typography Utilities */
+.text-heading {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-24);
+  line-height: var(--lh-120);
+}
+
+.text-body-base {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-16);
+  line-height: var(--lh-140);
+}
+
+.text-body-strong {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-14);
+  line-height: var(--lh-140);
+}
+
+.text-body {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-14);
+  line-height: var(--lh-140);
+}
+
+.text-caption-strong {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-12);
+  line-height: var(--lh-16px);
+}
+
+.text-caption {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-12);
+  line-height: var(--lh-16px);
+}
+
+.text-caption-small {
+  font-family: var(--font-base);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-10);
+  line-height: var(--lh-12px);
+}
+
+/* Dark Mode Overrides */
+[data-theme='dark'] {
+  --bg-accent: var(--color-primary-600);
+  --bg-accent-subtle: var(--color-primary-alpha-20);
+  --bg-page: var(--color-cool-950);
+  --bg-strong: var(--color-cool-800);
+  --bg-subtle: var(--color-cool-900);
+  --bg-surface: var(--color-cool-800);
+
+  --border-strong: var(--color-cool-400);
+  --border-subtle: var(--color-cool-800);
+
+  --fg-accent: var(--color-primary-500);
+  --fg-accent-light: var(--color-primary-50);
+  --fg-accent-subtle: var(--color-primary-300);
+  --fg-muted: var(--color-cool-500);
+  --fg-neutral: var(--color-cool-50);
+  --fg-subtle: var(--color-cool-400);
+  --fg-on-accent: var(--color-white);
+
+  /* Status Colors - Dark Mode (same primitives work well) */
+  --bg-information-subtle: var(--color-blue-900);
+  --fg-information-subtle: var(--color-blue-100);
+  --bg-negative-subtle: var(--color-red-900);
+  --fg-negative-subtle: var(--color-red-100);
+  --bg-neutral-subtle: var(--color-purple-900);
+  --fg-neutral-subtle: var(--color-purple-100);
+  --bg-notice-subtle: var(--color-yellow-900);
+  --fg-notice-subtle: var(--color-yellow-100);
+  --bg-positive-subtle: var(--color-green-900);
+  --fg-positive-subtle: var(--color-green-100);
+  --bg-primary-subtle: var(--bg-accent-subtle);
+  --fg-primary-subtle: var(--fg-accent-light);
+
+  --bg-information-intense: var(--color-blue-600);
+  --fg-information-intense: var(--color-white);
+  --bg-negative-intense: var(--color-red-600);
+  --fg-negative-intense: var(--color-white);
+  --bg-neutral-intense: var(--color-purple-600);
+  --fg-neutral-intense: var(--color-white);
+  --bg-notice-intense: var(--color-yellow-600);
+  --fg-notice-intense: var(--color-white);
+  --bg-positive-intense: var(--color-green-600);
+  --fg-positive-intense: var(--color-white);
+  --bg-primary-intense: var(--bg-accent);
+  --fg-primary-intense: var(--fg-on-accent);
+}
+
+/* System Preference Fallback (only if no theme set) */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme='light']) {
+    --bg-accent: var(--color-primary-600);
+    --bg-accent-subtle: var(--color-primary-alpha-20);
+    --bg-page: var(--color-cool-950);
+    --bg-strong: var(--color-cool-800);
+    --bg-subtle: var(--color-cool-900);
+
+    --border-strong: var(--color-cool-400);
+    --border-subtle: var(--color-cool-800);
+
+    --fg-accent: var(--color-primary-500);
+    --fg-accent-light: var(--color-primary-50);
+    --fg-accent-subtle: var(--color-primary-300);
+    --fg-muted: var(--color-cool-500);
+    --fg-neutral: var(--color-cool-50);
+    --fg-subtle: var(--color-cool-400);
+    --fg-on-accent: var(--color-white);
   }
 }
 
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: var(--fg-neutral);
+  background: var(--bg-page);
+  font-family: var(--font-base);
+  margin: 0;
+  line-height: var(--lh-140);
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+}
+
+/* Documentation Content Styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-semibold);
+  color: var(--fg-neutral);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+}
+
+h1 {
+  font-size: 32px;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-0_5);
+}
+
+h3 {
+  font-size: 20px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+p,
+li {
+  margin-bottom: var(--space-4);
+  max-width: 70ch;
 }
 
 a {
-  color: inherit;
+  color: var(--fg-accent);
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+a:hover {
+  text-decoration: underline;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-subtle);
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+pre {
+  background: var(--bg-subtle);
+  padding: var(--space-4);
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: var(--space-6);
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--fg-neutral);
+}
+
+/* App Shell Layout */
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 0;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    margin-left: var(--sidebar-width);
   }
 }

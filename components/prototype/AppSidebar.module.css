@@ -1,0 +1,87 @@
+.nav {
+    width: var(--sidebar-width);
+    height: 100vh;
+    padding: var(--space-2) var(--space-4);
+    /* 8px top/bottom, 16px sides */
+    border-right: 1px solid var(--border-subtle);
+    overflow-y: auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: var(--bg-subtle);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.logoContainer {
+    margin-bottom: var(--space-8);
+    display: flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-2);
+    padding-left: var(--space-6);
+    /* 24px left padding for alignment */
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    /* 16px gap between icon and text */
+    text-decoration: none;
+    color: var(--fg-subtle);
+    padding: var(--space-2) var(--space-6);
+    /* 8px top/bottom, 24px sides */
+    border-radius: 9999px;
+    /* Fully rounded (pill) */
+    transition: background 0.2s, color 0.2s;
+}
+
+.link:hover {
+    background: var(--bg-strong);
+    color: var(--fg-neutral);
+    text-decoration: none;
+    /* Disable underline on hover */
+}
+
+/* Selected State */
+.link[data-active="true"] {
+    background: var(--bg-accent-subtle);
+    color: var(--fg-accent-light);
+    /* Selected text color */
+}
+
+/* Icon in Link */
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg-subtle);
+    /* Default icon color */
+}
+
+.link:hover .icon {
+    color: var(--fg-neutral);
+}
+
+.link[data-active="true"] .icon {
+    color: var(--fg-accent);
+    /* Selected icon color as requested */
+}
+
+/* Theme-aware Logos */
+.logoLight {
+    display: block;
+}
+
+.logoDark {
+    display: none;
+}
+
+:global([data-theme='dark']) .logoLight {
+    display: none;
+}
+
+:global([data-theme='dark']) .logoDark {
+    display: block;
+}

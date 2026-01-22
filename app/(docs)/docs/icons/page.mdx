@@ -1,0 +1,70 @@
+import { Icon, IconName } from '@/components/ui/Icon';
+
+# Icons
+
+We use **Remix Icons** as our icon system.
+Currently, a curated set of icons is available via the `<Icon />` component.
+
+## Sizes
+Standard icon sizes are **16px**, **20px** (Default), and **32px**.
+
+<div style={{ display: 'flex', alignItems: 'end', gap: '24px', marginBottom: '32px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+    <Icon name="settings" size={16} />
+    <span className="text-caption">16px</span>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+    <Icon name="settings" size={20} />
+    <span className="text-caption">20px</span>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+    <Icon name="settings" size={32} />
+    <span className="text-caption">32px</span>
+  </div>
+</div>
+
+## Available Icons
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: '24px' }}>
+  {[
+    'inbox',
+    'archive',
+    'alert',
+    'history',
+    'chart',
+    'survey',
+    'settings',
+    'user',
+    'add',
+    'close',
+    'fire',
+    'first-aid',
+    'menu',
+    'arrow-down',
+    'sun',
+    'moon',
+  ].map((name) => (
+    <div key={name} style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      gap: '12px',
+      padding: '16px',
+      borderRadius: '8px',
+      border: '1px solid var(--border-subtle)',
+      background: 'var(--bg-subtle)'
+    }}>
+      <Icon name={name} size={24} />
+      <code style={{ fontSize: '12px' }}>{name}</code>
+    </div>
+  ))}
+</div>
+
+## Usage
+
+```tsx
+import { Icon } from '@/components/ui/Icon';
+
+<Icon name="settings" size={20} />
+<Icon name="alert" color="var(--color-primary-600)" />
+```

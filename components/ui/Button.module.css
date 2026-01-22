@@ -1,0 +1,171 @@
+/* Base Button Styles */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 9999px;
+    /* Fully rounded / Pill shape */
+    cursor: pointer;
+    /* Typography via utility classes mapped by size */
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    outline: none;
+    gap: var(--space-1);
+    /* 4px gap between icon and text */
+    text-decoration: none;
+    /* Ensure no underline when used as Link */
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Size Variants - Typography handled by utility classes */
+
+/* XSmall: 28px height */
+.xs {
+    height: 28px;
+    padding: 0 var(--space-3);
+}
+
+.xs.hasLeadingIcon {
+    padding-left: var(--space-2);
+}
+
+.xs.hasTrailingIcon {
+    padding-right: var(--space-2);
+}
+
+/* Small: 32px height */
+.sm {
+    height: 32px;
+    padding: 0 var(--space-4);
+}
+
+.sm.hasLeadingIcon {
+    padding-left: var(--space-3);
+}
+
+.sm.hasTrailingIcon {
+    padding-right: var(--space-3);
+}
+
+/* Medium: 40px height */
+.md {
+    height: 40px;
+    padding: 0 var(--space-6);
+}
+
+.md.hasLeadingIcon {
+    padding-left: var(--space-4);
+}
+
+.md.hasTrailingIcon {
+    padding-right: var(--space-4);
+}
+
+/* Large: 48px height */
+.lg {
+    height: 48px;
+    padding: 0 var(--space-8);
+}
+
+.lg.hasLeadingIcon {
+    padding-left: var(--space-6);
+}
+
+.lg.hasTrailingIcon {
+    padding-right: var(--space-6);
+}
+
+/* Variants */
+.primary {
+    background-color: var(--bg-accent);
+    color: var(--color-white);
+    border-color: transparent;
+}
+
+.primary:hover:not(:disabled) {
+    background-color: var(--color-primary-500);
+}
+
+.primary:active:not(:disabled) {
+    background-color: var(--color-primary-700);
+}
+
+.secondary {
+    background-color: var(--bg-strong);
+    color: var(--fg-neutral);
+    border-color: var(--border-subtle);
+}
+
+.secondary:hover:not(:disabled) {
+    background-color: var(--bg-surface);
+    border-color: var(--border-strong);
+}
+
+.secondary:active:not(:disabled) {
+    background-color: var(--bg-strong);
+    filter: brightness(95%);
+}
+
+.negative {
+    background-color: var(--bg-negative-intense);
+    color: var(--color-white);
+    border-color: transparent;
+}
+
+.negative:hover {
+    filter: brightness(110%);
+}
+
+.negative:active {
+    filter: brightness(90%);
+}
+
+.notice {
+    background-color: var(--bg-notice-intense);
+    color: var(--color-white);
+    border-color: transparent;
+}
+
+.notice:hover {
+    filter: brightness(110%);
+}
+
+.notice:active {
+    filter: brightness(90%);
+}
+
+.positive {
+    background-color: var(--bg-positive-intense);
+    color: var(--color-white);
+    border-color: transparent;
+}
+
+.positive:hover {
+    filter: brightness(110%);
+}
+
+.positive:active {
+    filter: brightness(90%);
+}
+
+/* Common States */
+.button:focus-visible {
+    outline: 2px solid var(--bg-accent);
+    outline-offset: 2px;
+}
+
+/* Icon Styles */
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Adjust icon sizes based on button size if needed? 
+   Usually icons are 16px or 20px. 
+*/

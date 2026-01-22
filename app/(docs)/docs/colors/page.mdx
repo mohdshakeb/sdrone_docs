@@ -1,0 +1,156 @@
+import SemanticColorTable from '@/components/docs/SemanticColorTable';
+
+# Colors
+
+Our design system uses a two-layered color approach: **Primitives** (atomic values) and **Semantics** (usage-based tokens).
+
+## Primitives
+
+These are the raw values available in our palette.
+
+### Primary (Orange)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1rem' }}>
+  {['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950', 'alpha-20'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-primary-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+### Cool Gray (Neutrals)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1rem' }}>
+  {['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-cool-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+### Warm Gray (Neutrals)
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1rem' }}>
+  {['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-warm-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+### Status Colors
+
+These palettes are used for feedback states (badges, alerts, notifications).
+
+#### Blue (Information)
+<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+  {['100', '600', '900'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-blue-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+#### Red (Negative)
+<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+  {['100', '600', '900'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-red-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+#### Yellow (Notice)
+<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+  {['100', '600', '900'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-yellow-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+#### Green (Positive)
+<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+  {['100', '600', '900'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-green-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+#### Purple (Neutral Status)
+<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+  {['100', '600', '900'].map((step) => (
+    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <div style={{ 
+        width: '80px', 
+        height: '80px', 
+        borderRadius: '8px', 
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+        backgroundColor: `var(--color-purple-${step})` 
+      }} />
+      <code style={{ fontSize: '12px' }}>{step}</code>
+    </div>
+  ))}
+</div>
+
+---
+
+## Semantic Tokens
+
+Semantic tokens abstract the raw values to ensure consistency and themeability.
+The table below updates automatically based on your current theme (use the toggle in the header).
+
+> [!NOTE]
+> **Theme Policy**:
+> *   **Light Mode**: Uses the **Warm Palette** (e.g., `fg-neutral` -> `warm-900`).
+> *   **Dark Mode**: Uses the **Cool Palette** (e.g., `fg-neutral` -> `cool-50`).
+
+
+<SemanticColorTable />

@@ -1,0 +1,130 @@
+import Button from '@/components/ui/Button';
+import { Icon } from '@/components/ui/Icon';
+
+# Buttons
+
+Buttons allow users to take actions and make choices with a single tap. They are the primary interactive element for triggering events.
+
+---
+
+## Overview
+
+The `Button` component supports multiple variants and sizes. All buttons use a **pill shape** (fully rounded corners).
+
+---
+
+## Preview
+
+### Variants
+
+<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '32px' }}>
+  <Button variant="primary">Primary</Button>
+  <Button variant="secondary">Secondary</Button>
+  <Button variant="negative">Negative</Button>
+  <Button variant="notice">Notice</Button>
+  <Button variant="positive">Positive</Button>
+</div>
+
+### States
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '32px', marginBottom: '32px' }}>
+  <div>
+    <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Default</h4>
+    <Button variant="primary">Default</Button>
+  </div>
+  <div>
+    <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Disabled</h4>
+    <Button variant="primary" disabled>Disabled</Button>
+  </div>
+  <div>
+    <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Secondary Disabled</h4>
+    <Button variant="secondary" disabled>Disabled</Button>
+  </div>
+</div>
+
+### Sizes
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px', flexWrap: 'wrap' }}>
+  <div>
+    <Button size="xs">XSmall</Button>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>28px</div>
+  </div>
+  <div>
+    <Button size="sm">Small</Button>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>32px</div>
+  </div>
+  <div>
+    <Button size="md">Medium</Button>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>40px</div>
+  </div>
+  <div>
+    <Button size="lg">Large</Button>
+    <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>48px</div>
+  </div>
+</div>
+
+### Icon Composition
+
+<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '24px' }}>
+  <Button variant="secondary" leadingIcon={<Icon name="add" size={20} />}>Leading Icon</Button>
+  <Button variant="secondary" trailingIcon={<Icon name="arrow-down" size={20} />}>Trailing Icon</Button>
+</div>
+
+---
+
+## Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | — | Button label (required) |
+| `size` | `string` | `"md"` | `xs`, `sm`, `md`, `lg` |
+| `variant` | `string` | `"primary"` | `primary`, `secondary`, `negative`, `notice`, `positive` |
+| `leadingIcon` | `ReactNode` | — | Icon before label |
+| `trailingIcon` | `ReactNode` | — | Icon after label |
+| `disabled` | `boolean` | `false` | Disables the button |
+| `href` | `string` | — | Renders as a link |
+
+---
+
+## Specification
+
+### Variants
+
+| Variant | Token / Color | Purpose |
+|---------|---------------|---------|
+| `primary` | `--bg-accent` | Main call to action |
+| `secondary` | `--bg-strong` | Neutral supporting actions |
+| `negative` | `--bg-negative-intense` | Destructive actions (Logout, Delete) |
+| `notice` | `--bg-notice-intense` | Warning actions |
+| `positive` | `--bg-positive-intense` | Success/Confirmation actions |
+
+### Size Mapping
+
+| Size | Height | Padding (H) | Font Size | Recommended Icon |
+|------|--------|-------------|-----------|------------------|
+| `xs` | 28px | 12px | 12px | 16px |
+| `sm` | 32px | 16px | 12px | 16px |
+| `md` | 40px | 24px | 14px | 20px |
+| `lg` | 48px | 32px | 16px | 24px |
+
+---
+
+## Usage
+
+```tsx
+import Button from '@/components/ui/Button';
+import { Icon } from '@/components/ui/Icon';
+
+// Variants
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+
+// Status Variants
+<Button variant="negative">Delete</Button>
+<Button variant="positive">Confirm</Button>
+
+// Icon and Size
+<Button variant="secondary" size="lg" leadingIcon={<Icon name="add" size={20} />}>
+  Create New
+</Button>
+```

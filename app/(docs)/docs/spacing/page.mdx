@@ -1,0 +1,84 @@
+# Spacing & Layout
+
+## Spacing Scale
+
+We use a **proportional 4px scale**. The token number roughly represents the multiplier of 4px (with some exceptions like 0.5 for 2px).
+
+Usage: `gap: var(--space-4)`, `padding: var(--space-8)`.
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
+  {[
+    { token: 'space-0', val: '0px' },
+    { token: 'space-0_5', val: '2px' },
+    { token: 'space-1', val: '4px' },
+    { token: 'space-2', val: '8px' },
+    { token: 'space-3', val: '12px' },
+    { token: 'space-4', val: '16px' },
+    { token: 'space-5', val: '20px' },
+    { token: 'space-6', val: '24px' },
+    { token: 'space-8', val: '32px' },
+    { token: 'space-10', val: '40px' },
+    { token: 'space-12', val: '48px' },
+    { token: 'space-14', val: '56px' },
+  ].map((item) => (
+    <div key={item.token} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <div style={{ width: '120px', fontFamily: 'monospace', fontSize: '14px' }}>--{item.token}</div>
+      <div style={{ width: '60px', color: 'var(--fg-subtle)', fontSize: '14px' }}>{item.val}</div>
+      <div style={{ 
+        height: '24px', 
+        width: `var(--${item.token})`, 
+        backgroundColor: 'var(--color-primary-600)', 
+        borderRadius: '2px',
+        opacity: 0.8
+      }} />
+    </div>
+  ))}
+</div>
+
+## Layout System
+
+### Containers
+
+#### Web Dashboard (Full Width)
+For dashboard views with sticky sidebars.
+- **Sidebar**: `240px` (`--sidebar-width`)
+- **Content**: Fluid width
+
+#### Web Dashboard Central (Fixed Width)
+For centered content pages.
+- **Max Width**: `800px`
+- **Centered** in the available content area.
+
+### Grid (Desktop)
+Based on `1440px` screen width.
+
+<div style={{ background: 'var(--bg-subtle)', padding: '24px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '8px', marginBottom: '16px' }}>
+    <div style={{ fontWeight: 'bold' }}>Specifications</div>
+    <div><strong>Columns:</strong> 12</div>
+    <div><strong>Gutter:</strong> 16px (--space-4)</div>
+    <div><strong>Margin:</strong> 24px (--space-6)</div>
+  </div>
+</div>
+
+#### Visual Example (12 Columns)
+
+<div className="grid-12" style={{ 
+  background: 'var(--bg-page)', 
+  padding: '0 24px', /* Margin */
+  gap: '16px', /* Gutter */
+  margin: '2rem 0',
+  border: '1px dashed var(--border-strong)'
+}}>
+  {Array.from({ length: 12 }).map((_, i) => (
+    <div key={i} style={{ 
+      background: 'rgba(240, 108, 0, 0.2)', 
+      height: '80px', 
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      fontSize: '12px',
+      color: 'var(--fg-neutral)'
+    }}>Col</div>
+  ))}
+</div>

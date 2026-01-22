@@ -1,0 +1,102 @@
+import FilterChip from '@/components/ui/FilterChip';
+import { FilterChipDemo, FilterChipInteractive } from '@/components/docs/FilterChipShowcase';
+
+# Filter Chip
+
+Filter chips allow users to filter content by selecting one or more criteria. They are interactive elements that toggle between states.
+
+---
+
+## Overview
+
+The `FilterChip` component provides:
+- **Default state**: Unselected, ready to be clicked
+- **Selected state**: Active filter with visual highlight
+- **Multiple selected**: Shows a count badge when multiple options within that filter are selected
+- **Disabled state**: Non-interactive, grayed out
+
+---
+
+## Preview
+
+### States
+
+<FilterChipDemo />
+
+### Interactive Example
+
+<FilterChipInteractive />
+
+---
+
+## Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | — | Chip label (required) |
+| `selected` | `boolean` | `false` | Whether the chip is selected |
+| `count` | `number` | — | Shows count badge when provided |
+| `disabled` | `boolean` | `false` | Disables interaction |
+| `onClick` | `() => void` | — | Click handler |
+| `className` | `string` | — | Additional CSS class |
+
+---
+
+## Specification
+
+### Dimensions
+
+| Property | Value |
+|----------|-------|
+| Height | `32px` |
+| Padding | `0 12px` (`--space-3`) |
+| Gap (internal) | `8px` (`--space-2`) |
+| Border Radius | `9999px` (pill) |
+
+### Tokens Used
+
+| State | Background | Border | Text |
+|-------|------------|--------|------|
+| Default | `--bg-subtle` | `--border-subtle` | `--fg-neutral` |
+| Hover | `--bg-strong` | `--border-strong` | `--fg-neutral` |
+| Selected | `--bg-accent-subtle` | `--fg-accent` | `--fg-accent-light` |
+| Disabled | (50% opacity) | — | — |
+
+### Count Badge
+
+| Property | Value |
+|----------|-------|
+| Min Width | `18px` |
+| Height | `18px` |
+| Background | `--fg-accent` |
+| Text | `--fg-on-accent` |
+| Font Size | `10px` |
+
+---
+
+## Usage
+
+```tsx
+import FilterChip from '@/components/ui/FilterChip';
+
+// Basic
+<FilterChip>Category</FilterChip>
+
+// Selected
+<FilterChip selected>Active Filter</FilterChip>
+
+// With count (multiple selections)
+<FilterChip selected count={3}>Status</FilterChip>
+
+// Controlled with state
+const [selected, setSelected] = useState(false);
+<FilterChip 
+  selected={selected} 
+  onClick={() => setSelected(!selected)}
+>
+  Toggle Me
+</FilterChip>
+
+// Disabled
+<FilterChip disabled>Unavailable</FilterChip>
+```

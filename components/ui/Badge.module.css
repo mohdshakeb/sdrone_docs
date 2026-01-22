@@ -1,0 +1,99 @@
+/* Badge Component Styles */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    /* Typography via utility classes mapped by size */
+    white-space: nowrap;
+}
+
+/* Size Variants - Typography handled by utility classes */
+.xsmall {
+    height: 20px;
+    padding: 0 var(--space-1);
+}
+
+.small {
+    height: 24px;
+    padding: 0 var(--space-2);
+}
+
+.medium {
+    height: 28px;
+    padding: 0 var(--space-3);
+}
+
+.large {
+    height: 32px;
+    padding: 0 var(--space-4);
+}
+
+/* Color + Emphasis Variants */
+
+/* Information */
+.information_subtle {
+    background-color: var(--bg-information-subtle);
+    color: var(--fg-information-subtle);
+}
+
+.information_intense {
+    background-color: var(--bg-information-intense);
+    color: var(--fg-information-intense);
+}
+
+/* Negative */
+.negative_subtle {
+    background-color: var(--bg-negative-subtle);
+    color: var(--fg-negative-subtle);
+}
+
+.negative_intense {
+    background-color: var(--bg-negative-intense);
+    color: var(--fg-negative-intense);
+}
+
+/* Neutral */
+.neutral_subtle {
+    background-color: var(--bg-neutral-subtle);
+    color: var(--fg-neutral-subtle);
+}
+
+.neutral_intense {
+    background-color: var(--bg-neutral-intense);
+    color: var(--fg-neutral-intense);
+}
+
+/* Notice */
+.notice_subtle {
+    background-color: var(--bg-notice-subtle);
+    color: var(--fg-notice-subtle);
+}
+
+.notice_intense {
+    background-color: var(--bg-notice-intense);
+    color: var(--fg-notice-intense);
+}
+
+/* Positive */
+.positive_subtle {
+    background-color: var(--bg-positive-subtle);
+    color: var(--fg-positive-subtle);
+}
+
+.positive_intense {
+    background-color: var(--bg-positive-intense);
+    color: var(--fg-positive-intense);
+}
+
+/* Primary */
+.primary_subtle {
+    background-color: var(--bg-primary-subtle);
+    color: var(--fg-primary-subtle);
+}
+
+.primary_intense {
+    background-color: var(--bg-primary-intense);
+    color: var(--fg-primary-intense);
+}

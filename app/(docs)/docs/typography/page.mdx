@@ -1,0 +1,90 @@
+# Typography
+
+We use **Inter** as our primary typeface. It is a variable font with a tall x-height, making it highly legible at small sizes.
+
+## Font Family
+<div style={{ padding: '24px', border: '1px solid var(--border-subtle)', borderRadius: '8px', marginBottom: '32px' }}>
+  <p style={{ fontFamily: 'var(--font-inter)', fontSize: '48px', margin: 0 }}>Aa Bb Cc</p>
+  <p style={{ marginTop: '16px', color: 'var(--fg-subtle)' }}>Inter (Variable)</p>
+</div>
+
+## Type Scale & Styles
+
+These are the defined text styles available in our system. Usage in code corresponds to the class names shown.
+
+<table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse', marginTop: '1rem' }}>
+  <thead>
+    <tr>
+      <th style={{ padding: '12px', borderBottom: '1px solid var(--border-subtle)', width: '30%' }}>Preview</th>
+      <th style={{ padding: '12px', borderBottom: '1px solid var(--border-subtle)' }}>Class Name</th>
+      <th style={{ padding: '12px', borderBottom: '1px solid var(--border-subtle)' }}>Properties</th>
+    </tr>
+  </thead>
+  <tbody>
+    {[
+      { 
+        class: 'text-heading', 
+        sample: 'Heading', 
+        props: '24px / 120% / SemiBold' 
+      },
+      { 
+        class: 'text-body-base', 
+        sample: 'Body Base', 
+        props: '16px / 140% / Medium' 
+      },
+      { 
+        class: 'text-body-strong', 
+        sample: 'Body Strong', 
+        props: '14px / 140% / Medium' 
+      },
+      { 
+        class: 'text-body', 
+        sample: 'Body', 
+        props: '14px / 140% / Regular' 
+      },
+      { 
+        class: 'text-caption-strong', 
+        sample: 'Caption Strong', 
+        props: '12px / 16px / Medium' 
+      },
+      { 
+        class: 'text-caption', 
+        sample: 'Caption', 
+        props: '12px / 16px / Regular' 
+      },
+      { 
+        class: 'text-caption-small', 
+        sample: 'Caption Small', 
+        props: '10px / 12px / SemiBold' 
+      },
+    ].map(style => (
+      <tr key={style.class}>
+        <td style={{ padding: '16px 12px', borderBottom: '1px solid var(--border-subtle)' }}>
+          <span className={style.class}>{style.sample}</span>
+        </td>
+        <td style={{ padding: '16px 12px', borderBottom: '1px solid var(--border-subtle)' }}>
+          <code style={{ background: 'var(--bg-subtle)', padding: '4px 8px', borderRadius: '4px' }}>.{style.class}</code>
+        </td>
+        <td style={{ padding: '16px 12px', borderBottom: '1px solid var(--border-subtle)', color: 'var(--fg-subtle)', fontSize: '0.9em' }}>
+          {style.props}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+## Tokens
+
+Underlying CSS variables used to construct the styles above.
+
+### Weights
+- **Regular (400)**: `var(--font-weight-regular)`
+- **Medium (500)**: `var(--font-weight-medium)`
+- **Medium (600)**: `var(--font-weight-semibold)`
+
+### Sizes
+- **10px**: `var(--text-10)`
+- **12px**: `var(--text-12)`
+- **14px**: `var(--text-14)`
+- **16px**: `var(--text-16)`
+- **24px**: `var(--text-24)`

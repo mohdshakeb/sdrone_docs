@@ -1,0 +1,44 @@
+.header {
+    height: 64px;
+    border-bottom: 1px solid var(--border-subtle);
+    background-color: var(--bg-page);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-6);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    font-family: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-16);
+    color: var(--fg-neutral);
+    text-decoration: none;
+}
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-muted);
+    padding: var(--space-2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.iconButton:hover {
+    color: var(--fg-neutral);
+    background-color: var(--bg-subtle);
+}
