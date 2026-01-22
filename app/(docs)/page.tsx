@@ -1,66 +1,57 @@
-import Image from "next/image";
+'use client';
+
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
+        <div style={{ display: 'flex' }}>
+          <img
+            src="/logo_light.png"
+            alt="S-Drone Logo"
+            className="logo-light"
+            style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+          />
+          <img
+            src="/logo_dark.png"
+            alt="S-Drone Logo"
+            className="logo-dark"
+            style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+          />
+        </div>
+
         <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
+          <h1>SDRONE Design Documentation</h1>
           <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+            A comprehensive documentation for design handoff with prototype.
           </p>
         </div>
+
         <div className={styles.ctas}>
-          <a
+          <Link
+            href="/sdrone"
             className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
             target="_blank"
-            rel="noopener noreferrer"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
+            View prototype
+          </Link>
           <a
+            href="https://github.com/mohdshakeb/sdrone_docs.git"
             className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Documentation
+            View on Github
           </a>
         </div>
       </main>
+
+      <style jsx global>{`
+        [data-theme='light'] .logo-dark { display: none; }
+        [data-theme='dark'] .logo-light { display: none; }
+      `}</style>
     </div>
   );
 }

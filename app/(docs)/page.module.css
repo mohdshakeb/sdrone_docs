@@ -1,19 +1,19 @@
 .page {
-  --background: #fafafa;
-  --foreground: #fff;
+  --background: var(--bg-page);
+  --foreground: transparent;
 
-  --text-primary: #000;
-  --text-secondary: #666;
+  --text-primary: var(--fg-neutral);
+  --text-secondary: var(--fg-subtle);
 
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
+  --button-primary-hover: var(--color-primary-700);
+  --button-secondary-hover: var(--bg-strong);
+  --button-secondary-border: var(--border-subtle);
 
   display: flex;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-inter), sans-serif;
   background-color: var(--background);
 }
 
@@ -23,36 +23,39 @@
   width: 100%;
   max-width: 800px;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   background-color: var(--foreground);
-  padding: 120px 60px;
+  padding: 60px;
+  gap: 48px;
 }
 
 .intro {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
 }
 
 .intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
+  max-width: 600px;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
   text-wrap: balance;
   color: var(--text-primary);
+  margin: 0;
 }
 
 .intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
+  max-width: 500px;
+  font-size: 20px;
+  line-height: 1.6;
   text-wrap: balance;
   color: var(--text-secondary);
+  margin: 0;
 }
 
 .intro a {
@@ -63,6 +66,7 @@
 .ctas {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   width: 100%;
   max-width: 440px;
   gap: 16px;
@@ -123,19 +127,15 @@ a.secondary {
 }
 
 @media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
-
   .page {
-    --background: #000;
-    --foreground: #000;
+    --background: var(--bg-page);
+    --foreground: transparent;
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+    --text-primary: var(--fg-neutral);
+    --text-secondary: var(--fg-subtle);
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
+    --button-primary-hover: var(--color-primary-700);
+    --button-secondary-hover: var(--bg-strong);
+    --button-secondary-border: var(--border-subtle);
   }
 }
