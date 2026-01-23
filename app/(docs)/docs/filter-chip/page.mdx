@@ -33,12 +33,13 @@ The `FilterChip` component provides:
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | — | Chip label (required) |
+| `children` | `ReactNode` | — | Primary chip label (e.g., "Report Type") |
+| `value` | `string` | — | Selected parameter value |
 | `selected` | `boolean` | `false` | Whether the chip is selected |
-| `count` | `number` | — | Shows count badge when provided |
+| `count` | `number` | — | Number of items selected if multiple |
 | `disabled` | `boolean` | `false` | Disables interaction |
-| `onClick` | `() => void` | — | Click handler |
-| `className` | `string` | — | Additional CSS class |
+| `onClick` | `() => void` | — | Click handler for main area |
+| `onClear` | `() => void` | — | Click handler for clear action |
 
 ---
 
@@ -57,10 +58,10 @@ The `FilterChip` component provides:
 
 | State | Background | Border | Text |
 |-------|------------|--------|------|
-| Default | `--bg-subtle` | `--border-subtle` | `--fg-neutral` |
-| Hover | `--bg-strong` | `--border-strong` | `--fg-neutral` |
-| Selected | `--bg-accent-subtle` | `--fg-accent` | `--fg-accent-light` |
-| Disabled | (50% opacity) | — | — |
+| Default | `--bg-strong` | — | `--fg-subtle` |
+| Hover | `--border-subtle` | — | `--fg-subtle` |
+| Selected (Value) | `--bg-strong` | — | `--fg-accent` |
+| Count Tag | `--bg-accent-subtle` | — | `--fg-accent` |
 
 ### Count Badge
 
@@ -79,24 +80,26 @@ The `FilterChip` component provides:
 ```tsx
 import FilterChip from '@/components/ui/FilterChip';
 
-// Basic
-<FilterChip>Category</FilterChip>
+// Basic (Default)
+<FilterChip>Report Type</FilterChip>
 
-// Selected
-<FilterChip selected>Active Filter</FilterChip>
-
-// With count (multiple selections)
-<FilterChip selected count={3}>Status</FilterChip>
-
-// Controlled with state
-const [selected, setSelected] = useState(false);
+// Selected (Single)
 <FilterChip 
-  selected={selected} 
-  onClick={() => setSelected(!selected)}
+  selected 
+  value="First Aid"
+  onClear={() => handleClear()}
 >
-  Toggle Me
+  Report Type
+</FilterChip>
+
+// Multiple Selected
+<FilterChip 
+  count={3}
+  onClear={() => handleClear()}
+>
+  Project
 </FilterChip>
 
 // Disabled
-<FilterChip disabled>Unavailable</FilterChip>
+<FilterChip disabled>Category</FilterChip>
 ```

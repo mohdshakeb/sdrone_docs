@@ -3,63 +3,113 @@
 .chip {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
     height: 32px;
-    padding: 0 var(--space-3);
     border-radius: 9999px;
-    border: 1px solid var(--border-subtle);
-    background-color: var(--bg-surface);
-    color: var(--fg-neutral);
-    /* Typography via utility class (text-body-strong) */
-    cursor: pointer;
+    background-color: var(--bg-strong);
+    color: var(--fg-subtle);
     transition: all 0.15s ease;
+    overflow: hidden;
+}
+
+.chip:hover:not(.disabled) {
+    color: var(--fg-neutral);
+}
+
+.chip:hover:not(.disabled) .chevron {
+    color: var(--fg-neutral);
+}
+
+/* Main clickable area */
+.mainPart {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    /* Reduced from space-2 */
+    height: 100%;
+    padding: 0 var(--space-2) 0 var(--space-3);
+    /* Reduced right padding further */
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
     outline: none;
 }
 
-.chip:hover:not(:disabled) {
-    border-color: var(--border-subtle);
-    background-color: var(--bg-surface);
+.mainPart:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: 2px;
+    border-radius: 9999px;
 }
 
-.chip:focus-visible {
-    box-shadow: 0 0 0 2px var(--bg-accent-subtle);
-    border-color: var(--fg-accent);
+.label {
+    white-space: nowrap;
 }
 
-/* Selected State */
-.selected {
-    background-color: var(--bg-accent-subtle);
-    border-color: var(--fg-accent);
-    color: var(--fg-accent-light);
-}
-
-.selected:hover:not(:disabled) {
-    background-color: var(--bg-accent-subtle);
-    border-color: var(--fg-accent);
-}
-
-.selected .icon {
+.value {
     color: var(--fg-accent);
+    font-weight: var(--font-weight-medium);
 }
 
-/* Multiple Selected (with count) */
-.multiple {
-    background-color: var(--bg-accent-subtle);
-    border-color: var(--fg-accent);
-    color: var(--fg-accent-light);
-}
-
-.count {
+.countIndicator {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 18px;
     height: 18px;
-    padding: 0 var(--space-1);
+    padding: 0 var(--space-2);
     border-radius: 9999px;
-    background-color: var(--fg-accent);
-    color: var(--fg-on-accent);
-    /* Typography via utility class (text-caption-small) */
+    background-color: var(--bg-accent-subtle);
+    color: var(--fg-accent);
+    font-weight: var(--font-weight-medium);
+}
+
+.chevron {
+    color: var(--fg-muted);
+    flex-shrink: 0;
+}
+
+/* Active State (Selected or Multiple) */
+.active {
+    background-color: var(--bg-strong);
+}
+
+.active .label {
+    color: var(--fg-neutral);
+}
+
+/* Divider between main part and clear button */
+.divider {
+    width: 1px;
+    height: 16px;
+    background-color: var(--border-base);
+    flex-shrink: 0;
+}
+
+/* Clear button */
+.clearButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    /* Reduced from 32 */
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    padding: 0;
+    outline: none;
+}
+
+.clearButton:hover {
+    color: var(--fg-neutral);
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.clearButton:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
 }
 
 /* Disabled State */
@@ -67,15 +117,4 @@
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
-}
-
-/* Label */
-.label {
-    white-space: nowrap;
-}
-
-/* Icon */
-.icon {
-    color: var(--fg-subtle);
-    flex-shrink: 0;
 }

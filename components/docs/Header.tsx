@@ -26,7 +26,7 @@ export default function Header() {
 
             <div className={styles.right}>
                 {/* Theme Toggle - render placeholder or consistent state on server */}
-                <button className={styles.iconButton} onClick={toggleTheme} aria-label="Toggle Theme">
+                <button className={styles.iconButton} onClick={toggleTheme} aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}>
                     {!mounted ? (
                         <div style={{ width: 20, height: 20 }} /> // Placeholder to prevent layout shift
                     ) : theme === 'light' ? (

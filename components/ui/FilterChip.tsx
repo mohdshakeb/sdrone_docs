@@ -6,44 +6,71 @@ import { Icon } from '@/components/ui/Icon';
 
 interface FilterChipProps {
     children: React.ReactNode;
+    value?: string;
     selected?: boolean;
-    count?: number; // For multiple selected indication
+    count?: number;
     disabled?: boolean;
     onClick?: () => void;
+    onClear?: (e: React.MouseEvent) => void;
     className?: string;
 }
 
 export default function FilterChip({
     children,
+    value,
     selected = false,
     count,
     disabled = false,
     onClick,
+    onClear,
     className = '',
 }: FilterChipProps) {
     const hasMultiple = count !== undefined && count > 0;
+    const isActive = selected || hasMultiple;
 
-    const classNames = [
+    const containerClassNames = [
         styles.chip,
-        selected && styles.selected,
-        hasMultiple && styles.multiple,
+        isActive && styles.active,
         disabled && styles.disabled,
         className,
     ].filter(Boolean).join(' ');
 
+    const handleClear = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClear?.(e);
+    };
+
     return (
-        <button
-            type="button"
-            className={`${classNames} text-caption-strong`}
-            onClick={onClick}
-            disabled={disabled}
-            aria-pressed={selected}
-        >
-            <span className={styles.label}>{children}</span>
-            {hasMultiple && (
-                <span className={`${styles.count} text-caption-small`}>{count}</span>
+        <div className={containerClassNames}>
+            <button
+                type="button"
+                className={`${styles.mainPart} text-caption`}
+                onClick={onClick}
+                disabled={disabled}
+            >
+                <span className={styles.label}>{children}{isActive ? ':' : ''}</span>
+                {hasMultiple ? (
+                    <span className={styles.countIndicator}>{count}</span>
+                ) : selected && value ? (
+                    <span className={styles.value}>{value}</span>
+                ) : null}
+                <Icon name="arrow-down" size={16} className={styles.chevron} />
+            </button>
+
+            {isActive && !disabled && (
+                <>
+                    <div className={styles.divider} />
+                    <button
+                        type="button"
+                        className={styles.clearButton}
+                        onClick={handleClear}
+                        aria-label="Clear selection"
+                    >
+                        <Icon name="close" size={16} />
+                    </button>
+                </>
             )}
-            <Icon name="arrow-down" size={16} className={styles.icon} />
-        </button>
+        </div>
     );
 }

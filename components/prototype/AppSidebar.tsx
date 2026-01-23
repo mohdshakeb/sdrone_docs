@@ -2,20 +2,25 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import styles from './AppSidebar.module.css';
 import { Icon } from '@/components/ui/Icon';
+import type { IconName } from '@/components/ui/Icon';
+import { useTheme } from '@/components/ui/ThemeProvider';
 
-const NAV_ITEMS = [
+interface NavItem {
+    label: string;
+    href: string;
+    icon: IconName;
+}
+
+const NAV_ITEMS: NavItem[] = [
     { label: 'Inbox', href: '/sdrone', icon: 'inbox' },
     { label: 'History', href: '/sdrone/history', icon: 'archive' },
     { label: 'Alerts', href: '/sdrone/alerts', icon: 'alert' },
     { label: 'Insights', href: '/sdrone/insights', icon: 'chart' },
     { label: 'Settings', href: '/sdrone/settings', icon: 'settings' },
-] as const;
-
-import { useTheme } from '@/components/ui/ThemeProvider';
+];
 
 export default function AppSidebar({ className = '' }: { className?: string }) {
     const pathname = usePathname();
@@ -57,7 +62,7 @@ export default function AppSidebar({ className = '' }: { className?: string }) {
                             data-active={isActive}
                         >
                             <span className={styles.icon}>
-                                <Icon name={item.icon as any} size={20} />
+                                <Icon name={item.icon} size={20} />
                             </span>
                             {item.label}
                         </Link>
@@ -68,6 +73,7 @@ export default function AppSidebar({ className = '' }: { className?: string }) {
             <div style={{ marginTop: 'auto', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'center' }}>
                 <button
                     onClick={toggleTheme}
+                    aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
                     style={{
                         background: 'var(--bg-strong)',
                         border: '1px solid var(--border-subtle)',

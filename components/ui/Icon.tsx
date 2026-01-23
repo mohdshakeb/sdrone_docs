@@ -37,7 +37,7 @@ export type IconName =
     | 'menu'
     | 'sos';
 
-export type IconSize = 16 | 20 | 24 | 32;
+export type IconSize = 14 | 16 | 20 | 24 | 32;
 
 const SosIcon = ({ size, color, className }: { size?: number | string; color?: string; className?: string }) => (
     <img

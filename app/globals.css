@@ -128,6 +128,7 @@
   --fg-subtle: var(--color-warm-600);
   /* Warm 600 */
   --fg-on-accent: var(--color-white);
+  --border-base: var(--color-warm-200);
 
   /* Status Colors - Subtle (Light BG, Dark Text) */
   --bg-information-subtle: var(--color-blue-100);
@@ -247,6 +248,7 @@
   --fg-neutral: var(--color-cool-50);
   --fg-subtle: var(--color-cool-400);
   --fg-on-accent: var(--color-white);
+  --border-base: var(--color-cool-700);
 
   /* Status Colors - Dark Mode (same primitives work well) */
   --bg-information-subtle: var(--color-blue-900);

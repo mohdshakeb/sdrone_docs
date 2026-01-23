@@ -49,9 +49,8 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
                 <Link
                     href={href}
                     className={combinedClassName}
-                    // @ts-ignore - ref type mismatch between button and anchor is tricky in simple forwardRef
                     ref={ref as React.Ref<HTMLAnchorElement>}
-                    {...props as React.AnchorHTMLAttributes<HTMLAnchorElement>}
+                    {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
                 >
                     {content}
                 </Link>

@@ -3,9 +3,24 @@
 import React, { useState } from 'react';
 import TaskCard from '@/components/prototype/TaskCard';
 import FilterChip from '@/components/ui/FilterChip';
+import type { IconName } from '@/components/ui/Icon';
+import type { BadgeColor } from '@/components/ui/Badge';
 
-const TASKS = [
+interface Task {
+    id: string;
+    title: string;
+    subtitle: string;
+    status: string;
+    reportedBy: string;
+    reportedOn: string;
+    location: string;
+    iconName: IconName;
+    badgeColor: BadgeColor;
+}
+
+const TASKS: Task[] = [
     {
+        id: 'task-1',
         title: "Short circuit in control panel",
         subtitle: "First incident report",
         status: "Critical",
@@ -16,6 +31,7 @@ const TASKS = [
         badgeColor: "negative"
     },
     {
+        id: 'task-2',
         title: "Sprained ankle on slippery surface",
         subtitle: "First Aid",
         status: "Awaiting Review",
@@ -26,6 +42,7 @@ const TASKS = [
         badgeColor: "notice"
     },
     {
+        id: 'task-3',
         title: "Monthly site safety walkthrough",
         subtitle: "Safety audit",
         status: "In Progress",
@@ -36,6 +53,7 @@ const TASKS = [
         badgeColor: "information"
     },
     {
+        id: 'task-4',
         title: "Minor abrasion during cargo handling",
         subtitle: "First Aid",
         status: "Completed",
@@ -46,6 +64,7 @@ const TASKS = [
         badgeColor: "positive"
     },
     {
+        id: 'task-5',
         title: "Oil spill near fuel tank",
         subtitle: "First incident report",
         status: "Awaiting Review",
@@ -56,6 +75,7 @@ const TASKS = [
         badgeColor: "notice"
     },
     {
+        id: 'task-6',
         title: "Emergency exit inspection",
         subtitle: "Safety audit",
         status: "Awaiting Review",
@@ -66,6 +86,7 @@ const TASKS = [
         badgeColor: "notice"
     },
     {
+        id: 'task-7',
         title: "Finger cut from sharp edge",
         subtitle: "First Aid",
         status: "In Progress",
@@ -76,6 +97,7 @@ const TASKS = [
         badgeColor: "information"
     },
     {
+        id: 'task-8',
         title: "Power tools calibration check",
         subtitle: "Tool audit",
         status: "Scheduled",
@@ -86,6 +108,7 @@ const TASKS = [
         badgeColor: "neutral"
     },
     {
+        id: 'task-9',
         title: "Head injury during maintenance work",
         subtitle: "First incident report",
         status: "Awaiting Review",
@@ -96,6 +119,7 @@ const TASKS = [
         badgeColor: "notice"
     },
     {
+        id: 'task-10',
         title: "Eye irritation from dust",
         subtitle: "First Aid",
         status: "Awaiting Review",
@@ -105,12 +129,12 @@ const TASKS = [
         iconName: "first-aid",
         badgeColor: "notice"
     }
-] as const;
+];
 
 export default function InboxPage() {
-    const [reportTypeSelected, setReportTypeSelected] = useState(false);
-    const [statusSelected, setStatusSelected] = useState(true);
-    const [statusCount] = useState(2); // Example: 2 statuses selected
+    const [reportType, setReportType] = useState<string | null>(null);
+    const [isStatusActive, setIsStatusActive] = useState(true);
+    const [statusCount] = useState(2);
 
     return (
         <div>
@@ -128,15 +152,18 @@ export default function InboxPage() {
                 marginBottom: 'calc(var(--space-12) - var(--space-2))'
             }}>
                 <FilterChip
-                    selected={reportTypeSelected}
-                    onClick={() => setReportTypeSelected(!reportTypeSelected)}
+                    selected={!!reportType}
+                    value={reportType || undefined}
+                    onClick={() => setReportType(prev => prev ? null : 'First Aid')}
+                    onClear={() => setReportType(null)}
                 >
                     Report Type
                 </FilterChip>
                 <FilterChip
-                    selected={statusSelected}
-                    count={statusSelected ? statusCount : undefined}
-                    onClick={() => setStatusSelected(!statusSelected)}
+                    selected={isStatusActive}
+                    count={isStatusActive ? statusCount : undefined}
+                    onClick={() => setIsStatusActive(!isStatusActive)}
+                    onClear={() => setIsStatusActive(false)}
                 >
                     Status
                 </FilterChip>
@@ -144,17 +171,17 @@ export default function InboxPage() {
 
             {/* Task Cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)', paddingBottom: 'var(--space-12)' }}>
-                {TASKS.map((task, index) => (
+                {TASKS.map((task) => (
                     <TaskCard
-                        key={index}
+                        key={task.id}
                         title={task.title}
                         subtitle={task.subtitle}
                         status={task.status}
                         reportedBy={task.reportedBy}
                         reportedOn={task.reportedOn}
                         location={task.location}
-                        iconName={task.iconName as any}
-                        badgeColor={task.badgeColor as any}
+                        iconName={task.iconName}
+                        badgeColor={task.badgeColor}
                     />
                 ))}
             </div>
