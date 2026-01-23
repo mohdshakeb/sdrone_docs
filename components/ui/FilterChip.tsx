@@ -10,6 +10,7 @@ interface FilterChipProps {
     selected?: boolean;
     count?: number;
     disabled?: boolean;
+    isOpen?: boolean;
     onClick?: () => void;
     onClear?: (e: React.MouseEvent) => void;
     className?: string;
@@ -21,6 +22,7 @@ export default function FilterChip({
     selected = false,
     count,
     disabled = false,
+    isOpen = false,
     onClick,
     onClear,
     className = '',
@@ -55,7 +57,7 @@ export default function FilterChip({
                 ) : selected && value ? (
                     <span className={styles.value}>{value}</span>
                 ) : null}
-                <Icon name="arrow-down" size={16} className={styles.chevron} />
+                <Icon name="arrow-down" size={16} className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`} />
             </button>
 
             {isActive && !disabled && (

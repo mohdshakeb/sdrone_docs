@@ -2,9 +2,26 @@
 
 import React, { useState } from 'react';
 import TaskCard from '@/components/prototype/TaskCard';
-import FilterChip from '@/components/ui/FilterChip';
+import FilterChipDropdown from '@/components/ui/FilterChipDropdown';
 import type { IconName } from '@/components/ui/Icon';
 import type { BadgeColor } from '@/components/ui/Badge';
+
+const REPORT_TYPE_OPTIONS = [
+    { value: 'first-aid', label: 'First Aid' },
+    { value: 'first-incident', label: 'First incident report' },
+    { value: 'accident-detail', label: 'Accident detail report' },
+    { value: 'near-miss', label: 'Near miss' },
+    { value: 'tool-audit', label: 'Tool audit' },
+    { value: 'safety-audit', label: 'Safety audit' },
+];
+
+const STATUS_OPTIONS = [
+    { value: 'critical', label: 'Critical' },
+    { value: 'in-progress', label: 'In Progress' },
+    { value: 'awaiting-review', label: 'Awaiting Review' },
+    { value: 'completed', label: 'Completed' },
+    { value: 'scheduled', label: 'Scheduled' },
+];
 
 interface Task {
     id: string;
@@ -133,8 +150,7 @@ const TASKS: Task[] = [
 
 export default function InboxPage() {
     const [reportType, setReportType] = useState<string | null>(null);
-    const [isStatusActive, setIsStatusActive] = useState(true);
-    const [statusCount] = useState(2);
+    const [status, setStatus] = useState<string | null>(null);
 
     return (
         <div>
@@ -142,31 +158,27 @@ export default function InboxPage() {
             <div style={{
                 position: 'sticky',
                 top: '64px',
-                zIndex: 4,
+                zIndex: 10,
                 display: 'flex',
                 gap: 'var(--space-2)',
-                paddingBottom: 'var(--space-4)', // 16px bottom padding
-                paddingTop: 'var(--space-2)',    // 8px top padding
+                paddingBottom: 'var(--space-4)',
+                paddingTop: 'var(--space-2)',
                 marginTop: 'calc(var(--space-2) * -1)',
                 backgroundColor: 'var(--bg-page)',
                 marginBottom: 'calc(var(--space-12) - var(--space-2))'
             }}>
-                <FilterChip
-                    selected={!!reportType}
-                    value={reportType || undefined}
-                    onClick={() => setReportType(prev => prev ? null : 'First Aid')}
-                    onClear={() => setReportType(null)}
-                >
-                    Report Type
-                </FilterChip>
-                <FilterChip
-                    selected={isStatusActive}
-                    count={isStatusActive ? statusCount : undefined}
-                    onClick={() => setIsStatusActive(!isStatusActive)}
-                    onClear={() => setIsStatusActive(false)}
-                >
-                    Status
-                </FilterChip>
+                <FilterChipDropdown
+                    label="Report Type"
+                    options={REPORT_TYPE_OPTIONS}
+                    value={reportType}
+                    onChange={setReportType}
+                />
+                <FilterChipDropdown
+                    label="Status"
+                    options={STATUS_OPTIONS}
+                    value={status}
+                    onChange={setStatus}
+                />
             </div>
 
             {/* Task Cards */}

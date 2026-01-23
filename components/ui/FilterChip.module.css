@@ -1,5 +1,10 @@
 /* FilterChip Component Styles */
 
+.wrapper {
+    position: relative;
+    display: inline-block;
+}
+
 .chip {
     display: inline-flex;
     align-items: center;
@@ -66,6 +71,11 @@
 .chevron {
     color: var(--fg-muted);
     flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
 }
 
 /* Active State (Selected or Multiple) */

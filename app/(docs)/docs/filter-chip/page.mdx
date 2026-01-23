@@ -1,5 +1,5 @@
 import FilterChip from '@/components/ui/FilterChip';
-import { FilterChipDemo, FilterChipInteractive } from '@/components/docs/FilterChipShowcase';
+import { FilterChipDemo, FilterChipInteractive, FilterChipDropdownDemo } from '@/components/docs/FilterChipShowcase';
 
 # Filter Chip
 
@@ -27,6 +27,10 @@ The `FilterChip` component provides:
 
 <FilterChipInteractive />
 
+### Dropdown Example
+
+<FilterChipDropdownDemo />
+
 ---
 
 ## Properties
@@ -38,6 +42,7 @@ The `FilterChip` component provides:
 | `selected` | `boolean` | `false` | Whether the chip is selected |
 | `count` | `number` | — | Number of items selected if multiple |
 | `disabled` | `boolean` | `false` | Disables interaction |
+| `isOpen` | `boolean` | `false` | Controls chevron rotation (for dropdown) |
 | `onClick` | `() => void` | — | Click handler for main area |
 | `onClear` | `() => void` | — | Click handler for clear action |
 
@@ -102,4 +107,49 @@ import FilterChip from '@/components/ui/FilterChip';
 
 // Disabled
 <FilterChip disabled>Category</FilterChip>
+```
+
+---
+
+## FilterChipDropdown
+
+A convenience wrapper that combines `FilterChip` with `DropdownMenu` for the common use case of selecting from a list of options.
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — | The chip label text |
+| `options` | `DropdownOption[]` | — | Array of selectable options |
+| `value` | `string \| null` | — | Currently selected value |
+| `onChange` | `(value: string \| null) => void` | — | Called when selection changes |
+| `disabled` | `boolean` | `false` | Disables interaction |
+
+### DropdownOption Type
+
+```ts
+interface DropdownOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+```
+
+### Usage
+
+```tsx
+import FilterChipDropdown from '@/components/ui/FilterChipDropdown';
+
+const options = [
+  { value: 'first-aid', label: 'First Aid' },
+  { value: 'near-miss', label: 'Near miss' },
+  { value: 'safety-audit', label: 'Safety audit' },
+];
+
+<FilterChipDropdown
+  label="Report Type"
+  options={options}
+  value={selectedValue}
+  onChange={setSelectedValue}
+/>
 ```
