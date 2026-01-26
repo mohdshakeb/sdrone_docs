@@ -30,23 +30,32 @@
     padding: 12px 16px;
     background: transparent;
     border: none;
-    color: var(--fg-neutral);
+    color: var(--fg-subtle);
     font-family: inherit;
-    font-size: inherit;
     text-align: left;
     cursor: pointer;
     outline: none;
     transition: background-color 0.1s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.option:hover,
-.option:focus {
+.option:not(:disabled):hover,
+.option:not(:disabled):focus {
     background-color: var(--bg-strong);
+    color: var(--fg-neutral);
 }
 
 .optionSelected {
-    color: var(--fg-accent);
-    font-weight: var(--font-weight-medium);
+    background-color: var(--bg-accent-subtle);
+    color: var(--fg-accent-light);
+}
+
+.option.optionSelected:hover,
+.option.optionSelected:focus {
+    background-color: var(--bg-accent-subtle);
+    color: var(--fg-accent-light);
 }
 
 .optionDisabled {
@@ -56,4 +65,36 @@
 
 .optionDisabled:hover {
     background-color: transparent;
+}
+
+/* Icon option styles */
+.optionWithIcon {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.optionIcon {
+    flex-shrink: 0;
+    color: var(--fg-subtle);
+}
+
+.optionSelected .optionIcon,
+.optionIconSelected {
+    color: var(--fg-accent-light);
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+    margin: var(--space-1) 0;
+    background-color: var(--border-subtle);
+}
+
+/* Section header */
+.header {
+    padding: var(--space-2) var(--space-4);
+    color: var(--fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }

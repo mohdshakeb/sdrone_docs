@@ -7,7 +7,7 @@ export default function DocsLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="app-shell">
+        <div className="app-shell" data-docs="true">
             <Sidebar />
             <main className="main-content">
                 <Header />

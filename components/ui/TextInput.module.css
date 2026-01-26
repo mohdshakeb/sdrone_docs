@@ -1,0 +1,60 @@
+/* TextInput component styles */
+.input {
+    display: block;
+    border: 1px solid var(--border-base);
+    border-radius: 8px;
+    background-color: var(--bg-surface);
+    color: var(--fg-neutral);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+    color: var(--fg-muted);
+}
+
+.input:hover:not(:disabled) {
+    border-color: var(--border-strong);
+}
+
+.input:focus {
+    border-color: var(--bg-accent);
+    box-shadow: 0 0 0 2px var(--bg-accent-subtle);
+}
+
+.input:disabled {
+    background-color: var(--bg-strong);
+    color: var(--fg-muted);
+    cursor: not-allowed;
+}
+
+/* Error state */
+.error {
+    border-color: var(--bg-negative-intense);
+}
+
+.error:focus {
+    border-color: var(--bg-negative-intense);
+    box-shadow: 0 0 0 2px var(--bg-negative-subtle);
+}
+
+/* Size variants */
+.sm {
+    height: 32px;
+    padding: 0 var(--space-3);
+}
+
+.md {
+    height: 40px;
+    padding: 0 var(--space-4);
+}
+
+.lg {
+    height: 48px;
+    padding: 0 var(--space-5);
+}
+
+/* Full width */
+.fullWidth {
+    width: 100%;
+}

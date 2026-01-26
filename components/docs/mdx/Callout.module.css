@@ -1,0 +1,72 @@
+/* Callout Component Styles */
+
+.callout {
+  margin-block: var(--space-6);
+  padding: var(--space-4);
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+/* Type Variants */
+.type-note {
+  background-color: var(--bg-neutral-subtle);
+  border-color: var(--fg-neutral-subtle);
+  color: var(--fg-neutral);
+}
+
+.type-info {
+  background-color: var(--bg-information-subtle);
+  border-color: var(--fg-information-subtle);
+  color: var(--fg-neutral);
+}
+
+.type-warning {
+  background-color: var(--bg-notice-subtle);
+  border-color: var(--fg-notice-subtle);
+  color: var(--fg-neutral);
+}
+
+.type-error {
+  background-color: var(--bg-negative-subtle);
+  border-color: var(--fg-negative-subtle);
+  color: var(--fg-neutral);
+}
+
+.type-success {
+  background-color: var(--bg-positive-subtle);
+  border-color: var(--fg-positive-subtle);
+  color: var(--fg-neutral);
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-weight: var(--font-weight-semibold);
+  font-size: 14px;
+}
+
+.title {
+  color: var(--fg-neutral);
+}
+
+/* Content */
+.content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fg-subtle);
+}
+
+.content p:last-child {
+  margin-bottom: 0;
+}
+
+.content code {
+  background-color: var(--bg-surface);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}

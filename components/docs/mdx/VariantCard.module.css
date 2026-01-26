@@ -1,0 +1,56 @@
+/* VariantCard Component Styles */
+
+.card {
+  margin-block: var(--space-6);
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  background-color: var(--bg-surface);
+}
+
+/* Header */
+.header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background-color: var(--bg-page);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--fg-neutral);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fg-subtle);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* Example */
+.example {
+  padding: var(--space-6);
+  background-color: var(--bg-surface);
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--space-3);
+  }
+
+  .example {
+    padding: var(--space-4);
+  }
+
+  .title {
+    font-size: 15px;
+  }
+
+  .description {
+    font-size: 13px;
+  }
+}

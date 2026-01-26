@@ -1,0 +1,32 @@
+/* Section Component Styles */
+
+.section {
+  width: 100%;
+}
+
+/* Spacing Variants */
+.spacing-sm {
+  margin-bottom: var(--space-8);
+}
+
+.spacing-md {
+  margin-bottom: var(--space-10);
+}
+
+.spacing-lg {
+  margin-bottom: var(--space-12);
+}
+
+/* Divider */
+.divider {
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.divider.spacing-sm {
+  padding-bottom: var(--space-8);
+}
+
+.divider.spacing-lg {
+  padding-bottom: var(--space-12);
+}

@@ -49,15 +49,15 @@ export default function TaskCard({
             <div className={`${styles.footer} text-caption`}>
                 <div className={styles.footerItem}>
                     <span>Reported by:</span>
-                    <span className={`${styles.footerValue} text-caption-strong`}>{reportedBy}</span>
+                    <span className={`${styles.footerValue} text-caption`}>{reportedBy}</span>
                 </div>
                 <div className={styles.footerItem}>
                     <span>Reported on:</span>
-                    <span className={`${styles.footerValue} text-caption-strong`}>{reportedOn}</span>
+                    <span className={`${styles.footerValue} text-caption`}>{reportedOn}</span>
                 </div>
                 <div className={styles.footerItem}>
                     <span>Location:</span>
-                    <span className={`${styles.footerValue} text-caption-strong`}>{location}</span>
+                    <span className={`${styles.footerValue} text-caption`}>{location}</span>
                 </div>
             </div>
         </div>

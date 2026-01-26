@@ -1,0 +1,107 @@
+/* Preview Component Styles */
+
+.preview {
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  margin-block: var(--space-6);
+  overflow: hidden;
+}
+
+/* Background Variants */
+.bg-default {
+  background-color: var(--bg-surface);
+}
+
+.bg-subtle {
+  background-color: var(--bg-subtle);
+}
+
+.bg-strong {
+  background-color: var(--bg-page);
+}
+
+/* Padding Variants */
+.padding-none {
+  padding: 0;
+}
+
+.padding-sm {
+  padding: var(--space-4);
+}
+
+.padding-md {
+  padding: var(--space-6);
+}
+
+.padding-lg {
+  padding: var(--space-8);
+}
+
+/* Gap Variants */
+.gap-none {
+  gap: 0;
+}
+
+.gap-sm {
+  gap: var(--space-3);
+}
+
+.gap-md {
+  gap: var(--space-4);
+}
+
+.gap-lg {
+  gap: var(--space-6);
+}
+
+/* Alignment */
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+/* Layout: Flex Wrap (default) */
+.layout-flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Layout: Stack */
+.layout-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Layout: Grid 2 Columns */
+.layout-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Layout: Grid 3 Columns */
+.layout-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+/* Layout: Grid 4 Columns */
+.layout-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+/* Responsive: Collapse grids to single column on mobile */
+@media (max-width: 640px) {
+  .layout-grid-2,
+  .layout-grid-3,
+  .layout-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,14 @@
+/* FilterBar Component Styles */
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  background-color: var(--bg-page);
+}
+
+@media (max-width: 768px) {
+  .filterBar {
+    padding: var(--space-4);
+  }
+}

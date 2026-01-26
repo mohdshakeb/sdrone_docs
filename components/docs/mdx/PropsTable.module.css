@@ -1,0 +1,145 @@
+/* PropsTable Component Styles */
+
+.wrapper {
+  margin-block: var(--space-6);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--fg-neutral);
+  margin-bottom: var(--space-3);
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead {
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-base);
+}
+
+.table th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  color: var(--fg-neutral);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.15s ease;
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: var(--bg-subtle);
+}
+
+.table td {
+  padding: var(--space-4);
+  vertical-align: top;
+}
+
+/* Column widths */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 20%;
+  min-width: 120px;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 25%;
+  min-width: 140px;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 15%;
+  min-width: 100px;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  width: 40%;
+}
+
+/* Prop name styling */
+.propName {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-accent);
+  background-color: var(--bg-subtle);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: var(--font-weight-medium);
+}
+
+.required {
+  color: var(--fg-negative);
+  margin-left: 2px;
+}
+
+/* Type styling */
+.type {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-subtle);
+  background-color: var(--bg-page);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Default value styling */
+.default {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-muted);
+  background-color: var(--bg-page);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.empty {
+  color: var(--fg-muted);
+}
+
+/* Description styling */
+.description {
+  color: var(--fg-subtle);
+  line-height: 1.6;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .table {
+    font-size: 13px;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-3);
+  }
+
+  .propName,
+  .type,
+  .default {
+    font-size: 12px;
+  }
+}

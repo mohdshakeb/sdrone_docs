@@ -1,0 +1,114 @@
+/* Specification Component Styles */
+
+.wrapper {
+  margin-block: var(--space-6);
+}
+
+.title {
+  font-size: 16px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--fg-neutral);
+  margin-bottom: var(--space-3);
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead {
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-base);
+}
+
+.table th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  color: var(--fg-neutral);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background-color 0.15s ease;
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: var(--bg-subtle);
+}
+
+.table td {
+  padding: var(--space-4);
+  vertical-align: middle;
+}
+
+/* Color Swatch */
+.colorSwatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Property */
+.property {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-accent);
+  background-color: var(--bg-subtle);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Value */
+.value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--fg-subtle);
+  background-color: var(--bg-page);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Description */
+.description {
+  color: var(--fg-subtle);
+  line-height: 1.6;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .table {
+    font-size: 13px;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--space-3);
+  }
+
+  .property,
+  .value {
+    font-size: 12px;
+  }
+
+  .colorSwatch {
+    width: 24px;
+    height: 24px;
+  }
+}

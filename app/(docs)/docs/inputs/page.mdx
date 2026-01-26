@@ -1,0 +1,460 @@
+import TextInput from '@/components/ui/TextInput';
+import Textarea from '@/components/ui/Textarea';
+import Select from '@/components/ui/Select';
+import RadioGroup from '@/components/ui/RadioGroup';
+import FileInput from '@/components/ui/FileInput';
+import TimeInput from '@/components/ui/TimeInput';
+import FormField from '@/components/ui/FormField';
+
+# Form Inputs
+
+Form inputs allow users to enter and select data. The design system provides a comprehensive set of input components with consistent styling and accessibility features.
+
+---
+
+## Overview
+
+All form input components share common features:
+- **Size variants** (sm, md, lg) for flexible layout needs
+- **Error states** for validation feedback
+- **Accessibility** with proper ARIA attributes and keyboard navigation
+- **Dark mode** support via CSS variables
+- **FormField wrapper** for labels, help text, and error messages
+
+---
+
+## Text Input
+
+The `TextInput` component is used for single-line text entry.
+
+### Preview
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '32px', maxWidth: '400px' }}>
+  <TextInput placeholder="Enter text..." />
+  <TextInput placeholder="Small size" size="sm" />
+  <TextInput placeholder="Medium size" size="md" />
+  <TextInput placeholder="Large size" size="lg" />
+  <TextInput placeholder="Error state" hasError />
+</div>
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `string` | `"md"` | `sm`, `md`, `lg` |
+| `hasError` | `boolean` | `false` | Shows error styling |
+| `fullWidth` | `boolean` | `true` | Expands to fill container |
+| All standard input props | — | — | Supports all native input attributes |
+
+### Usage
+
+```tsx
+import TextInput from '@/components/ui/TextInput';
+
+<TextInput
+  placeholder="Enter your name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+/>
+```
+
+---
+
+## Textarea
+
+The `Textarea` component is used for multi-line text entry with optional character counting.
+
+### Preview
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '32px', maxWidth: '400px' }}>
+  <Textarea placeholder="Enter description..." rows={3} />
+  <Textarea placeholder="With character count" showCharCount maxLength={200} rows={3} />
+  <Textarea placeholder="Error state" hasError rows={3} />
+</div>
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `hasError` | `boolean` | `false` | Shows error styling |
+| `fullWidth` | `boolean` | `true` | Expands to fill container |
+| `showCharCount` | `boolean` | `false` | Display character counter |
+| `maxLength` | `number` | — | Maximum characters (enforced) |
+| `resize` | `string` | `"vertical"` | `none`, `vertical`, `horizontal`, `both` |
+| All standard textarea props | — | — | Supports all native textarea attributes |
+
+### Usage
+
+```tsx
+import Textarea from '@/components/ui/Textarea';
+
+<Textarea
+  placeholder="Enter description..."
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  showCharCount
+  maxLength={500}
+  rows={4}
+/>
+```
+
+---
+
+## Select
+
+The `Select` component provides a dropdown menu for selecting from predefined options.
+
+### Preview
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '32px', maxWidth: '400px' }}>
+  <Select
+    options={[
+      { value: 'option1', label: 'Option 1' },
+      { value: 'option2', label: 'Option 2' },
+      { value: 'option3', label: 'Option 3' },
+    ]}
+    placeholder="Select an option..."
+  />
+  <Select
+    options={[
+      { value: 'sm', label: 'Small' },
+      { value: 'md', label: 'Medium' },
+      { value: 'lg', label: 'Large' },
+    ]}
+    size="sm"
+    placeholder="Small size"
+  />
+  <Select
+    options={[
+      { value: 'error', label: 'Error state' },
+    ]}
+    hasError
+    placeholder="Error state"
+  />
+</div>
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `options` | `SelectOption[]` | — | Array of options (required) |
+| `placeholder` | `string` | — | Placeholder text |
+| `size` | `string` | `"md"` | `sm`, `md`, `lg` |
+| `hasError` | `boolean` | `false` | Shows error styling |
+| `fullWidth` | `boolean` | `true` | Expands to fill container |
+| All standard select props | — | — | Supports all native select attributes |
+
+### Option Interface
+
+```tsx
+interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+```
+
+### Usage
+
+```tsx
+import Select from '@/components/ui/Select';
+
+const options = [
+  { value: 'us', label: 'United States' },
+  { value: 'uk', label: 'United Kingdom' },
+  { value: 'ca', label: 'Canada' },
+];
+
+<Select
+  options={options}
+  placeholder="Select country..."
+  value={country}
+  onChange={(e) => setCountry(e.target.value)}
+/>
+```
+
+---
+
+## Radio Group
+
+The `RadioGroup` component allows selection of a single option from multiple choices.
+
+### Preview
+
+<div style={{ marginBottom: '32px' }}>
+  <RadioGroup
+    name="example-vertical"
+    options={[
+      { value: 'option1', label: 'Option 1', description: 'This is the first option' },
+      { value: 'option2', label: 'Option 2', description: 'This is the second option' },
+      { value: 'option3', label: 'Option 3', description: 'This is the third option' },
+    ]}
+    aria-label="Example radio group"
+  />
+</div>
+
+<div style={{ marginBottom: '32px' }}>
+  <p className="text-caption-strong" style={{ marginBottom: '12px' }}>Horizontal Layout:</p>
+  <RadioGroup
+    name="example-horizontal"
+    options={[
+      { value: 'yes', label: 'Yes' },
+      { value: 'no', label: 'No' },
+      { value: 'maybe', label: 'Maybe' },
+    ]}
+    direction="horizontal"
+    aria-label="Horizontal radio group"
+  />
+</div>
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `name` | `string` | — | Group name (required) |
+| `options` | `RadioOption[]` | — | Array of options (required) |
+| `value` | `string` | — | Currently selected value |
+| `onChange` | `function` | — | Callback with selected value |
+| `direction` | `string` | `"vertical"` | `vertical`, `horizontal` |
+| `hasError` | `boolean` | `false` | Shows error styling |
+| `disabled` | `boolean` | `false` | Disables all options |
+| `aria-label` | `string` | — | Accessible label for group |
+
+### Option Interface
+
+```tsx
+interface RadioOption {
+  value: string;
+  label: string;
+  description?: string;
+  disabled?: boolean;
+}
+```
+
+### Usage
+
+```tsx
+import RadioGroup from '@/components/ui/RadioGroup';
+
+const options = [
+  { value: 'low', label: 'Low Priority' },
+  { value: 'medium', label: 'Medium Priority' },
+  { value: 'high', label: 'High Priority', description: 'Requires immediate attention' },
+];
+
+<RadioGroup
+  name="priority"
+  options={options}
+  value={priority}
+  onChange={setPriority}
+  aria-label="Priority level"
+/>
+```
+
+---
+
+## Time Input
+
+The `TimeInput` component provides a native time picker interface.
+
+### Preview
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '32px', maxWidth: '400px' }}>
+  <TimeInput />
+  <TimeInput size="sm" />
+  <TimeInput size="lg" />
+  <TimeInput hasError />
+</div>
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `string` | `"md"` | `sm`, `md`, `lg` |
+| `hasError` | `boolean` | `false` | Shows error styling |
+| `fullWidth` | `boolean` | `true` | Expands to fill container |
+| All standard input props | — | — | Supports all native input attributes |
+
+### Usage
+
+```tsx
+import TimeInput from '@/components/ui/TimeInput';
+
+<TimeInput
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+/>
+```
+
+---
+
+## File Input
+
+The `FileInput` component provides drag-and-drop file upload with file list management.
+
+### Preview
+
+<div style={{ marginBottom: '32px' }}>
+  <FileInput
+    placeholder="Drag files here or click to browse"
+    helpText="Supports PDF, DOC, and image files"
+    accept=".pdf,.doc,.docx,image/*"
+    multiple
+    maxFiles={5}
+  />
+</div>
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `accept` | `string` | — | Accepted file types |
+| `multiple` | `boolean` | `false` | Allow multiple files |
+| `maxFiles` | `number` | `10` | Maximum number of files |
+| `maxSize` | `number` | — | Maximum file size in bytes |
+| `files` | `File[]` | `[]` | Current files (controlled) |
+| `onChange` | `function` | — | Callback with file array |
+| `hasError` | `boolean` | `false` | Shows error styling |
+| `disabled` | `boolean` | `false` | Disables file input |
+| `placeholder` | `string` | — | Dropzone text |
+| `helpText` | `string` | — | Help text below dropzone |
+
+### Usage
+
+```tsx
+import FileInput from '@/components/ui/FileInput';
+
+<FileInput
+  accept=".pdf,.doc,.docx"
+  multiple
+  maxFiles={3}
+  maxSize={5242880} // 5MB
+  files={files}
+  onChange={setFiles}
+  placeholder="Upload documents"
+  helpText="Maximum 3 files, 5MB each"
+/>
+```
+
+---
+
+## Form Field
+
+The `FormField` component wraps input components to provide labels, help text, and error messages with proper accessibility.
+
+### Preview
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '32px', maxWidth: '400px' }}>
+  <FormField
+    id="example-name"
+    label="Full Name"
+    required
+    helpText="Enter your first and last name"
+  >
+    <TextInput placeholder="John Doe" />
+  </FormField>
+
+  <FormField
+    id="example-email"
+    label="Email Address"
+    required
+    error="Please enter a valid email address"
+  >
+    <TextInput placeholder="you@example.com" hasError />
+  </FormField>
+
+  <FormField
+    id="example-description"
+    label="Description"
+    helpText="Provide a brief description"
+  >
+    <Textarea placeholder="Enter description..." rows={3} />
+  </FormField>
+</div>
+
+### Properties
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `id` | `string` | — | Field ID (required, links label to input) |
+| `label` | `string` | — | Label text |
+| `required` | `boolean` | `false` | Shows required indicator |
+| `error` | `string` | — | Error message to display |
+| `helpText` | `string` | — | Help text below input |
+| `hideLabel` | `boolean` | `false` | Visually hide label (still accessible) |
+| `children` | `ReactNode` | — | The input element (required) |
+
+### Usage
+
+```tsx
+import FormField from '@/components/ui/FormField';
+import TextInput from '@/components/ui/TextInput';
+
+<FormField
+  id="username"
+  label="Username"
+  required
+  error={errors.username}
+  helpText="Choose a unique username"
+>
+  <TextInput
+    value={username}
+    onChange={(e) => setUsername(e.target.value)}
+    hasError={!!errors.username}
+  />
+</FormField>
+```
+
+---
+
+## Specification
+
+### Size Mapping
+
+All sized input components follow this consistent sizing:
+
+| Size | Height | Padding (H) | Padding (V) | Font Size |
+|------|--------|-------------|-------------|-----------|
+| `sm` | 32px | 12px | 8px | 12px |
+| `md` | 40px | 16px | 12px | 14px |
+| `lg` | 48px | 20px | 16px | 16px |
+
+### Color Tokens
+
+Input components use these semantic tokens:
+
+| State | Background | Border | Text |
+|-------|------------|--------|------|
+| Default | `--bg-default` | `--border-strong` | `--fg-default` |
+| Focus | `--bg-default` | `--border-accent` | `--fg-default` |
+| Error | `--bg-default` | `--border-negative` | `--fg-default` |
+| Disabled | `--bg-subtle` | `--border-muted` | `--fg-muted` |
+| Placeholder | `--bg-default` | `--border-strong` | `--fg-muted` |
+
+---
+
+## Best Practices
+
+### Accessibility
+- Always use `FormField` wrapper for proper label association
+- Provide helpful error messages that explain how to fix the issue
+- Use `aria-label` for RadioGroup when no visible label exists
+- Ensure sufficient color contrast in all states
+
+### Validation
+- Show error states only after user interaction or form submission
+- Provide specific, actionable error messages
+- Use `required` prop to indicate mandatory fields
+- Consider inline validation for better UX
+
+### Layout
+- Use consistent sizing across related form fields
+- Group related fields together visually
+- Provide adequate spacing between form sections
+- Consider mobile viewport when designing forms
+
+### Content
+- Write clear, concise labels
+- Use help text to provide context or examples
+- Keep placeholder text brief and instructional
+- Make required fields obvious

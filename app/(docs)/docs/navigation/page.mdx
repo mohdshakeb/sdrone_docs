@@ -4,7 +4,7 @@ import NavigationShowcase from '@/components/docs/NavigationShowcase';
 
 Navigation components provide the structural framework for applications. They help users understand where they are and move between different sections.
 
----
+<Section divider>
 
 ## Overview
 
@@ -12,51 +12,65 @@ The navigation system includes:
 - **App Sidebar** (S-Drone prototype) - Fixed left sidebar with branding and navigation tabs
 - **App Header** - Sticky header with page title, metadata, and actions
 
----
+</Section>
+
+<Section divider>
 
 ## Preview
 
 <NavigationShowcase />
 
----
+</Section>
+
+<Section divider>
 
 ## Properties
 
 ### AppSidebar
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | — | Override class for positioning |
+<PropsTable data={[
+  {
+    prop: 'className',
+    type: 'string',
+    description: 'Override class for positioning'
+  }
+]} />
 
 ### AppHeader
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `className` | `string` | — | Override class for styling |
+<PropsTable data={[
+  {
+    prop: 'className',
+    type: 'string',
+    description: 'Override class for styling'
+  }
+]} />
 
----
+</Section>
+
+<Section divider>
 
 ## Specification
 
 ### App Sidebar
 
-| Property | Value |
-|----------|-------|
-| Width | `240px` (`--sidebar-width`) |
-| Padding | `16px` (`--space-4`) |
-| Logo Left Padding | `24px` (`--space-6`) |
-| Background | `--bg-subtle` |
-| Border | `1px solid var(--border-subtle)` |
+<Specification data={[
+  { property: 'Width', value: '240px (--sidebar-width)' },
+  { property: 'Padding', value: '16px (--space-4)' },
+  { property: 'Logo Left Padding', value: '24px (--space-6)' },
+  { property: 'Background', value: '--bg-subtle' },
+  { property: 'Border', value: '1px solid var(--border-subtle)' }
+]} />
 
 #### Tab Styling
 
-| Property | Value |
-|----------|-------|
-| Shape | Pill (`border-radius: 9999px`) |
-| Padding | `8px 24px` |
-| Gap (between tabs) | `16px` |
-| Icon-Text Gap | `16px` |
-| Typography | `text-body-strong` (14px Medium) |
+<Specification data={[
+  { property: 'Shape', value: 'Pill (border-radius: 9999px)' },
+  { property: 'Padding', value: '8px 24px' },
+  { property: 'Gap (between tabs)', value: '16px' },
+  { property: 'Icon-Text Gap', value: '16px' },
+  { property: 'Typography', value: 'text-body-strong (14px Medium)' }
+]} />
 
 #### Tab States
 
@@ -68,18 +82,21 @@ The navigation system includes:
 
 ### App Header
 
-| Property | Value |
-|----------|-------|
-| Height | `64px` |
-| Padding | `0 24px` |
-| Background | `--bg-subtle` |
-| Border | `1px solid var(--border-subtle)` bottom |
-| Position | `sticky` (top: 0) |
+<Specification data={[
+  { property: 'Height', value: '64px' },
+  { property: 'Padding', value: '0 24px' },
+  { property: 'Background', value: '--bg-subtle' },
+  { property: 'Border', value: '1px solid var(--border-subtle) bottom' },
+  { property: 'Position', value: 'sticky (top: 0)' }
+]} />
 
----
+</Section>
+
+<Section>
 
 ## Usage
 
+<CodeBlock language="tsx" filename="layout.tsx">
 ```tsx
 // In layout.tsx
 import AppSidebar from '@/components/prototype/AppSidebar';
@@ -97,3 +114,6 @@ export default function Layout({ children }) {
   );
 }
 ```
+</CodeBlock>
+
+</Section>

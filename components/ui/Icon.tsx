@@ -16,6 +16,13 @@ import {
     RiSurveyFill,
     RiFirstAidKitFill,
     RiMenuLine,
+    RiUploadCloud2Line,
+    RiFileTextLine,
+    RiImageLine,
+    RiCheckLine,
+    RiArrowLeftLine,
+    RiArrowRightLine,
+    RiDeleteBinLine,
 } from 'react-icons/ri';
 
 export type IconName =
@@ -35,7 +42,14 @@ export type IconName =
     | 'survey'
     | 'first-aid'
     | 'menu'
-    | 'sos';
+    | 'sos'
+    | 'upload'
+    | 'file'
+    | 'image'
+    | 'check'
+    | 'arrow-left'
+    | 'arrow-right'
+    | 'delete';
 
 export type IconSize = 14 | 16 | 20 | 24 | 32;
 
@@ -76,6 +90,13 @@ const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; c
     'first-aid': RiFirstAidKitFill,
     'menu': RiMenuLine,
     'sos': SosIcon,
+    'upload': RiUploadCloud2Line,
+    'file': RiFileTextLine,
+    'image': RiImageLine,
+    'check': RiCheckLine,
+    'arrow-left': RiArrowLeftLine,
+    'arrow-right': RiArrowRightLine,
+    'delete': RiDeleteBinLine,
 };
 
 export const Icon: React.FC<IconProps> = ({ name, size = 20, className = '', ...props }) => {

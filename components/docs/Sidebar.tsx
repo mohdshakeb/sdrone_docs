@@ -36,9 +36,9 @@ export default function Sidebar({ className = '' }: { className?: string }) {
                         <li><Link href="/docs/buttons" onClick={() => setIsOpen(false)}>Buttons</Link></li>
                         <li><Link href="/docs/badge" onClick={() => setIsOpen(false)}>Badge</Link></li>
                         <li><Link href="/docs/filter-chip" onClick={() => setIsOpen(false)}>Filter Chip</Link></li>
+                        <li><Link href="/docs/dropdown" onClick={() => setIsOpen(false)}>Dropdown Menu</Link></li>
+                        <li><Link href="/docs/modal" onClick={() => setIsOpen(false)}>Modal</Link></li>
                         <li><Link href="/docs/inputs" onClick={() => setIsOpen(false)}>Inputs</Link></li>
-                        <li><Link href="/docs/cards" onClick={() => setIsOpen(false)}>Cards</Link></li>
-                        <li><Link href="/docs/navigation" onClick={() => setIsOpen(false)}>Navigation</Link></li>
                     </ul>
                 </div>
             </nav>

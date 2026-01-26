@@ -12,7 +12,7 @@
 /* Size Variants - Typography handled by utility classes */
 .xsmall {
     height: 20px;
-    padding: 0 var(--space-1);
+    padding: 0 var(--space-2);
 }
 
 .small {

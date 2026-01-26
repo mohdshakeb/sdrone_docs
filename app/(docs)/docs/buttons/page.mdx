@@ -5,29 +5,31 @@ import { Icon } from '@/components/ui/Icon';
 
 Buttons allow users to take actions and make choices with a single tap. They are the primary interactive element for triggering events.
 
----
+<Section divider>
 
 ## Overview
 
 The `Button` component supports multiple variants and sizes. All buttons use a **pill shape** (fully rounded corners).
 
----
+</Section>
 
-## Preview
+<Section divider>
 
-### Variants
+## Variants
 
-<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '32px' }}>
+### Button Variants
+
+<Preview layout="flex-wrap">
   <Button variant="primary">Primary</Button>
   <Button variant="secondary">Secondary</Button>
   <Button variant="negative">Negative</Button>
   <Button variant="notice">Notice</Button>
   <Button variant="positive">Positive</Button>
-</div>
+</Preview>
 
 ### States
 
-<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '32px', marginBottom: '32px' }}>
+<Preview layout="grid-3" align="start">
   <div>
     <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Default</h4>
     <Button variant="primary">Default</Button>
@@ -40,11 +42,11 @@ The `Button` component supports multiple variants and sizes. All buttons use a *
     <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Secondary Disabled</h4>
     <Button variant="secondary" disabled>Disabled</Button>
   </div>
-</div>
+</Preview>
 
 ### Sizes
 
-<div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '32px', flexWrap: 'wrap' }}>
+<Preview layout="flex-wrap" align="start">
   <div>
     <Button size="xs">XSmall</Button>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>28px</div>
@@ -61,30 +63,66 @@ The `Button` component supports multiple variants and sizes. All buttons use a *
     <Button size="lg">Large</Button>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>48px</div>
   </div>
-</div>
+</Preview>
 
 ### Icon Composition
 
-<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '24px' }}>
+<Preview layout="flex-wrap">
   <Button variant="secondary" leadingIcon={<Icon name="add" size={20} />}>Leading Icon</Button>
   <Button variant="secondary" trailingIcon={<Icon name="arrow-down" size={20} />}>Trailing Icon</Button>
-</div>
+</Preview>
 
----
+</Section>
+
+<Section divider>
 
 ## Properties
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | Button label (required) |
-| `size` | `string` | `"md"` | `xs`, `sm`, `md`, `lg` |
-| `variant` | `string` | `"primary"` | `primary`, `secondary`, `negative`, `notice`, `positive` |
-| `leadingIcon` | `ReactNode` | — | Icon before label |
-| `trailingIcon` | `ReactNode` | — | Icon after label |
-| `disabled` | `boolean` | `false` | Disables the button |
-| `href` | `string` | — | Renders as a link |
+<PropsTable data={[
+  {
+    prop: 'children',
+    type: 'ReactNode',
+    required: true,
+    description: 'Button label'
+  },
+  {
+    prop: 'size',
+    type: 'string',
+    default: '"md"',
+    description: 'Size variant: xs, sm, md, lg'
+  },
+  {
+    prop: 'variant',
+    type: 'string',
+    default: '"primary"',
+    description: 'Visual variant: primary, secondary, negative, notice, positive'
+  },
+  {
+    prop: 'leadingIcon',
+    type: 'ReactNode',
+    description: 'Icon before label'
+  },
+  {
+    prop: 'trailingIcon',
+    type: 'ReactNode',
+    description: 'Icon after label'
+  },
+  {
+    prop: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    description: 'Disables the button'
+  },
+  {
+    prop: 'href',
+    type: 'string',
+    description: 'Renders as a link'
+  }
+]} />
 
----
+</Section>
+
+<Section divider>
 
 ## Specification
 
@@ -107,10 +145,13 @@ The `Button` component supports multiple variants and sizes. All buttons use a *
 | `md` | 40px | 24px | 14px | 20px |
 | `lg` | 48px | 32px | 16px | 24px |
 
----
+</Section>
+
+<Section>
 
 ## Usage
 
+<CodeBlock language="tsx" filename="example.tsx">
 ```tsx
 import Button from '@/components/ui/Button';
 import { Icon } from '@/components/ui/Icon';
@@ -128,3 +169,6 @@ import { Icon } from '@/components/ui/Icon';
   Create New
 </Button>
 ```
+</CodeBlock>
+
+</Section>

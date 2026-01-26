@@ -2,11 +2,20 @@
 
 We use **Inter** as our primary typeface. It is a variable font with a tall x-height, making it highly legible at small sizes.
 
+<Section divider>
+
 ## Font Family
-<div style={{ padding: '24px', border: '1px solid var(--border-subtle)', borderRadius: '8px', marginBottom: '32px' }}>
-  <p style={{ fontFamily: 'var(--font-inter)', fontSize: '48px', margin: 0 }}>Aa Bb Cc</p>
-  <p style={{ marginTop: '16px', color: 'var(--fg-subtle)' }}>Inter (Variable)</p>
-</div>
+
+<Preview padding="lg" background="subtle">
+  <div>
+    <p style={{ fontFamily: 'var(--font-inter)', fontSize: '48px', margin: 0 }}>Aa Bb Cc</p>
+    <p style={{ marginTop: '16px', color: 'var(--fg-subtle)' }}>Inter (Variable)</p>
+  </div>
+</Preview>
+
+</Section>
+
+<Section divider>
 
 ## Type Scale & Styles
 
@@ -22,40 +31,40 @@ These are the defined text styles available in our system. Usage in code corresp
   </thead>
   <tbody>
     {[
-      { 
-        class: 'text-heading', 
-        sample: 'Heading', 
-        props: '24px / 120% / SemiBold' 
+      {
+        class: 'text-heading',
+        sample: 'Heading',
+        props: '24px / 120% / SemiBold'
       },
-      { 
-        class: 'text-body-base', 
-        sample: 'Body Base', 
-        props: '16px / 140% / Medium' 
+      {
+        class: 'text-body-base',
+        sample: 'Body Base',
+        props: '16px / 140% / Medium'
       },
-      { 
-        class: 'text-body-strong', 
-        sample: 'Body Strong', 
-        props: '14px / 140% / Medium' 
+      {
+        class: 'text-body-strong',
+        sample: 'Body Strong',
+        props: '14px / 140% / Medium'
       },
-      { 
-        class: 'text-body', 
-        sample: 'Body', 
-        props: '14px / 140% / Regular' 
+      {
+        class: 'text-body',
+        sample: 'Body',
+        props: '14px / 140% / Regular'
       },
-      { 
-        class: 'text-caption-strong', 
-        sample: 'Caption Strong', 
-        props: '12px / 16px / Medium' 
+      {
+        class: 'text-caption-strong',
+        sample: 'Caption Strong',
+        props: '12px / 16px / Medium'
       },
-      { 
-        class: 'text-caption', 
-        sample: 'Caption', 
-        props: '12px / 16px / Regular' 
+      {
+        class: 'text-caption',
+        sample: 'Caption',
+        props: '12px / 16px / Regular'
       },
-      { 
-        class: 'text-caption-small', 
-        sample: 'Caption Small', 
-        props: '10px / 12px / SemiBold' 
+      {
+        class: 'text-caption-small',
+        sample: 'Caption Small',
+        props: '10px / 12px / SemiBold'
       },
     ].map(style => (
       <tr key={style.class}>
@@ -73,18 +82,50 @@ These are the defined text styles available in our system. Usage in code corresp
   </tbody>
 </table>
 
+</Section>
+
+<Section divider>
+
 ## Tokens
 
 Underlying CSS variables used to construct the styles above.
 
 ### Weights
-- **Regular (400)**: `var(--font-weight-regular)`
-- **Medium (500)**: `var(--font-weight-medium)`
-- **Medium (600)**: `var(--font-weight-semibold)`
+
+<Specification data={[
+  { property: 'Regular', value: '400 (var(--font-weight-regular))' },
+  { property: 'Medium', value: '500 (var(--font-weight-medium))' },
+  { property: 'SemiBold', value: '600 (var(--font-weight-semibold))' }
+]} />
 
 ### Sizes
-- **10px**: `var(--text-10)`
-- **12px**: `var(--text-12)`
-- **14px**: `var(--text-14)`
-- **16px**: `var(--text-16)`
-- **24px**: `var(--text-24)`
+
+<Specification data={[
+  { property: '10px', value: 'var(--text-10)' },
+  { property: '12px', value: 'var(--text-12)' },
+  { property: '14px', value: 'var(--text-14)' },
+  { property: '16px', value: 'var(--text-16)' },
+  { property: '24px', value: 'var(--text-24)' }
+]} />
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+// Use utility classes for consistent typography
+<h1 className="text-heading">Page Title</h1>
+<p className="text-body">Body text content</p>
+<span className="text-caption">Caption text</span>
+
+// Or use CSS variables directly
+<div style={{ fontSize: 'var(--text-14)', fontWeight: 'var(--font-weight-medium)' }}>
+  Custom text
+</div>
+```
+</CodeBlock>
+
+</Section>

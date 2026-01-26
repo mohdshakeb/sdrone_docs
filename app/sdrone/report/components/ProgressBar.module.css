@@ -1,0 +1,26 @@
+/* ProgressBar component styles */
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+}
+
+.barContainer {
+    height: 4px;
+    background-color: var(--bg-strong);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.barFill {
+    height: 100%;
+    background-color: var(--bg-accent);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.label {
+    color: var(--fg-subtle);
+    text-align: center;
+}

@@ -1,0 +1,110 @@
+/* Shared styles for step components */
+
+/* Entry Step */
+.entryContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-8) var(--space-4);
+    min-height: 60vh;
+    gap: var(--space-4);
+}
+
+.entryIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--bg-accent-subtle);
+    color: var(--fg-accent);
+    margin-bottom: var(--space-2);
+}
+
+.entryTitle {
+    margin: 0;
+    color: var(--fg-neutral);
+}
+
+.entryDescription {
+    margin: 0;
+    color: var(--fg-subtle);
+    max-width: 400px;
+}
+
+/* Field row for side-by-side inputs */
+.fieldRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+@media (max-width: 480px) {
+    .fieldRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Review Step */
+.reviewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.reviewSection {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.reviewSection:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.reviewSectionTitle {
+    margin: 0 0 var(--space-3) 0;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.reviewSubtitle {
+    margin: var(--space-3) 0 var(--space-1) 0;
+    color: var(--fg-subtle);
+}
+
+.reviewText {
+    margin: 0;
+    color: var(--fg-neutral);
+    white-space: pre-wrap;
+}
+
+.reviewTextSecondary {
+    margin: var(--space-2) 0 0 0;
+    color: var(--fg-subtle);
+    white-space: pre-wrap;
+}
+
+.reviewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-3);
+}
+
+.reviewItem {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-0_5);
+}
+
+.reviewLabel {
+    color: var(--fg-subtle);
+}
+
+.reviewValue {
+    color: var(--fg-neutral);
+}

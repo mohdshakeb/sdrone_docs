@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import FilterChip from '@/components/ui/FilterChip';
-import FilterChipDropdown from '@/components/ui/FilterChipDropdown';
+import Dropdown, { type DropdownItem } from '@/components/ui/Dropdown';
 
 export function FilterChipDemo() {
     return (
@@ -79,13 +79,13 @@ export function FilterChipDropdownDemo() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <FilterChipDropdown
+                <Dropdown
                     label="Report Type"
                     options={REPORT_TYPE_OPTIONS}
                     value={reportType}
                     onChange={setReportType}
                 />
-                <FilterChipDropdown
+                <Dropdown
                     label="Status"
                     options={STATUS_OPTIONS}
                     value={status}
@@ -94,6 +94,44 @@ export function FilterChipDropdownDemo() {
             </div>
             <p style={{ fontSize: '12px', color: 'var(--fg-subtle)' }}>
                 Click a chip to open dropdown. Arrow keys navigate, Enter selects, Escape closes.
+            </p>
+        </div>
+    );
+}
+
+// Items with icons, dividers, and headers
+const ICON_ITEMS: DropdownItem[] = [
+    { type: 'header', label: 'Incidents' },
+    { type: 'icon', value: 'first-aid', label: 'First Aid', icon: 'first-aid' },
+    { type: 'icon', value: 'fire', label: 'Fire', icon: 'fire' },
+    { type: 'divider' },
+    { type: 'header', label: 'Audits' },
+    { type: 'icon', value: 'survey', label: 'Survey', icon: 'survey' },
+    { type: 'icon', value: 'chart', label: 'Analytics', icon: 'chart' },
+];
+
+export function FilterChipDropdownAdvancedDemo() {
+    const [itemType, setItemType] = useState<string | null>(null);
+    const [date, setDate] = useState<Date | null>(null);
+
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <Dropdown
+                    label="Type"
+                    items={ICON_ITEMS}
+                    value={itemType}
+                    onChange={setItemType}
+                />
+                <Dropdown
+                    variant="date"
+                    label="Date"
+                    value={date}
+                    onChange={setDate}
+                />
+            </div>
+            <p style={{ fontSize: '12px', color: 'var(--fg-subtle)' }}>
+                Dropdown with icons, section headers, and dividers. Date picker with calendar navigation.
             </p>
         </div>
     );

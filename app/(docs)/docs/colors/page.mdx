@@ -4,153 +4,163 @@ import SemanticColorTable from '@/components/docs/SemanticColorTable';
 
 Our design system uses a two-layered color approach: **Primitives** (atomic values) and **Semantics** (usage-based tokens).
 
+<Section divider>
+
 ## Primitives
 
 These are the raw values available in our palette.
 
 ### Primary (Orange)
-<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1rem' }}>
+
+<Preview layout="flex-wrap" padding="sm" gap="lg">
   {['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950', 'alpha-20'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-primary-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
+    <ColorSwatch
+      key={step}
+      token={`--color-primary-${step}`}
+      name={step}
+      showValue={false}
+    />
   ))}
-</div>
+</Preview>
 
 ### Cool Gray (Neutrals)
-<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1rem' }}>
+
+<Preview layout="flex-wrap" padding="sm" gap="lg">
   {['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-cool-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
+    <ColorSwatch
+      key={step}
+      token={`--color-cool-${step}`}
+      name={step}
+      showValue={false}
+    />
   ))}
-</div>
+</Preview>
 
 ### Warm Gray (Neutrals)
-<div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '1rem' }}>
-  {['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-warm-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
-  ))}
-</div>
 
-### Status Colors
+<Preview layout="flex-wrap" padding="sm" gap="lg">
+  {['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'].map((step) => (
+    <ColorSwatch
+      key={step}
+      token={`--color-warm-${step}`}
+      name={step}
+      showValue={false}
+    />
+  ))}
+</Preview>
+
+</Section>
+
+<Section divider>
+
+## Status Colors
 
 These palettes are used for feedback states (badges, alerts, notifications).
 
-#### Blue (Information)
-<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
-  {['100', '600', '900'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-blue-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
-  ))}
-</div>
+### Blue (Information)
 
-#### Red (Negative)
-<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+<Preview layout="flex-wrap" padding="sm" gap="lg">
   {['100', '600', '900'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-red-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
+    <ColorSwatch
+      key={step}
+      token={`--color-blue-${step}`}
+      name={step}
+      showValue={false}
+    />
   ))}
-</div>
+</Preview>
 
-#### Yellow (Notice)
-<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+### Red (Negative)
+
+<Preview layout="flex-wrap" padding="sm" gap="lg">
   {['100', '600', '900'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-yellow-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
+    <ColorSwatch
+      key={step}
+      token={`--color-red-${step}`}
+      name={step}
+      showValue={false}
+    />
   ))}
-</div>
+</Preview>
 
-#### Green (Positive)
-<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+### Yellow (Notice)
+
+<Preview layout="flex-wrap" padding="sm" gap="lg">
   {['100', '600', '900'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-green-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
+    <ColorSwatch
+      key={step}
+      token={`--color-yellow-${step}`}
+      name={step}
+      showValue={false}
+    />
   ))}
-</div>
+</Preview>
 
-#### Purple (Neutral Status)
-<div style={{ display: 'flex', gap: '1.5rem', marginTop: '1rem', marginBottom: '1.5rem' }}>
+### Green (Positive)
+
+<Preview layout="flex-wrap" padding="sm" gap="lg">
   {['100', '600', '900'].map((step) => (
-    <div key={step} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <div style={{ 
-        width: '80px', 
-        height: '80px', 
-        borderRadius: '8px', 
-        boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-        backgroundColor: `var(--color-purple-${step})` 
-      }} />
-      <code style={{ fontSize: '12px' }}>{step}</code>
-    </div>
+    <ColorSwatch
+      key={step}
+      token={`--color-green-${step}`}
+      name={step}
+      showValue={false}
+    />
   ))}
-</div>
+</Preview>
 
----
+### Purple (Neutral Status)
+
+<Preview layout="flex-wrap" padding="sm" gap="lg">
+  {['100', '600', '900'].map((step) => (
+    <ColorSwatch
+      key={step}
+      token={`--color-purple-${step}`}
+      name={step}
+      showValue={false}
+    />
+  ))}
+</Preview>
+
+</Section>
+
+<Section divider>
 
 ## Semantic Tokens
 
-Semantic tokens abstract the raw values to ensure consistency and themeability.
-The table below updates automatically based on your current theme (use the toggle in the header).
+Semantic tokens abstract the raw values to ensure consistency and themeability. The table below updates automatically based on your current theme (use the toggle in the header).
 
-> [!NOTE]
-> **Theme Policy**:
-> *   **Light Mode**: Uses the **Warm Palette** (e.g., `fg-neutral` -> `warm-900`).
-> *   **Dark Mode**: Uses the **Cool Palette** (e.g., `fg-neutral` -> `cool-50`).
-
+<Callout type="info" title="Theme Policy">
+- **Light Mode**: Uses the **Warm Palette** (e.g., `fg-neutral` → `warm-900`).
+- **Dark Mode**: Uses the **Cool Palette** (e.g., `fg-neutral` → `cool-50`).
+</Callout>
 
 <SemanticColorTable />
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+// Always use semantic tokens in components
+<div style={{
+  backgroundColor: 'var(--bg-surface)',
+  color: 'var(--fg-neutral)',
+  border: '1px solid var(--border-subtle)'
+}}>
+  Content
+</div>
+
+// For status colors
+<Badge color="positive">Success</Badge>
+<Badge color="negative">Error</Badge>
+
+// Primitive tokens should only be used in globals.css
+// to define semantic tokens
+```
+</CodeBlock>
+
+</Section>

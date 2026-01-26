@@ -4,7 +4,7 @@ import Badge from '@/components/ui/Badge';
 
 Badges are used to highlight status, category, or other metadata. They are non-interactive and provide at-a-glance information.
 
----
+<Section divider>
 
 ## Overview
 
@@ -13,35 +13,37 @@ The `Badge` component displays short labels with color-coded backgrounds. Use ba
 - Categorize items (e.g., "New", "Featured")
 - Show counts or tags
 
----
+</Section>
 
-## Preview
+<Section divider>
+
+## Variants
 
 ### Colors
 
 All available color variants in their default **subtle** emphasis:
 
-<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
+<Preview layout="flex-wrap">
   <Badge color="information">Information</Badge>
   <Badge color="negative">Negative</Badge>
   <Badge color="neutral">Neutral</Badge>
   <Badge color="notice">Notice</Badge>
   <Badge color="positive">Positive</Badge>
   <Badge color="primary">Primary</Badge>
-</div>
+</Preview>
 
 ### Emphasis
 
 **Subtle** (default) vs **Intense**:
 
-<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
+<Preview layout="flex-wrap">
   <Badge color="positive" emphasis="subtle">Subtle</Badge>
   <Badge color="positive" emphasis="intense">Intense</Badge>
-</div>
+</Preview>
 
 ### Sizes
 
-<div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+<Preview layout="flex-wrap" align="start">
   <div>
     <Badge size="xsmall">XSmall</Badge>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>20px</div>
@@ -58,20 +60,44 @@ All available color variants in their default **subtle** emphasis:
     <Badge size="large">Large</Badge>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>32px</div>
   </div>
-</div>
+</Preview>
 
----
+</Section>
+
+<Section divider>
 
 ## Properties
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | Label text (required) |
-| `color` | `string` | `"neutral"` | `information`, `negative`, `neutral`, `notice`, `positive`, `primary` |
-| `size` | `string` | `"medium"` | `xsmall`, `small`, `medium`, `large` |
-| `emphasis` | `string` | `"subtle"` | `subtle`, `intense` |
+<PropsTable data={[
+  {
+    prop: 'children',
+    type: 'ReactNode',
+    required: true,
+    description: 'Label text'
+  },
+  {
+    prop: 'color',
+    type: 'BadgeColor',
+    default: '"neutral"',
+    description: 'Color variant: information, negative, neutral, notice, positive, primary'
+  },
+  {
+    prop: 'size',
+    type: 'string',
+    default: '"medium"',
+    description: 'Size variant: xsmall, small, medium, large'
+  },
+  {
+    prop: 'emphasis',
+    type: 'string',
+    default: '"subtle"',
+    description: 'Visual emphasis: subtle, intense'
+  }
+]} />
 
----
+</Section>
+
+<Section divider>
 
 ## Specification
 
@@ -97,10 +123,13 @@ Badges use semantic status tokens that adapt to Light/Dark themes:
 | `positive` | `--bg-positive-subtle` | `--fg-positive-subtle` | `--bg-positive-intense` | `--fg-positive-intense` |
 | `primary` | `--bg-primary-subtle` | `--fg-primary-subtle` | `--bg-primary-intense` | `--fg-primary-intense` |
 
----
+</Section>
+
+<Section>
 
 ## Usage
 
+<CodeBlock language="tsx" filename="example.tsx">
 ```tsx
 import Badge from '@/components/ui/Badge';
 
@@ -113,3 +142,6 @@ import Badge from '@/components/ui/Badge';
 // With size
 <Badge color="negative" size="small">Error</Badge>
 ```
+</CodeBlock>
+
+</Section>
