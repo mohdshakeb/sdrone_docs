@@ -30,6 +30,30 @@
     margin: 0;
 }
 
+/* Footer row (error/help + char count) */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+    margin-top: calc(var(--space-1) * -1);
+    /* Pull up to reduce gap from input */
+}
+
+.messages {
+    flex: 1;
+}
+
+.charCount {
+    white-space: nowrap;
+    color: var(--fg-subtle);
+    flex-shrink: 0;
+}
+
+.charCountOver {
+    color: var(--fg-negative-subtle);
+}
+
 /* Visually hidden but accessible to screen readers */
 .visuallyHidden {
     position: absolute;

@@ -32,9 +32,6 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
                     aria-label={`Step ${currentStep + 1} of ${totalSteps}`}
                 />
             </div>
-            <span className={[styles.label, 'text-caption'].join(' ')}>
-                Step {currentStep + 1} of {totalSteps}
-            </span>
         </div>
     );
 };

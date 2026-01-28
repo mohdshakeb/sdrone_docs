@@ -1,0 +1,77 @@
+.container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+    max-width: 320px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: var(--space-3);
+    color: var(--fg-muted);
+    pointer-events: none;
+}
+
+.input {
+    width: 100%;
+    height: 40px;
+    padding: var(--space-2) var(--space-3);
+    padding-left: var(--space-9);
+    padding-right: var(--space-9);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    background-color: var(--bg-subtle);
+    color: var(--fg-neutral);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+    color: var(--fg-muted);
+}
+
+.input:hover {
+    border-color: var(--border-base);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--fg-accent);
+    box-shadow: 0 0 0 2px var(--bg-accent-subtle);
+}
+
+.clearButton {
+    position: absolute;
+    right: var(--space-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background-color: transparent;
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.clearButton:hover {
+    background-color: var(--bg-hover);
+    color: var(--fg-neutral);
+}
+
+.clearButton:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: 1px;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+    .container {
+        min-width: 0;
+        max-width: none;
+        flex: 1;
+    }
+}

@@ -54,8 +54,8 @@ export function validateStep(step: FormStep, data: IncidentFormData): StepErrors
             break;
 
         case 4:
-            // Injury Details (only if wasInjured is true)
-            if (data.wasInjured) {
+            // Injury Details (only if wasInjured is true or explicit first-aid)
+            if (data.wasInjured || data.selectedType === 'first-aid') {
                 if (!data.injuredEmployee.trim()) {
                     errors.injuredEmployee = 'Name of injured person is required';
                 }
@@ -69,21 +69,33 @@ export function validateStep(step: FormStep, data: IncidentFormData): StepErrors
             break;
 
         case 5:
+            // First Aid Specifics (only for explicit first-aid type)
+            if (data.selectedType === 'first-aid') {
+                if (data.medicineUsed === null) {
+                    errors.medicineUsed = 'Please indicate if medicine was used';
+                }
+                if (data.medicineUsed === true && !data.medicineDetails?.trim()) {
+                    errors.medicineDetails = 'Please describe the medicine or treatment applied';
+                }
+            }
+            break;
+
+        case 6:
             // Contributing Factors
             if (!data.contributingFactor) {
                 errors.contributingFactor = 'Contributing factor is required';
             }
             break;
 
-        case 6:
+        case 7:
             // Evidence - optional, no validation required
             break;
 
-        case 7:
+        case 8:
             // Corrective Action - optional, no validation required
             break;
 
-        case 8:
+        case 9:
             // Review - validate all required fields
             // This aggregates all step validations
             break;
@@ -109,11 +121,17 @@ export function getFieldError(errors: StepErrors, field: string): string | undef
 export function validateForm(data: IncidentFormData): StepErrors {
     const allErrors: StepErrors = {};
 
-    // Steps 1-7 validation (excluding step 0 entry and step 8 review)
-    for (let step = 1; step <= 7; step++) {
-        // Skip step 4 if no injury
-        if (step === 4 && !data.wasInjured) {
-            continue;
+    // Steps 1-8 validation (excluding step 0 entry and step 9 review)
+    for (let step = 1; step <= 8; step++) {
+        // Skip steps based on selected type
+        if (step === 3 && data.selectedType !== 'unsure' && data.selectedType !== null) {
+            continue; // Skip injury check for explicit types
+        }
+        if (step === 5 && data.selectedType !== 'first-aid') {
+            continue; // Skip first aid specifics unless first-aid type
+        }
+        if (step === 4 && !data.wasInjured && data.selectedType !== 'first-aid') {
+            continue; // Skip injury details if no injury (unless first-aid)
         }
 
         const stepErrors = validateStep(step as FormStep, data);

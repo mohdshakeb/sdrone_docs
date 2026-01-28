@@ -17,17 +17,28 @@ const STEP_CONFIGS: StepConfig[] = [
     { id: 0, title: 'Report an Incident' },
     { id: 1, title: 'What Happened?' },
     { id: 2, title: 'When & Where?' },
-    { id: 3, title: 'Was Anyone Injured?' },
+    {
+        id: 3,
+        title: 'Was Anyone Injured?',
+        isConditional: true,
+        condition: (data) => data.selectedType === 'unsure' || data.selectedType === null,
+    },
     {
         id: 4,
         title: 'Injury Details',
         isConditional: true,
-        condition: (data) => data.wasInjured === true,
+        condition: (data) => data.wasInjured === true || data.selectedType === 'first-aid',
     },
-    { id: 5, title: 'Contributing Factors' },
-    { id: 6, title: 'Evidence' },
-    { id: 7, title: 'Corrective Action' },
-    { id: 8, title: 'Review & Submit' },
+    {
+        id: 5,
+        title: 'First Aid Specifics',
+        isConditional: true,
+        condition: (data) => data.selectedType === 'first-aid',
+    },
+    { id: 6, title: 'Contributing Factors' },
+    { id: 7, title: 'Evidence' },
+    { id: 8, title: 'Corrective Action' },
+    { id: 9, title: 'Review & Submit' },
 ];
 
 interface UseIncidentFormOptions {
@@ -41,6 +52,7 @@ interface UseIncidentFormReturn {
     errors: StepErrors;
     presetType: IncidentType | null;
     isSubmitted: boolean;
+    selectedType: string | null;
 
     // Computed
     stepConfig: StepConfig;
@@ -62,17 +74,19 @@ interface UseIncidentFormReturn {
     submit: () => boolean;
     reset: () => void;
     validateCurrentStep: () => boolean;
+    setSelectedType: (type: string) => void;
 }
 
 export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncidentFormReturn {
     const { presetType = null } = options;
 
-    const [state, setState] = useState<FormState>({
+    const [state, setState] = useState<FormState & { selectedType: string | null }>({
         data: initialFormData,
         currentStep: 0,
         errors: {},
         presetType,
         isSubmitted: false,
+        selectedType: presetType ?? null,
     });
 
     // Get active steps (excluding conditionally skipped steps)
@@ -98,11 +112,16 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
     const canGoBack = currentStepIndex > 0;
     const canGoNext = currentStepIndex < totalSteps - 1;
     const isFirstStep = state.currentStep === 0;
-    const isLastStep = state.currentStep === 8;
-    const isReviewStep = state.currentStep === 8;
+    const isLastStep = state.currentStep === 9;
+    const isReviewStep = state.currentStep === 9;
 
     // Infer incident type based on form data
     const inferredType = useMemo((): IncidentType => {
+        // If selected type is provided and not "unsure", use it
+        if (state.selectedType && state.selectedType !== 'unsure') {
+            return state.selectedType as IncidentType;
+        }
+
         // If preset type is provided and not "not sure", use it
         if (presetType) {
             return presetType;
@@ -127,7 +146,7 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
 
         // Default to near-miss if undetermined
         return 'near-miss';
-    }, [presetType, state.data.wasInjured, state.data.treatment]);
+    }, [state.selectedType, presetType, state.data.wasInjured, state.data.treatment]);
 
     // Update a single field
     const updateField = useCallback(<K extends keyof IncidentFormData>(
@@ -148,6 +167,20 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
                 errors: newErrors,
             };
         });
+    }, []);
+
+    // Set selected incident type from entry step
+    const setSelectedType = useCallback((type: string) => {
+        setState((prev) => ({
+            ...prev,
+            selectedType: type,
+            data: {
+                ...prev.data,
+                selectedType: type,
+                // Auto-set treatment for explicit first-aid selection
+                treatment: type === 'first-aid' ? 'first-aid' : prev.data.treatment,
+            },
+        }));
     }, []);
 
     // Validate current step
@@ -235,6 +268,7 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
             errors: {},
             presetType,
             isSubmitted: false,
+            selectedType: presetType ?? null,
         });
     }, [presetType]);
 
@@ -245,6 +279,7 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
         errors: state.errors,
         presetType: state.presetType,
         isSubmitted: state.isSubmitted,
+        selectedType: state.selectedType,
 
         // Computed
         stepConfig,
@@ -266,6 +301,7 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
         submit,
         reset,
         validateCurrentStep,
+        setSelectedType,
     };
 }
 

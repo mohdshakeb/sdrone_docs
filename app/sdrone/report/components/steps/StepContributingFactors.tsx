@@ -4,6 +4,7 @@ import React from 'react';
 import FormField from '@/components/ui/FormField';
 import RadioGroup from '@/components/ui/RadioGroup';
 import Textarea from '@/components/ui/Textarea';
+import styles from './Steps.module.css';
 import { contributingFactorOptions } from '../../mockData';
 import type { IncidentFormData, StepErrors, ContributingFactor } from '../../types';
 
@@ -19,7 +20,7 @@ export const StepContributingFactors: React.FC<StepContributingFactorsProps> = (
     onUpdate,
 }) => {
     return (
-        <>
+        <div className={styles.fieldsWrapper}>
             <FormField
                 id="contributingFactor"
                 label="What contributed to this incident?"
@@ -47,7 +48,7 @@ export const StepContributingFactors: React.FC<StepContributingFactorsProps> = (
                     rows={3}
                 />
             </FormField>
-        </>
+        </div>
     );
 };
 

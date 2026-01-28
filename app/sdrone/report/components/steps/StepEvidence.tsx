@@ -3,6 +3,7 @@
 import React from 'react';
 import FormField from '@/components/ui/FormField';
 import FileInput from '@/components/ui/FileInput';
+import styles from './Steps.module.css';
 import type { IncidentFormData, StepErrors } from '../../types';
 
 export interface StepEvidenceProps {
@@ -17,7 +18,7 @@ export const StepEvidence: React.FC<StepEvidenceProps> = ({
     onUpdate,
 }) => {
     return (
-        <>
+        <div className={styles.fieldsWrapper}>
             <FormField
                 id="photos"
                 label="Photos"
@@ -53,7 +54,7 @@ export const StepEvidence: React.FC<StepEvidenceProps> = ({
                     helpText="Max 3 files, up to 5MB each (PDF, DOC, XLS, TXT)"
                 />
             </FormField>
-        </>
+        </div>
     );
 };
 

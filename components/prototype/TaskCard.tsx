@@ -6,6 +6,7 @@ import { Icon, IconName } from '@/components/ui/Icon';
 import Badge, { BadgeColor } from '@/components/ui/Badge';
 
 interface TaskCardProps {
+    id: string;
     title: string;
     subtitle: string;
     status: string;
@@ -14,9 +15,12 @@ interface TaskCardProps {
     location: string;
     iconName?: IconName;
     badgeColor?: BadgeColor;
+    onClick?: (id: string) => void;
+    isSelected?: boolean;
 }
 
 export default function TaskCard({
+    id,
     title,
     subtitle,
     status,
@@ -24,10 +28,29 @@ export default function TaskCard({
     reportedOn,
     location,
     iconName = 'fire',
-    badgeColor = 'neutral'
+    badgeColor = 'neutral',
+    onClick,
+    isSelected = false
 }: TaskCardProps) {
+    const handleClick = () => {
+        onClick?.(id);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick?.(id);
+        }
+    };
+
     return (
-        <div className={styles.card}>
+        <div
+            className={`${styles.card} ${isSelected ? styles.cardSelected : ''}`}
+            role="button"
+            tabIndex={0}
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+        >
             {/* Header Section */}
             <div className={styles.header}>
                 <div className={styles.leftSection}>

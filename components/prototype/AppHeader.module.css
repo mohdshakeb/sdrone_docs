@@ -63,3 +63,150 @@
     font-weight: var(--font-weight-medium);
     font-family: var(--font-base);
 }
+
+/* Form variant styles */
+.formLeft {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    /* 12px between back button and title */
+}
+
+.formBackButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    color: var(--fg-neutral);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    padding: 0;
+}
+
+.formBackButton:hover {
+    background-color: var(--bg-hover);
+}
+
+.formBackButton:focus-visible {
+    outline: 2px solid var(--bg-accent);
+    outline-offset: 2px;
+}
+
+.formTitle {
+    color: var(--fg-neutral);
+    margin: 0;
+    /* Typography applied via utility class */
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.progressText {
+    color: var(--fg-subtle);
+    /* Typography applied via utility class */
+}
+
+/* Mobile responsive - form variant */
+@media (max-width: 640px) {
+    .formLeft {
+        gap: var(--space-2);
+        /* Reduce gap on mobile */
+    }
+
+    .formTitle {
+        font-size: var(--text-14);
+        /* Slightly smaller on mobile */
+    }
+
+    .center {
+        display: none;
+        /* Hide progress text on mobile */
+    }
+
+    .buttonGroup button span {
+        display: none;
+        /* Icon-only buttons on mobile */
+    }
+
+    .buttonGroup {
+        gap: var(--space-2);
+        /* Tighter gap on mobile */
+    }
+}
+
+/* Inner page variant styles */
+.innerPageLeft {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+}
+
+.innerPageTitle {
+    color: var(--fg-neutral);
+    margin: 0;
+}
+
+.breadcrumbs {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
+}
+
+.breadcrumbItem {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-1);
+}
+
+.breadcrumbSeparator {
+    color: var(--fg-muted);
+    font-size: var(--text-14);
+}
+
+.breadcrumbLink {
+    color: var(--fg-subtle);
+    text-decoration: none;
+    transition: color 0.1s ease;
+}
+
+.breadcrumbLink:hover {
+    color: var(--fg-neutral);
+    text-decoration: underline;
+}
+
+.breadcrumbLink:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.breadcrumbText {
+    color: var(--fg-muted);
+}
+
+/* Mobile responsive - inner page variant */
+@media (max-width: 640px) {
+    .innerPageLeft {
+        gap: var(--space-2);
+        flex: 1;
+        min-width: 0;
+    }
+
+    .innerPageTitle {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .breadcrumbs {
+        display: none;
+    }
+}

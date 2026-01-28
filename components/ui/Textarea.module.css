@@ -12,7 +12,7 @@
     padding: var(--space-3) var(--space-4);
     border: 1px solid var(--border-base);
     border-radius: 8px;
-    background-color: var(--bg-surface);
+    background-color: var(--bg-subtle);
     color: var(--fg-neutral);
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;

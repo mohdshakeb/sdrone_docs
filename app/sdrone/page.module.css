@@ -3,6 +3,11 @@
 .pageContainer {
   position: relative;
   min-height: 100vh;
+  transition: margin-right 200ms ease;
+}
+
+.pageContainerWithPanel {
+  margin-right: 480px;
 }
 
 .filterContainer {
@@ -25,7 +30,17 @@
   padding-bottom: var(--space-12);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
+  .pageContainerWithPanel {
+    margin-right: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pageContainerWithPanel {
+    margin-right: 0;
+  }
+
   .filterContainer {
     top: 56px;
     /* Adjust for smaller header on mobile if needed */

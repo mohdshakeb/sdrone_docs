@@ -6,7 +6,7 @@
 export type IncidentType = 'near-miss' | 'first-aid' | 'fir' | 'adr';
 
 // Form step indices
-export type FormStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+export type FormStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 // Contributing factor types
 export type ContributingFactor = 'UA' | 'UC' | 'both';
@@ -16,6 +16,9 @@ export type TreatmentLevel = 'first-aid' | 'medical' | 'hospital';
 
 // Form data structure
 export interface IncidentFormData {
+    // Step 0: Entry - Selected type
+    selectedType: string | null;
+
     // Step 1: What Happened
     description: string;
     immediateAction: string;
@@ -27,7 +30,7 @@ export interface IncidentFormData {
     area: string;
     asset: string;
 
-    // Step 3: Injury Check
+    // Step 3: Injury Check (conditional)
     wasInjured: boolean | null;
 
     // Step 4: Injury Details (conditional)
@@ -35,20 +38,25 @@ export interface IncidentFormData {
     bodyPart: string;
     treatment: TreatmentLevel | null;
 
-    // Step 5: Contributing Factors
+    // Step 5: First Aid Specifics (conditional)
+    medicineUsed: boolean | null;
+    medicineDetails: string;
+
+    // Step 6: Contributing Factors
     contributingFactor: ContributingFactor | null;
     contributingNotes: string;
 
-    // Step 6: Evidence
+    // Step 7: Evidence
     photos: File[];
     attachments: File[];
 
-    // Step 7: Corrective Action
+    // Step 8: Corrective Action
     correctiveAction: string;
 }
 
 // Initial form state
 export const initialFormData: IncidentFormData = {
+    selectedType: null,
     description: '',
     immediateAction: '',
     dateOccurred: '',
@@ -60,6 +68,8 @@ export const initialFormData: IncidentFormData = {
     injuredEmployee: '',
     bodyPart: '',
     treatment: null,
+    medicineUsed: null,
+    medicineDetails: '',
     contributingFactor: null,
     contributingNotes: '',
     photos: [],

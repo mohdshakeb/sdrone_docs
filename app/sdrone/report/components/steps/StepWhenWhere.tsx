@@ -24,7 +24,7 @@ export const StepWhenWhere: React.FC<StepWhenWhereProps> = ({
     const today = new Date().toISOString().split('T')[0];
 
     return (
-        <>
+        <div className={styles.fieldsWrapper}>
             <div className={styles.fieldRow}>
                 <FormField
                     id="dateOccurred"
@@ -93,7 +93,7 @@ export const StepWhenWhere: React.FC<StepWhenWhereProps> = ({
                     placeholder="e.g., Forklift #12, Conveyor belt, None"
                 />
             </FormField>
-        </>
+        </div>
     );
 };
 

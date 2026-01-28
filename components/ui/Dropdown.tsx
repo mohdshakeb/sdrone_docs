@@ -31,6 +31,10 @@ interface DropdownListProps {
     /** New discriminated union items prop */
     items?: DropdownItem[];
     value?: string | null;
+    /** Override the displayed value in FilterChip (useful for multiselect) */
+    displayValue?: string | null;
+    /** Array of selected values for multiselect checkmarks */
+    selectedValues?: string[];
     onChange?: (value: string | null) => void;
     disabled?: boolean;
 }
@@ -97,6 +101,9 @@ export default function Dropdown(props: DropdownProps) {
 
     const selectedLabel = getSelectableLabel(normalizedItems, props.value);
     const hasValue = props.value !== null && props.value !== undefined;
+    // Use displayValue override if provided, otherwise use computed selectedLabel
+    const displayedValue = props.displayValue !== undefined ? (props.displayValue ?? undefined) : selectedLabel;
+    const hasDisplayValue = props.displayValue !== undefined ? props.displayValue !== null : hasValue;
 
     const handleSelect = (selectedValue: string) => {
         props.onChange?.(selectedValue);
@@ -111,8 +118,8 @@ export default function Dropdown(props: DropdownProps) {
     return (
         <div ref={wrapperRef} className={styles.wrapper}>
             <FilterChip
-                selected={hasValue}
-                value={selectedLabel}
+                selected={hasDisplayValue}
+                value={displayedValue}
                 isOpen={isOpen}
                 disabled={props.disabled}
                 onClick={toggle}
@@ -124,6 +131,7 @@ export default function Dropdown(props: DropdownProps) {
                 options={props.options}
                 items={props.items}
                 selectedValue={props.value ?? undefined}
+                selectedValues={props.selectedValues}
                 onSelect={handleSelect}
                 isOpen={isOpen}
                 onClose={close}

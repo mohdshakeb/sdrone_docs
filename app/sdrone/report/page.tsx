@@ -7,7 +7,7 @@ import { useIncidentForm } from './useIncidentForm';
 import type { IncidentType } from './types';
 
 // Components
-import FormHeader from './components/FormHeader';
+import AppHeader from '@/components/prototype/AppHeader';
 import ProgressBar from './components/ProgressBar';
 import StepContainer from './components/StepContainer';
 import ConfirmationScreen from './components/ConfirmationScreen';
@@ -18,6 +18,7 @@ import StepWhatHappened from './components/steps/StepWhatHappened';
 import StepWhenWhere from './components/steps/StepWhenWhere';
 import StepInjuryCheck from './components/steps/StepInjuryCheck';
 import StepInjuryDetails from './components/steps/StepInjuryDetails';
+import StepFirstAidSpecifics from './components/steps/StepFirstAidSpecifics';
 import StepContributingFactors from './components/steps/StepContributingFactors';
 import StepEvidence from './components/steps/StepEvidence';
 import StepCorrectiveAction from './components/steps/StepCorrectiveAction';
@@ -27,7 +28,12 @@ import StepReview from './components/steps/StepReview';
 function ReportPageLoading() {
     return (
         <div className={styles.page}>
-            <FormHeader />
+            <AppHeader
+                variant="form"
+                formTitle="Report Incident"
+                currentStep={1}
+                totalSteps={8}
+            />
             <div className={styles.loadingContainer}>
                 <p className="text-body">Loading...</p>
             </div>
@@ -63,11 +69,26 @@ function ReportPageContent() {
         form.submit();
     };
 
+    // Get form title based on incident type
+    const getFormTitle = () => {
+        if (form.selectedType === 'unsure') return 'Report Incident';
+        if (form.inferredType === 'near-miss') return 'Near Miss Report';
+        if (form.inferredType === 'first-aid') return 'First Aid Report';
+        if (form.inferredType === 'fir') return 'First Incident Report';
+        if (form.inferredType === 'adr') return 'Accident Detail Report';
+        return 'Report Incident';
+    };
+
     // Show confirmation screen after submission
     if (form.isSubmitted) {
         return (
             <div className={styles.page}>
-                <FormHeader />
+                <AppHeader
+                    variant="form"
+                    formTitle={getFormTitle()}
+                    currentStep={form.totalSteps}
+                    totalSteps={form.totalSteps}
+                />
                 <ConfirmationScreen
                     incidentType={form.inferredType}
                     onViewInbox={handleViewInbox}
@@ -82,7 +103,11 @@ function ReportPageContent() {
         switch (form.currentStep) {
             case 0:
                 return (
-                    <StepEntry onStart={() => form.goNext()} />
+                    <StepEntry
+                        onStart={() => form.goNext()}
+                        selectedType={form.selectedType}
+                        onTypeChange={form.setSelectedType}
+                    />
                 );
             case 1:
                 return (
@@ -118,7 +143,7 @@ function ReportPageContent() {
                 );
             case 5:
                 return (
-                    <StepContributingFactors
+                    <StepFirstAidSpecifics
                         data={form.data}
                         errors={form.errors}
                         onUpdate={form.updateField}
@@ -126,7 +151,7 @@ function ReportPageContent() {
                 );
             case 6:
                 return (
-                    <StepEvidence
+                    <StepContributingFactors
                         data={form.data}
                         errors={form.errors}
                         onUpdate={form.updateField}
@@ -134,13 +159,21 @@ function ReportPageContent() {
                 );
             case 7:
                 return (
-                    <StepCorrectiveAction
+                    <StepEvidence
                         data={form.data}
                         errors={form.errors}
                         onUpdate={form.updateField}
                     />
                 );
             case 8:
+                return (
+                    <StepCorrectiveAction
+                        data={form.data}
+                        errors={form.errors}
+                        onUpdate={form.updateField}
+                    />
+                );
+            case 9:
                 return (
                     <StepReview
                         data={form.data}
@@ -152,20 +185,33 @@ function ReportPageContent() {
         }
     };
 
+    // Handle cancel - go back to inbox
+    const handleCancel = () => {
+        router.push('/sdrone');
+    };
+
     return (
         <div className={styles.page}>
-            <FormHeader
-                showSubmit={form.isReviewStep}
-                submitDisabled={false}
-                onSubmit={handleSubmit}
+            <AppHeader
+                variant="form"
+                formTitle={getFormTitle()}
+                currentStep={form.currentStepIndex}
+                totalSteps={form.totalSteps}
+                onFormBack={form.canGoBack ? form.goBack : () => router.push('/sdrone')}
+                onFormCancel={handleCancel}
+                onFormSubmit={handleSubmit}
+                isEntryStep={form.isFirstStep}
+                isReviewStep={form.isReviewStep}
             />
 
             {/* Hide progress bar on entry step */}
             {!form.isFirstStep && (
-                <ProgressBar
-                    currentStep={form.currentStepIndex}
-                    totalSteps={form.totalSteps}
-                />
+                <div className={styles.progressBarContainer}>
+                    <ProgressBar
+                        currentStep={form.currentStepIndex}
+                        totalSteps={form.totalSteps}
+                    />
+                </div>
             )}
 
             <main className={styles.main}>
@@ -176,14 +222,12 @@ function ReportPageContent() {
                     ) : (
                         <StepContainer
                             title={form.stepConfig.title}
-                            isFirstStep={form.isFirstStep}
                             isReviewStep={form.isReviewStep}
                             showBack={form.canGoBack}
-                            showNext={true}
                             onBack={form.goBack}
                             onNext={form.goNext}
                             onSubmit={handleSubmit}
-                            nextLabel={form.isReviewStep ? 'Submit Report' : form.currentStep === 7 ? 'Review' : undefined}
+                            nextLabel={form.currentStep === 8 ? 'Review' : undefined}
                         >
                             {renderStepContent()}
                         </StepContainer>

@@ -1,0 +1,86 @@
+/* Following the StepReview design pattern */
+
+.reviewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.reviewSection {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.reviewSection:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.reviewSectionTitle {
+    margin: 0 0 var(--space-3) 0;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.reviewText {
+    margin: 0;
+    color: var(--fg-neutral);
+    white-space: pre-wrap;
+}
+
+.reviewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+}
+
+.reviewItem {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-0_5);
+}
+
+.reviewLabel {
+    color: var(--fg-subtle);
+}
+
+.reviewValue {
+    color: var(--fg-neutral);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.classificationRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.typeText {
+    color: var(--fg-subtle);
+}
+
+.roleText {
+    color: var(--fg-subtle);
+    font-size: var(--text-12);
+}
+
+.timeText {
+    color: var(--fg-muted);
+    font-size: var(--text-12);
+}
+
+.recordId {
+    font-family: monospace;
+    color: var(--fg-subtle);
+    margin: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+    .reviewGrid {
+        grid-template-columns: 1fr;
+    }
+}

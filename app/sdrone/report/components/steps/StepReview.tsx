@@ -45,11 +45,82 @@ const formatTime = (timeStr: string): string => {
     return `${hour12}:${minutes} ${ampm}`;
 };
 
+// Helper to format submission date/time
+const formatSubmissionDateTime = (date: Date): string => {
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+    }) + ' at ' + date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+    });
+};
+
 export const StepReview: React.FC<StepReviewProps> = ({ data, inferredType }) => {
     const badgeColor = incidentTypeBadgeColors[inferredType];
+    const [mounted, setMounted] = React.useState(false);
+
+    React.useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // Mock report metadata
+    const reportMetadata = React.useMemo(() => ({
+        reportId: 'INC-2026-00123',
+        reportedBy: 'Michael Johnson',
+        reporterRole: 'Site Supervisor',
+        submittedAt: new Date(2026, 0, 28, 14, 0), // Stable date for prototype
+        submissionLocation: 'Main Office',
+    }), []);
+
+    if (!mounted) {
+        return <div className={styles.reviewContainer}>Loading review...</div>;
+    }
+
 
     return (
         <div className={styles.reviewContainer}>
+            {/* Report Details */}
+            <div className={styles.reviewSection}>
+                <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
+                    Report Details
+                </h3>
+                <div className={styles.reviewGrid}>
+                    <div className={styles.reviewItem}>
+                        <span className={['text-caption', styles.reviewLabel].join(' ')}>Report ID</span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>
+                            {reportMetadata.reportId}
+                        </span>
+                    </div>
+                    <div className={styles.reviewItem}>
+                        <span className={['text-caption', styles.reviewLabel].join(' ')}>Reported By</span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>
+                            {reportMetadata.reportedBy}
+                        </span>
+                    </div>
+                    <div className={styles.reviewItem}>
+                        <span className={['text-caption', styles.reviewLabel].join(' ')}>Role</span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>
+                            {reportMetadata.reporterRole}
+                        </span>
+                    </div>
+                    <div className={styles.reviewItem}>
+                        <span className={['text-caption', styles.reviewLabel].join(' ')}>Submitted</span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>
+                            {formatSubmissionDateTime(reportMetadata.submittedAt)}
+                        </span>
+                    </div>
+                    <div className={styles.reviewItem}>
+                        <span className={['text-caption', styles.reviewLabel].join(' ')}>Location</span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>
+                            {reportMetadata.submissionLocation}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
             {/* Incident Type */}
             <div className={styles.reviewSection}>
                 <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
@@ -126,7 +197,7 @@ export const StepReview: React.FC<StepReviewProps> = ({ data, inferredType }) =>
                 <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
                     Injury Information
                 </h3>
-                {data.wasInjured ? (
+                {data.wasInjured || data.selectedType === 'first-aid' ? (
                     <div className={styles.reviewGrid}>
                         <div className={styles.reviewItem}>
                             <span className={['text-caption', styles.reviewLabel].join(' ')}>Injured Person</span>
@@ -151,6 +222,33 @@ export const StepReview: React.FC<StepReviewProps> = ({ data, inferredType }) =>
                     <p className={['text-body', styles.reviewText].join(' ')}>No injuries reported</p>
                 )}
             </div>
+
+            {/* First Aid Specifics */}
+            {data.selectedType === 'first-aid' && data.medicineUsed !== null && (
+                <div className={styles.reviewSection}>
+                    <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
+                        First Aid Specifics
+                    </h3>
+                    <div className={styles.reviewGrid}>
+                        <div className={styles.reviewItem}>
+                            <span className={['text-caption', styles.reviewLabel].join(' ')}>Medicine Applied</span>
+                            <span className={['text-body', styles.reviewValue].join(' ')}>
+                                {data.medicineUsed ? 'Yes' : 'No'}
+                            </span>
+                        </div>
+                    </div>
+                    {data.medicineUsed && data.medicineDetails && (
+                        <>
+                            <h4 className={['text-caption', styles.reviewSubtitle].join(' ')}>
+                                Medicine Details
+                            </h4>
+                            <p className={['text-body', styles.reviewText].join(' ')}>
+                                {data.medicineDetails}
+                            </p>
+                        </>
+                    )}
+                </div>
+            )}
 
             {/* Contributing Factors */}
             <div className={styles.reviewSection}>

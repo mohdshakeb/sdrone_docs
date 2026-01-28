@@ -3,6 +3,7 @@
 import React from 'react';
 import FormField from '@/components/ui/FormField';
 import Textarea from '@/components/ui/Textarea';
+import styles from './Steps.module.css';
 import type { IncidentFormData, StepErrors } from '../../types';
 
 export interface StepWhatHappenedProps {
@@ -17,20 +18,22 @@ export const StepWhatHappened: React.FC<StepWhatHappenedProps> = ({
     onUpdate,
 }) => {
     return (
-        <>
+        <div className={styles.fieldsWrapper}>
             <FormField
                 id="description"
                 label="What happened?"
                 required
                 error={errors.description}
                 helpText="Describe the incident in detail. Include what led up to it, what occurred, and any immediate consequences."
+                charCount={data.description.length}
+                maxLength={1000}
             >
                 <Textarea
                     value={data.description}
                     onChange={(e) => onUpdate('description', e.target.value)}
                     placeholder="Describe the incident..."
                     hasError={!!errors.description}
-                    showCharCount
+                    showCharCount={false}
                     maxLength={1000}
                     rows={5}
                 />
@@ -48,7 +51,7 @@ export const StepWhatHappened: React.FC<StepWhatHappenedProps> = ({
                     rows={3}
                 />
             </FormField>
-        </>
+        </div>
     );
 };
 

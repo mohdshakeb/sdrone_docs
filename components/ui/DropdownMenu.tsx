@@ -79,6 +79,8 @@ interface DropdownMenuProps {
     /** New discriminated union items prop */
     items?: DropdownItem[];
     selectedValue?: string;
+    /** Array of selected values for multiselect (takes precedence over selectedValue) */
+    selectedValues?: string[];
     onSelect: (value: string) => void;
     isOpen: boolean;
     onClose: () => void;
@@ -88,6 +90,7 @@ export default function DropdownMenu({
     options,
     items,
     selectedValue,
+    selectedValues,
     onSelect,
     isOpen,
     onClose,
@@ -97,6 +100,9 @@ export default function DropdownMenu({
 
     // Normalize to items array
     const normalizedItems = normalizeItems(options, items);
+
+    // Use selectedValues if provided, otherwise wrap selectedValue in array
+    const effectiveSelectedValues = selectedValues || (selectedValue ? [selectedValue] : []);
 
     const getFocusableOptions = useCallback(() => {
         return normalizedItems
@@ -208,7 +214,7 @@ export default function DropdownMenu({
         }
 
         // Selectable items (text, icon, custom)
-        const isSelected = item.value === selectedValue;
+        const isSelected = effectiveSelectedValues.includes(item.value);
         const isDisabled = item.disabled ?? false;
 
         const optionClassNames = [
@@ -259,6 +265,11 @@ export default function DropdownMenu({
                     />
                 )}
                 {item.label}
+                {isSelected && (
+                    <div className={styles.checkmarkContainer}>
+                        <Icon name="check" size={16} />
+                    </div>
+                )}
             </button>
         );
     };

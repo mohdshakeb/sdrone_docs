@@ -20,6 +20,10 @@ export interface FormFieldProps {
     children: React.ReactNode;
     /** Additional className for the wrapper */
     className?: string;
+    /** Current character count for display */
+    charCount?: number;
+    /** Maximum character count to display alongside charCount */
+    maxLength?: number;
 }
 
 export const FormField: React.FC<FormFieldProps> = ({
@@ -31,6 +35,8 @@ export const FormField: React.FC<FormFieldProps> = ({
     hideLabel = false,
     children,
     className = '',
+    charCount,
+    maxLength,
 }) => {
     const errorId = error ? `${id}-error` : undefined;
     const helpId = helpText ? `${id}-help` : undefined;
@@ -73,16 +79,31 @@ export const FormField: React.FC<FormFieldProps> = ({
                 return child;
             })}
 
-            {error && (
-                <p id={errorId} className={[styles.error, 'text-caption'].join(' ')} role="alert">
-                    {error}
-                </p>
-            )}
+            {(error || helpText || (charCount !== undefined)) && (
+                <div className={styles.footer}>
+                    <div className={styles.messages}>
+                        {error && (
+                            <p id={errorId} className={[styles.error, 'text-caption'].join(' ')} role="alert">
+                                {error}
+                            </p>
+                        )}
 
-            {helpText && !error && (
-                <p id={helpId} className={[styles.helpText, 'text-caption'].join(' ')}>
-                    {helpText}
-                </p>
+                        {helpText && !error && (
+                            <p id={helpId} className={[styles.helpText, 'text-caption'].join(' ')}>
+                                {helpText}
+                            </p>
+                        )}
+                    </div>
+
+                    {charCount !== undefined && (
+                        <div className={[styles.charCount, 'text-caption'].join(' ')}>
+                            <span className={maxLength && charCount > maxLength ? styles.charCountOver : ''}>
+                                {charCount}
+                            </span>
+                            {maxLength && <span>/{maxLength}</span>}
+                        </div>
+                    )}
+                </div>
             )}
         </div>
     );

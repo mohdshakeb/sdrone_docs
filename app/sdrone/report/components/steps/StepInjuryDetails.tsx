@@ -8,6 +8,8 @@ import RadioGroup from '@/components/ui/RadioGroup';
 import { bodyPartOptions, treatmentOptions } from '../../mockData';
 import type { IncidentFormData, StepErrors, TreatmentLevel } from '../../types';
 
+import styles from './Steps.module.css';
+
 export interface StepInjuryDetailsProps {
     data: IncidentFormData;
     errors: StepErrors;
@@ -19,8 +21,10 @@ export const StepInjuryDetails: React.FC<StepInjuryDetailsProps> = ({
     errors,
     onUpdate,
 }) => {
+    const isFirstAidLocked = data.selectedType === 'first-aid';
+
     return (
-        <>
+        <div className={styles.fieldsWrapper}>
             <FormField
                 id="injuredEmployee"
                 label="Name of injured person"
@@ -55,17 +59,18 @@ export const StepInjuryDetails: React.FC<StepInjuryDetailsProps> = ({
                 label="Treatment required"
                 required
                 error={errors.treatment}
-                helpText="This helps categorize the incident severity"
+                helpText={isFirstAidLocked ? 'Automatically set for First Aid reports' : 'This helps categorize the incident severity'}
             >
                 <RadioGroup
                     name="treatment"
                     options={treatmentOptions}
-                    value={data.treatment ?? undefined}
-                    onChange={(value) => onUpdate('treatment', value as TreatmentLevel)}
+                    value={isFirstAidLocked ? 'first-aid' : (data.treatment ?? undefined)}
+                    onChange={(value) => !isFirstAidLocked && onUpdate('treatment', value as TreatmentLevel)}
+                    disabled={isFirstAidLocked}
                     hasError={!!errors.treatment}
                 />
             </FormField>
-        </>
+        </div>
     );
 };
 

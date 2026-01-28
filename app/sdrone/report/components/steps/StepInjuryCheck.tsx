@@ -3,6 +3,7 @@
 import React from 'react';
 import FormField from '@/components/ui/FormField';
 import RadioGroup from '@/components/ui/RadioGroup';
+import styles from './Steps.module.css';
 import { injuryOptions } from '../../mockData';
 import type { IncidentFormData, StepErrors } from '../../types';
 
@@ -36,20 +37,22 @@ export const StepInjuryCheck: React.FC<StepInjuryCheckProps> = ({
             : 'no';
 
     return (
-        <FormField
-            id="wasInjured"
-            label="Was anyone injured as a result of this incident?"
-            required
-            error={errors.wasInjured}
-        >
-            <RadioGroup
-                name="wasInjured"
-                options={injuryOptions}
-                value={selectedValue}
-                onChange={handleChange}
-                hasError={!!errors.wasInjured}
-            />
-        </FormField>
+        <div className={styles.fieldsWrapper}>
+            <FormField
+                id="wasInjured"
+                label="Was anyone injured as a result of this incident?"
+                required
+                error={errors.wasInjured}
+            >
+                <RadioGroup
+                    name="wasInjured"
+                    options={injuryOptions}
+                    value={selectedValue}
+                    onChange={handleChange}
+                    hasError={!!errors.wasInjured}
+                />
+            </FormField>
+        </div>
     );
 };
 

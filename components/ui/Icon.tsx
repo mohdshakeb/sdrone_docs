@@ -7,6 +7,7 @@ import {
     RiSettings4Fill,
     RiAddFill,
     RiArrowDownSLine,
+    RiArrowUpSLine,
     RiSunFill,
     RiMoonFill,
     RiHistoryFill,
@@ -23,6 +24,9 @@ import {
     RiArrowLeftLine,
     RiArrowRightLine,
     RiDeleteBinLine,
+    RiSearchLine,
+    RiFilterLine,
+    RiArrowDownLine,
 } from 'react-icons/ri';
 
 export type IconName =
@@ -33,6 +37,8 @@ export type IconName =
     | 'settings'
     | 'add'
     | 'arrow-down'
+    | 'arrow-up'
+    | 'chevron-down'
     | 'sun'
     | 'moon'
     | 'history'
@@ -49,7 +55,9 @@ export type IconName =
     | 'check'
     | 'arrow-left'
     | 'arrow-right'
-    | 'delete';
+    | 'delete'
+    | 'search'
+    | 'filter';
 
 export type IconSize = 14 | 16 | 20 | 24 | 32;
 
@@ -80,6 +88,8 @@ const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; c
     'settings': RiSettings4Fill,
     'add': RiAddFill,
     'arrow-down': RiArrowDownSLine,
+    'arrow-up': RiArrowUpSLine,
+    'chevron-down': RiArrowDownLine,
     'sun': RiSunFill,
     'moon': RiMoonFill,
     'history': RiHistoryFill,
@@ -97,6 +107,8 @@ const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; c
     'arrow-left': RiArrowLeftLine,
     'arrow-right': RiArrowRightLine,
     'delete': RiDeleteBinLine,
+    'search': RiSearchLine,
+    'filter': RiFilterLine,
 };
 
 export const Icon: React.FC<IconProps> = ({ name, size = 20, className = '', ...props }) => {

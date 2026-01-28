@@ -4,7 +4,7 @@
     flex-direction: column;
     min-height: 100vh;
     min-height: 100dvh;
-    background-color: var(--bg-surface);
+    background-color: var(--bg-subtle);
 }
 
 .main {
@@ -40,9 +40,8 @@
     }
 
     .container {
-        background-color: var(--bg-surface);
+        background-color: var(--bg-subtle);
         border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         margin-top: var(--space-6);
         margin-bottom: var(--space-6);
         overflow: hidden;
