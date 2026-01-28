@@ -2,9 +2,9 @@
     display: flex;
     align-items: center;
     gap: var(--space-1);
-    padding: var(--space-1);
-    background-color: var(--bg-strong);
-    border-radius: 10px;
+    padding: var(--space-3) var(--space-8);
+    background-color: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-subtle);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -26,9 +26,8 @@
     flex-shrink: 0;
 }
 
-.tab:hover {
+.tab:not(.tabActive):hover {
     color: var(--fg-neutral);
-    background-color: var(--bg-hover);
 }
 
 .tab:focus-visible {
@@ -37,13 +36,8 @@
 }
 
 .tabActive {
-    background-color: var(--bg-subtle);
+    background-color: var(--bg-strong);
     color: var(--fg-neutral);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-.tabActive:hover {
-    background-color: var(--bg-subtle);
 }
 
 /* Mobile responsive */

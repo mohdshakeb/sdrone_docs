@@ -80,7 +80,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({
             <Icon name="search" size={16} className={styles.searchIcon} />
             <input
                 type="text"
-                className={`${styles.input} text-body`}
+                className={`${styles.input} text-caption`}
                 value={internalValue}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}

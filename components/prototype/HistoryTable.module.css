@@ -13,7 +13,7 @@
 }
 
 .thead {
-    background-color: var(--bg-strong);
+    background-color: var(--bg-subtle);
 }
 
 .th {
@@ -22,7 +22,7 @@
     color: var(--fg-subtle);
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    border-bottom: 1px solid var(--border-base);
+    border-bottom: 1px solid var(--border-subtle);
     white-space: nowrap;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .tr:hover {
-    background-color: var(--bg-hover);
+    background-color: var(--bg-on-page);
 }
 
 .tr:focus-visible {

@@ -22,7 +22,7 @@ export default function SDroneLayout({
             <AppSidebar />
             <main className="main-content">
                 <AppHeader />
-                <div style={{ padding: 'var(--space-8)' }}>
+                <div>
                     {children}
                 </div>
             </main>

@@ -115,7 +115,7 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
                         {COLUMNS.map((col) => (
                             <th
                                 key={col.key}
-                                className={`${styles.th} ${col.sortable ? styles.sortable : ''} text-caption-strong`}
+                                className={`${styles.th} ${col.sortable ? styles.sortable : ''} text-caption-small`}
                                 onClick={() => col.sortable && onSort(col.key)}
                                 aria-sort={
                                     sortColumn === col.key
@@ -144,12 +144,12 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
                             role="button"
                             aria-label={`View details for ${record.title}`}
                         >
-                            <td className={`${styles.td} ${styles.titleCell} text-body`}>
+                            <td className={`${styles.td} ${styles.titleCell} text-caption`}>
                                 <span className={styles.titleText} title={record.title}>
                                     {record.title}
                                 </span>
                             </td>
-                            <td className={`${styles.td} text-body`}>
+                            <td className={`${styles.td} text-caption`}>
                                 {record.type}
                             </td>
                             <td className={styles.td}>
@@ -160,7 +160,7 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
                                     {record.status}
                                 </Badge>
                             </td>
-                            <td className={`${styles.td} text-body`}>
+                            <td className={`${styles.td} text-caption`}>
                                 <span className={styles.locationText}>
                                     {record.location.name}
                                     {record.location.area && (
@@ -171,13 +171,13 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
                                 </span>
                             </td>
                             <td
-                                className={`${styles.td} text-body`}
+                                className={`${styles.td} text-caption`}
                                 title={getOwnerTooltip(record)}
                             >
                                 {getOwnerOrClosedBy(record)}
                             </td>
                             <td
-                                className={`${styles.td} text-body`}
+                                className={`${styles.td} text-caption`}
                                 title={formatAbsoluteDate(record.updatedAt)}
                             >
                                 {formatRelativeTime(record.updatedAt)}

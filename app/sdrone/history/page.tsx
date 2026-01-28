@@ -288,21 +288,23 @@ export default function HistoryPage() {
             </div>
 
             {/* Table or Empty State */}
-            {showEmptyState ? (
-                <EmptyState
-                    title="No records found"
-                    description="Try adjusting filters or search"
-                    icon="archive"
-                />
-            ) : (
-                <HistoryTable
-                    records={filteredRecords}
-                    sortColumn={sortColumn}
-                    sortDirection={sortDirection}
-                    onSort={handleSort}
-                    onRowClick={handleRowClick}
-                />
-            )}
+            <div className={styles.tableContainer}>
+                {showEmptyState ? (
+                    <EmptyState
+                        title="No records found"
+                        description="Try adjusting filters or search"
+                        icon="archive"
+                    />
+                ) : (
+                    <HistoryTable
+                        records={filteredRecords}
+                        sortColumn={sortColumn}
+                        sortDirection={sortDirection}
+                        onSort={handleSort}
+                        onRowClick={handleRowClick}
+                    />
+                )}
+            </div>
 
             {/* Advanced Filters Modal */}
             <AdvancedFiltersModal

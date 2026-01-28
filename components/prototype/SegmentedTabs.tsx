@@ -42,7 +42,7 @@ export const SegmentedTabs: React.FC<SegmentedTabsProps> = ({
                         key={tab.id}
                         role="tab"
                         aria-selected={isActive}
-                        className={`${styles.tab} ${isActive ? styles.tabActive : ''} text-body`}
+                        className={`${styles.tab} ${isActive ? styles.tabActive : ''} text-caption`}
                         onClick={() => onChange(tab.id)}
                         onKeyDown={(e) => handleKeyDown(e, tab.id)}
                         tabIndex={isActive ? 0 : -1}
