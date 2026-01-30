@@ -7,7 +7,7 @@
     border: 1px solid var(--border-subtle);
     border-radius: 12px;
     overflow: hidden;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     font-family: var(--font-base);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     max-width: 100%;
@@ -17,7 +17,7 @@
 
 .card:hover {
     transform: translateY(-2px);
-    border-color: var(--border-base);
+    border-color: var(--border-default);
 }
 
 .card:focus-visible {
@@ -26,12 +26,12 @@
 }
 
 .card.cardSelected {
-    border-color: var(--border-base);
+    border-color: var(--border-default);
 }
 
 .card.cardSelected:hover {
     transform: none;
-    border-color: var(--border-base);
+    border-color: var(--border-default);
 }
 
 .header {
@@ -67,7 +67,7 @@
 
 
 .title {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     /* Typography via utility class */
 }
 
@@ -79,7 +79,7 @@
 
 
 .footer {
-    background-color: var(--bg-on-page);
+    background-color: var(--bg-base);
     padding: var(--space-3) var(--space-6) var(--space-3) 72px;
     display: flex;
     align-items: center;
@@ -95,6 +95,6 @@
 }
 
 .footerValue {
-    color: var(--fg-on-surface);
+    color: var(--fg-secondary);
     /* Typography via utility class */
 }

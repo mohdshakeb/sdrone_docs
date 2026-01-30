@@ -25,44 +25,42 @@ The `Button` component supports multiple variants and sizes. All buttons use a *
   <Button variant="negative">Negative</Button>
   <Button variant="notice">Notice</Button>
   <Button variant="positive">Positive</Button>
+  <Button variant="ghost">Ghost</Button>
 </Preview>
 
 ### States
 
-<Preview layout="grid-3" align="start">
-  <div>
-    <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Default</h4>
+<Preview layout="grid-3">
+  <DocItem label="Default">
     <Button variant="primary">Default</Button>
-  </div>
-  <div>
-    <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Disabled</h4>
+  </DocItem>
+  <DocItem label="Disabled">
     <Button variant="primary" disabled>Disabled</Button>
-  </div>
-  <div>
-    <h4 className="text-caption-strong" style={{ marginBottom: '12px' }}>Secondary Disabled</h4>
+  </DocItem>
+  <DocItem label="Secondary Disabled">
     <Button variant="secondary" disabled>Disabled</Button>
-  </div>
+  </DocItem>
 </Preview>
 
 ### Sizes
 
-<Preview layout="flex-wrap" align="start">
-  <div>
+<Preview layout="flex-wrap">
+  <DocItem>
     <Button size="xs">XSmall</Button>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>28px</div>
-  </div>
-  <div>
+  </DocItem>
+  <DocItem>
     <Button size="sm">Small</Button>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>32px</div>
-  </div>
-  <div>
+  </DocItem>
+  <DocItem>
     <Button size="md">Medium</Button>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>40px</div>
-  </div>
-  <div>
+  </DocItem>
+  <DocItem>
     <Button size="lg">Large</Button>
     <div style={{ fontSize: '10px', marginTop: '4px', color: 'var(--fg-muted)' }}>48px</div>
-  </div>
+  </DocItem>
 </Preview>
 
 ### Icon Composition
@@ -70,6 +68,8 @@ The `Button` component supports multiple variants and sizes. All buttons use a *
 <Preview layout="flex-wrap">
   <Button variant="secondary" leadingIcon={<Icon name="add" size={20} />}>Leading Icon</Button>
   <Button variant="secondary" trailingIcon={<Icon name="arrow-down" size={20} />}>Trailing Icon</Button>
+  <Button variant="ghost" iconOnly leadingIcon={<Icon name="sun" size={20} />} aria-label="Theme toggle" />
+  <Button variant="negative" iconOnly leadingIcon={<Icon name="sos" size={20} />} aria-label="SOS" />
 </Preview>
 
 </Section>
@@ -78,47 +78,7 @@ The `Button` component supports multiple variants and sizes. All buttons use a *
 
 ## Properties
 
-<PropsTable data={[
-  {
-    prop: 'children',
-    type: 'ReactNode',
-    required: true,
-    description: 'Button label'
-  },
-  {
-    prop: 'size',
-    type: 'string',
-    default: '"md"',
-    description: 'Size variant: xs, sm, md, lg'
-  },
-  {
-    prop: 'variant',
-    type: 'string',
-    default: '"primary"',
-    description: 'Visual variant: primary, secondary, negative, notice, positive'
-  },
-  {
-    prop: 'leadingIcon',
-    type: 'ReactNode',
-    description: 'Icon before label'
-  },
-  {
-    prop: 'trailingIcon',
-    type: 'ReactNode',
-    description: 'Icon after label'
-  },
-  {
-    prop: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    description: 'Disables the button'
-  },
-  {
-    prop: 'href',
-    type: 'string',
-    description: 'Renders as a link'
-  }
-]} />
+<PropsTable component="Button" />
 
 </Section>
 
@@ -135,6 +95,7 @@ The `Button` component supports multiple variants and sizes. All buttons use a *
 | `negative` | `--bg-negative-intense` | Destructive actions (Logout, Delete) |
 | `notice` | `--bg-notice-intense` | Warning actions |
 | `positive` | `--bg-positive-intense` | Success/Confirmation actions |
+| `ghost` | `transparent` | Subtle actions, toolbars, or icon-only buttons |
 
 ### Size Mapping
 
@@ -158,16 +119,15 @@ import { Icon } from '@/components/ui/Icon';
 
 // Variants
 <Button variant="primary">Primary</Button>
-<Button variant="secondary">Secondary</Button>
-
-// Status Variants
-<Button variant="negative">Delete</Button>
-<Button variant="positive">Confirm</Button>
+<Button variant="ghost">Ghost</Button>
 
 // Icon and Size
 <Button variant="secondary" size="lg" leadingIcon={<Icon name="add" size={20} />}>
   Create New
 </Button>
+
+// Icon Only (Square/Circular)
+<Button variant="ghost" iconOnly leadingIcon={<Icon name="sun" size={20} />} aria-label="Toggle theme" />
 ```
 </CodeBlock>
 

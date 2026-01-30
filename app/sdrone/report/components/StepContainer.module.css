@@ -17,7 +17,7 @@
 
 .title {
     margin: 0 0 var(--space-6) 0;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .body {

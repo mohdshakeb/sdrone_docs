@@ -35,6 +35,7 @@ interface DropdownListProps {
     displayValue?: string | null;
     /** Array of selected values for multiselect checkmarks */
     selectedValues?: string[];
+    count?: number;
     onChange?: (value: string | null) => void;
     disabled?: boolean;
 }
@@ -120,6 +121,7 @@ export default function Dropdown(props: DropdownProps) {
             <FilterChip
                 selected={hasDisplayValue}
                 value={displayedValue}
+                count={props.count}
                 isOpen={isOpen}
                 disabled={props.disabled}
                 onClick={toggle}

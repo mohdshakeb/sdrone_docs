@@ -33,12 +33,18 @@ export default function Sidebar({ className = '' }: { className?: string }) {
                 <div className={styles.section}>
                     <h3 className={styles.heading}>Components</h3>
                     <ul className={styles.list}>
-                        <li><Link href="/docs/buttons" onClick={() => setIsOpen(false)}>Buttons</Link></li>
+                        <li><Link href="/docs/buttons" onClick={() => setIsOpen(false)}>Button</Link></li>
                         <li><Link href="/docs/badge" onClick={() => setIsOpen(false)}>Badge</Link></li>
                         <li><Link href="/docs/filter-chip" onClick={() => setIsOpen(false)}>Filter Chip</Link></li>
-                        <li><Link href="/docs/dropdown" onClick={() => setIsOpen(false)}>Dropdown Menu</Link></li>
+                        <li><Link href="/docs/dropdown" onClick={() => setIsOpen(false)}>Dropdown</Link></li>
                         <li><Link href="/docs/modal" onClick={() => setIsOpen(false)}>Modal</Link></li>
-                        <li><Link href="/docs/inputs" onClick={() => setIsOpen(false)}>Inputs</Link></li>
+                        <li><Link href="/docs/text-input" onClick={() => setIsOpen(false)}>Text Input</Link></li>
+                        <li><Link href="/docs/textarea" onClick={() => setIsOpen(false)}>Textarea</Link></li>
+                        <li><Link href="/docs/select" onClick={() => setIsOpen(false)}>Select</Link></li>
+                        <li><Link href="/docs/radio-group" onClick={() => setIsOpen(false)}>Radio Group</Link></li>
+                        <li><Link href="/docs/time-input" onClick={() => setIsOpen(false)}>Time Input</Link></li>
+                        <li><Link href="/docs/file-input" onClick={() => setIsOpen(false)}>File Input</Link></li>
+                        <li><Link href="/docs/form-field" onClick={() => setIsOpen(false)}>Form Field</Link></li>
                     </ul>
                 </div>
             </nav>

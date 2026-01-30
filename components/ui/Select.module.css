@@ -7,10 +7,10 @@
 .select {
     display: block;
     appearance: none;
-    border: 1px solid var(--border-base);
+    border: 1px solid var(--border-default);
     border-radius: 8px;
     background-color: var(--bg-surface);
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     outline: none;
     cursor: pointer;
     padding-right: var(--space-10); /* Space for arrow */
@@ -23,28 +23,28 @@
 }
 
 .select:hover:not(:disabled) {
-    border-color: var(--border-strong);
+    border-color: var(--border-emphasis);
 }
 
 .select:focus {
     border-color: var(--bg-accent);
-    box-shadow: 0 0 0 2px var(--bg-accent-subtle);
+    box-shadow: 0 0 0 2px var(--bg-accent-soft);
 }
 
 .select:disabled {
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
     color: var(--fg-muted);
     cursor: not-allowed;
 }
 
 /* Error state */
 .error {
-    border-color: var(--bg-negative-intense);
+    border-color: var(--bg-negative-solid);
 }
 
 .error:focus {
-    border-color: var(--bg-negative-intense);
-    box-shadow: 0 0 0 2px var(--bg-negative-subtle);
+    border-color: var(--bg-negative-solid);
+    box-shadow: 0 0 0 2px var(--bg-negative-soft);
 }
 
 /* Size variants */

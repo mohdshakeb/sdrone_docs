@@ -10,17 +10,17 @@
     display: flex;
     align-items: center;
     gap: var(--space-1);
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 /* Required indicator */
 .required {
-    color: var(--fg-negative-subtle);
+    color: var(--fg-negative-soft);
 }
 
 /* Error message */
 .error {
-    color: var(--fg-negative-subtle);
+    color: var(--fg-negative-soft);
     margin: 0;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .charCountOver {
-    color: var(--fg-negative-subtle);
+    color: var(--fg-negative-soft);
 }
 
 /* Visually hidden but accessible to screen readers */

@@ -3,10 +3,15 @@
 import React from 'react';
 import styles from './RadioGroup.module.css';
 
+/** Option item for RadioGroup component */
 export interface RadioOption {
+    /** Unique value for the radio option */
     value: string;
+    /** Display label for the radio option */
     label: string;
+    /** Optional description text shown below the label */
     description?: string;
+    /** Whether the option is disabled */
     disabled?: boolean;
 }
 

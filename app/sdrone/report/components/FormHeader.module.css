@@ -31,7 +31,7 @@
     height: 40px;
     margin-left: calc(-1 * var(--space-2));
     border-radius: 8px;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -40,7 +40,7 @@
 }
 
 .closeButton:hover {
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
 }
 
 .closeButton:focus-visible {
@@ -50,6 +50,6 @@
 
 .title {
     margin: 0;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     text-align: center;
 }

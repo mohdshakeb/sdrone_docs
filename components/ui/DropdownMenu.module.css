@@ -44,19 +44,19 @@
 
 .option:not(:disabled):hover,
 .option:not(:disabled):focus {
-    background-color: var(--bg-strong);
-    color: var(--fg-neutral);
+    background-color: var(--bg-emphasis);
+    color: var(--fg-default);
 }
 
 .optionSelected {
-    background-color: var(--bg-accent-subtle);
-    color: var(--fg-accent-light);
+    background-color: var(--bg-accent-soft);
+    color: var(--fg-accent-emphasis);
 }
 
 .option.optionSelected:hover,
 .option.optionSelected:focus {
-    background-color: var(--bg-accent-subtle);
-    color: var(--fg-accent-light);
+    background-color: var(--bg-accent-soft);
+    color: var(--fg-accent-emphasis);
 }
 
 .optionDisabled {
@@ -82,7 +82,7 @@
 
 .optionSelected .optionIcon,
 .optionIconSelected {
-    color: var(--fg-accent-light);
+    color: var(--fg-accent-emphasis);
 }
 
 /* Divider */

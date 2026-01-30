@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './PropsTable.module.css';
+import componentPropsData from '@/public/component-props/all-components.json';
 
 export interface PropRow {
   /** Property name */
@@ -15,8 +16,10 @@ export interface PropRow {
 }
 
 export interface PropsTableProps {
-  /** Array of property definitions */
-  data: PropRow[];
+  /** Component name to auto-load props (e.g., "Button") - NEW automated way */
+  component?: string;
+  /** Array of property definitions - OLD manual way, kept for backward compatibility */
+  data?: PropRow[];
   /** Optional title for the table */
   title?: string;
 }
@@ -24,8 +27,41 @@ export interface PropsTableProps {
 /**
  * PropsTable component for documenting component properties.
  * Displays a standardized table with prop name, type, default, and description.
+ *
+ * Usage:
+ * - New (automated): <PropsTable component="Button" />
+ * - Old (manual): <PropsTable data={[...]} />
  */
-export function PropsTable({ data, title }: PropsTableProps) {
+export function PropsTable({ component, data, title }: PropsTableProps) {
+  // Auto-load props from extracted data if component name is provided
+  let propsData: PropRow[] = data || [];
+
+  if (component && !data) {
+    const componentData = (componentPropsData as any)[component];
+
+    if (componentData && componentData.props) {
+      propsData = componentData.props.map((prop: any) => ({
+        prop: prop.name,
+        type: prop.type,
+        default: prop.defaultValue,
+        required: prop.required,
+        description: prop.description,
+      }));
+    } else {
+      console.warn(`PropsTable: No props found for component "${component}"`);
+    }
+  }
+
+  if (propsData.length === 0) {
+    return (
+      <div className={styles.wrapper}>
+        <p style={{ color: 'var(--fg-muted)', fontStyle: 'italic' }}>
+          No props documented for this component.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.wrapper}>
       {title && <h3 className={styles.title}>{title}</h3>}
@@ -40,7 +76,7 @@ export function PropsTable({ data, title }: PropsTableProps) {
             </tr>
           </thead>
           <tbody>
-            {data.map((row, index) => (
+            {propsData.map((row, index) => (
               <tr key={index}>
                 <td>
                   <code className={styles.propName}>

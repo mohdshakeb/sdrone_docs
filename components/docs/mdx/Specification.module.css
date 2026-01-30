@@ -7,7 +7,7 @@
 .title {
   font-size: 16px;
   font-weight: var(--font-weight-semibold);
-  color: var(--fg-neutral);
+  color: var(--fg-default);
   margin-bottom: var(--space-3);
 }
 
@@ -25,14 +25,14 @@
 
 .table thead {
   background-color: var(--bg-subtle);
-  border-bottom: 1px solid var(--border-base);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .table th {
   padding: var(--space-3) var(--space-4);
   text-align: left;
   font-weight: var(--font-weight-semibold);
-  color: var(--fg-neutral);
+  color: var(--fg-default);
   font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -80,7 +80,7 @@
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--fg-subtle);
-  background-color: var(--bg-page);
+  background-color: var(--bg-canvas);
   padding: 2px 6px;
   border-radius: 4px;
 }

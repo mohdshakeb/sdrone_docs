@@ -11,17 +11,17 @@
     height: 32px;
     border-radius: 9999px;
     background-color: var(--bg-surface);
-    color: var(--fg-on-surface);
+    color: var(--fg-secondary);
     transition: all 0.15s ease;
     overflow: hidden;
 }
 
 .chip:hover:not(.disabled) {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .chip:hover:not(.disabled) .chevron {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 /* Main clickable area */
@@ -63,13 +63,13 @@
     height: 18px;
     padding: 0 var(--space-2);
     border-radius: 9999px;
-    background-color: var(--bg-accent-subtle);
+    background-color: var(--bg-accent-soft);
     color: var(--fg-accent);
     font-weight: var(--font-weight-medium);
 }
 
 .chevron {
-    color: var(--fg-on-surface);
+    color: var(--fg-secondary);
     flex-shrink: 0;
     transition: transform 0.15s ease;
 }
@@ -84,14 +84,14 @@
 }
 
 .active .label {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 /* Divider between main part and clear button */
 .divider {
     width: 1px;
     height: 16px;
-    background-color: var(--border-base);
+    background-color: var(--border-default);
     flex-shrink: 0;
 }
 
@@ -105,7 +105,7 @@
     height: 32px;
     background: transparent;
     border: none;
-    color: var(--fg-on-surface);
+    color: var(--fg-secondary);
     cursor: pointer;
     transition: all 0.15s ease;
     padding: 0;
@@ -113,7 +113,7 @@
 }
 
 .clearButton:hover {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     background-color: rgba(0, 0, 0, 0.05);
 }
 

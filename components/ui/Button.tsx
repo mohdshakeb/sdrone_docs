@@ -13,17 +13,46 @@ const SIZE_TO_TYPOGRAPHY: Record<ButtonSize, string> = {
 };
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'secondary' | 'negative' | 'notice' | 'positive';
+    /** Visual style variant of the button
+     * @default 'primary'
+     */
+    variant?: 'primary' | 'secondary' | 'negative' | 'notice' | 'positive' | 'ghost';
+    /** Size of the button
+     * @default 'md'
+     */
     size?: ButtonSize;
+    /** Whether the button only contains an icon (for square/circular layout)
+     * @default false
+     */
+    iconOnly?: boolean;
+    /** Icon displayed before the button text */
     leadingIcon?: React.ReactNode;
+    /** Icon displayed after the button text */
     trailingIcon?: React.ReactNode;
+    /** When provided, renders the button as a Next.js Link */
     href?: string;
+    /** Link target attribute (only used when href is provided) */
     target?: string;
+    /** Rel attribute for security (e.g., 'noopener noreferrer') */
+    rel?: string;
+    /** Button label content */
     children?: React.ReactNode;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
-    ({ className = '', variant = 'primary', size = 'md', leadingIcon, trailingIcon, href, children, ...props }, ref) => {
+    ({
+        className = '',
+        variant = 'primary',
+        size = 'md',
+        iconOnly = false,
+        leadingIcon,
+        trailingIcon,
+        href,
+        target,
+        rel,
+        children,
+        ...props
+    }, ref) => {
         const hasLeadingIcon = !!leadingIcon && !!children;
         const hasTrailingIcon = !!trailingIcon && !!children;
 
@@ -31,6 +60,7 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
             styles.button,
             styles[variant],
             styles[size],
+            iconOnly && styles.iconOnly,
             hasLeadingIcon && styles.hasLeadingIcon,
             hasTrailingIcon && styles.hasTrailingIcon,
             SIZE_TO_TYPOGRAPHY[size],
@@ -50,6 +80,8 @@ export const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, Bu
                     href={href}
                     className={combinedClassName}
                     ref={ref as React.Ref<HTMLAnchorElement>}
+                    rel={rel}
+                    target={target}
                     {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
                 >
                     {content}

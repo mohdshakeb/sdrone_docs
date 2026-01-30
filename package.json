@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run extract-props && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "extract-props": "node scripts/extract-props.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -24,6 +25,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.9",
+    "glob": "^13.0.0",
+    "react-docgen-typescript": "^2.4.0",
     "typescript": "^5"
   }
 }

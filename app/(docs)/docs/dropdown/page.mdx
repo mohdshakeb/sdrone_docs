@@ -1,42 +1,24 @@
-import { DropdownMenuBasicDemo, DropdownMenuIconDemo, DropdownMenuMixedDemo } from '@/components/docs/DropdownMenuShowcase';
 import { FilterChipDropdownDemo, FilterChipDropdownAdvancedDemo } from '@/components/docs/FilterChipShowcase';
 
 # Dropdown
 
-Unified dropdown component for both list selection and date picking. Integrates with FilterChip for a cohesive filter experience.
-
-<Section divider>
-
-## Overview
-
-The `Dropdown` component provides:
-- **List variant**: Select from text/icon options with keyboard navigation
-- **Date variant**: Calendar-based date picker
-- **FilterChip integration**: Consistent trigger UI across variants
-- **Type-safe variants**: Discriminated union based on `variant` prop
-- **Shared behavior**: Click-outside detection, state management, accessibility
-
-<Callout type="info">
-**Recommended**: Use `Dropdown` for all dropdown needs. For advanced use cases requiring custom triggers or behavior, use the low-level `DropdownMenu` component (documented below).
-</Callout>
-
-</Section>
+Unified dropdown component for both list selection and date picking, integrated with FilterChip for consistent filtering UI.
 
 <Section divider>
 
 ## Variants
 
-### List Variant (Default)
+### List Variant
 
-Simple list selection with FilterChip trigger.
-
-<FilterChipDropdownDemo />
+<Preview>
+  <FilterChipDropdownDemo />
+</Preview>
 
 ### Date Variant & Advanced Items
 
-Date picker and dropdown with icons, headers, and dividers.
-
-<FilterChipDropdownAdvancedDemo />
+<Preview>
+  <FilterChipDropdownAdvancedDemo />
+</Preview>
 
 </Section>
 
@@ -44,184 +26,53 @@ Date picker and dropdown with icons, headers, and dividers.
 
 ## Properties
 
-### List Variant (default)
-
-<CodeBlock language="tsx">
-```tsx
-<Dropdown
-  variant="list"  // optional, defaults to "list"
-  label="Type"
-  options={options}  // or items={items}
-  value={value}
-  onChange={onChange}
-  disabled={false}
-/>
-```
-</CodeBlock>
-
-<PropsTable data={[
-  {
-    prop: 'variant',
-    type: "'list'",
-    default: '"list"',
-    description: 'Optional variant selector'
-  },
-  {
-    prop: 'label',
-    type: 'string',
-    required: true,
-    description: 'FilterChip label'
-  },
-  {
-    prop: 'options',
-    type: 'DropdownOption[]',
-    description: 'Legacy: array of text options (deprecated, use items)'
-  },
-  {
-    prop: 'items',
-    type: 'DropdownItem[]',
-    description: 'Array of menu items (text, icon, divider, header, custom)'
-  },
-  {
-    prop: 'value',
-    type: 'string | null',
-    required: true,
-    description: 'Currently selected value'
-  },
-  {
-    prop: 'onChange',
-    type: '(value: string | null) => void',
-    required: true,
-    description: 'Called when selection changes or is cleared'
-  },
-  {
-    prop: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    description: 'Disable the dropdown'
-  }
-]} />
-
-### Date Variant
-
-<CodeBlock language="tsx">
-```tsx
-<Dropdown
-  variant="date"
-  label="Date"
-  value={date}
-  onChange={setDate}
-  minDate={minDate}
-  maxDate={maxDate}
-  disabled={false}
-/>
-```
-</CodeBlock>
-
-<PropsTable data={[
-  {
-    prop: 'variant',
-    type: "'date'",
-    required: true,
-    description: 'Required for date picker'
-  },
-  {
-    prop: 'label',
-    type: 'string',
-    required: true,
-    description: 'FilterChip label'
-  },
-  {
-    prop: 'value',
-    type: 'Date | null',
-    required: true,
-    description: 'Currently selected date'
-  },
-  {
-    prop: 'onChange',
-    type: '(value: Date | null) => void',
-    required: true,
-    description: 'Called when date changes or is cleared'
-  },
-  {
-    prop: 'minDate',
-    type: 'Date',
-    description: 'Optional minimum selectable date'
-  },
-  {
-    prop: 'maxDate',
-    type: 'Date',
-    description: 'Optional maximum selectable date'
-  },
-  {
-    prop: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    description: 'Disable the dropdown'
-  }
-]} />
+<PropsTable component="Dropdown" />
 
 </Section>
 
-<Section divider>
+<Section>
 
 ## Usage
 
-### Basic List Dropdown
+### List Dropdown
 
-<CodeBlock language="tsx" filename="list-example.tsx">
+<CodeBlock language="tsx" filename="list-dropdown.tsx">
 ```tsx
 import Dropdown from '@/components/ui/Dropdown';
 
-const OPTIONS = [
+const options = [
   { value: 'first-aid', label: 'First Aid' },
   { value: 'incident', label: 'Incident Report' },
   { value: 'audit', label: 'Safety Audit' },
 ];
 
-function MyComponent() {
-  const [type, setType] = useState<string | null>(null);
-
-  return (
-    <Dropdown
-      label="Report Type"
-      options={OPTIONS}
-      value={type}
-      onChange={setType}
-    />
-  );
-}
+<Dropdown
+  label="Report Type"
+  options={options}
+  value={type}
+  onChange={setType}
+/>
 ```
 </CodeBlock>
 
-### Date Picker Dropdown
+### Date Picker
 
-<CodeBlock language="tsx" filename="date-example.tsx">
+<CodeBlock language="tsx" filename="date-picker.tsx">
 ```tsx
-import Dropdown from '@/components/ui/Dropdown';
-
-function MyComponent() {
-  const [date, setDate] = useState<Date | null>(null);
-
-  return (
-    <Dropdown
-      variant="date"
-      label="Report Date"
-      value={date}
-      onChange={setDate}
-    />
-  );
-}
+<Dropdown
+  variant="date"
+  label="Report Date"
+  value={date}
+  onChange={setDate}
+/>
 ```
 </CodeBlock>
 
-### Advanced List with Icons
+### Advanced with Icons
 
-<CodeBlock language="tsx" filename="advanced-example.tsx">
+<CodeBlock language="tsx" filename="advanced-dropdown.tsx">
 ```tsx
-import Dropdown, { type DropdownItem } from '@/components/ui/Dropdown';
-
-const ITEMS: DropdownItem[] = [
+const items = [
   { type: 'header', label: 'Incidents' },
   { type: 'icon', value: 'first-aid', label: 'First Aid', icon: 'first-aid' },
   { type: 'icon', value: 'fire', label: 'Fire', icon: 'fire' },
@@ -230,430 +81,13 @@ const ITEMS: DropdownItem[] = [
   { type: 'icon', value: 'survey', label: 'Survey', icon: 'survey' },
 ];
 
-function MyComponent() {
-  const [type, setType] = useState<string | null>(null);
-
-  return (
-    <Dropdown
-      label="Type"
-      items={ITEMS}
-      value={type}
-      onChange={setType}
-    />
-  );
-}
-```
-</CodeBlock>
-
-</Section>
-
-<Section divider>
-
-## Migration Guide
-
-### From FilterChipDropdown
-
-<CodeBlock language="tsx">
-```tsx
-// Old (deprecated)
-import FilterChipDropdown from '@/components/ui/FilterChipDropdown';
-<FilterChipDropdown label="Type" options={...} value={...} onChange={...} />
-
-// New (recommended)
-import Dropdown from '@/components/ui/Dropdown';
-<Dropdown label="Type" options={...} value={...} onChange={...} />
-```
-</CodeBlock>
-
-### From DatePickerDropdown
-
-<CodeBlock language="tsx">
-```tsx
-// Old (deprecated)
-import DatePickerDropdown from '@/components/ui/DatePickerDropdown';
-<DatePickerDropdown label="Date" value={date} onChange={setDate} />
-
-// New (recommended)
-import Dropdown from '@/components/ui/Dropdown';
-<Dropdown variant="date" label="Date" value={date} onChange={setDate} />
-```
-</CodeBlock>
-
-</Section>
-
-<Section divider>
-
-## Accessibility
-
-- FilterChip trigger is keyboard accessible (Tab to focus, Enter/Space to open)
-- List variant supports arrow key navigation, Enter to select, Escape to close
-- Date variant supports keyboard navigation within calendar
-- Clear action is accessible via FilterChip clear button
-- All interactive elements have proper ARIA attributes
-
-</Section>
-
-<Section divider>
-
-## Best Practices
-
-### When to Use
-
-- Filtering data by category (list variant)
-- Selecting a single date (date variant)
-- 3-15 options in a compact space
-- Inline filters in a toolbar or header
-
-### When Not to Use
-
-- More than 15 options (consider autocomplete)
-- Multiple selections (use checkboxes or multi-select)
-- Primary navigation (use nav elements)
-- Date ranges (build custom multi-date component)
-
-</Section>
-
-<Section divider>
-
----
-
-# DropdownMenu (Low-Level)
-
-For advanced use cases requiring custom triggers or behavior, use the `DropdownMenu` component directly. This is a controlled component that provides the dropdown panel without FilterChip integration.
-
-## Overview
-
-The `DropdownMenu` component provides:
-- **Text options**: Simple text-based menu items
-- **Icon options**: Items with leading icons for visual distinction
-- **Dividers**: Visual separators between groups
-- **Section headers**: Non-selectable labels for organizing items
-- **Custom content**: Fully custom rendered items
-- **Keyboard navigation**: Arrow keys, Enter to select, Escape to close
-- **Disabled states**: Individual items can be disabled
-
-</Section>
-
-<Section divider>
-
-## Preview
-
-### Basic Text Menu
-
-Simple text-based dropdown with selectable options.
-
-<DropdownMenuBasicDemo />
-
-### With Icons & Sections
-
-Icons, section headers, and dividers for organized menus.
-
-<DropdownMenuIconDemo />
-
-### Mixed Content
-
-Combining different item types in a single menu.
-
-<DropdownMenuMixedDemo />
-
-</Section>
-
-<Section divider>
-
-## Properties
-
-<PropsTable data={[
-  {
-    prop: 'options',
-    type: 'DropdownOption[]',
-    description: 'Legacy: array of text options (deprecated, use items)'
-  },
-  {
-    prop: 'items',
-    type: 'DropdownItem[]',
-    description: 'Array of menu items (text, icon, divider, header, custom)'
-  },
-  {
-    prop: 'selectedValue',
-    type: 'string',
-    description: 'Currently selected item value'
-  },
-  {
-    prop: 'onSelect',
-    type: '(value: string) => void',
-    description: 'Called when item is selected'
-  },
-  {
-    prop: 'isOpen',
-    type: 'boolean',
-    required: true,
-    description: 'Controls dropdown visibility'
-  },
-  {
-    prop: 'onClose',
-    type: '() => void',
-    required: true,
-    description: 'Called when dropdown should close'
-  }
-]} />
-
-</Section>
-
-<Section divider>
-
-## Item Types
-
-### DropdownTextOption
-
-<CodeBlock language="ts">
-```ts
-interface DropdownTextOption {
-  type?: 'text';          // Optional, defaults to 'text'
-  value: string;          // Unique identifier
-  label: string;          // Display text
-  disabled?: boolean;     // Disable selection
-}
-```
-</CodeBlock>
-
-### DropdownIconOption
-
-<CodeBlock language="ts">
-```ts
-interface DropdownIconOption {
-  type: 'icon';           // Required
-  value: string;          // Unique identifier
-  label: string;          // Display text
-  icon: IconName;         // Icon from Icon system
-  disabled?: boolean;     // Disable selection
-}
-```
-</CodeBlock>
-
-### DropdownDivider
-
-<CodeBlock language="ts">
-```ts
-interface DropdownDivider {
-  type: 'divider';        // Creates horizontal separator
-}
-```
-</CodeBlock>
-
-### DropdownHeader
-
-<CodeBlock language="ts">
-```ts
-interface DropdownHeader {
-  type: 'header';         // Creates non-selectable section label
-  label: string;          // Header text (uppercase)
-}
-```
-</CodeBlock>
-
-### DropdownCustomOption
-
-<CodeBlock language="ts">
-```ts
-interface DropdownCustomOption {
-  type: 'custom';         // Custom rendered content
-  value: string;          // Unique identifier
-  render: (props: {       // Render function
-    selected: boolean;
-    disabled: boolean;
-  }) => ReactNode;
-  disabled?: boolean;     // Disable selection
-}
-```
-</CodeBlock>
-
-</Section>
-
-<Section divider>
-
-## Specification
-
-### Dimensions
-
-<Specification data={[
-  { property: 'Min Width', value: '180px' },
-  { property: 'Padding (vertical)', value: '4px (--space-1)' },
-  { property: 'Item Height', value: '44px (12px padding)' },
-  { property: 'Item Padding', value: '12px 16px (--space-3 --space-4)' },
-  { property: 'Border Radius', value: '8px' },
-  { property: 'Icon-Label Gap', value: '8px (--space-2)' },
-  { property: 'Divider Margin', value: '4px 0 (--space-1)' },
-  { property: 'Header Padding', value: '8px 16px (--space-2 --space-4)' }
-]} />
-
-### Tokens Used
-
-| Element | Background | Text | Border |
-|---------|------------|------|--------|
-| Menu Panel | `--bg-subtle` | — | `--border-subtle` |
-| Item Default | `transparent` | `--fg-neutral` | — |
-| Item Hover/Focus | `--bg-strong` | `--fg-neutral` | — |
-| Item Selected | `transparent` | `--fg-accent` | — |
-| Item Disabled | `transparent` | `--fg-muted` | — |
-| Icon Default | — | `--fg-subtle` | — |
-| Icon Selected | — | `--fg-accent` | — |
-| Divider | — | — | `--border-subtle` |
-| Header | — | `--fg-muted` | — |
-
-### Animation
-
-- **Entrance**: Fade in + translate Y (4px → 0)
-- **Duration**: `0.15s ease`
-- **Z-index**: `10`
-
-</Section>
-
-<Section divider>
-
-## Usage
-
-### Basic Text Menu
-
-<CodeBlock language="tsx">
-```tsx
-import DropdownMenu, { type DropdownItem } from '@/components/ui/DropdownMenu';
-
-const items: DropdownItem[] = [
-  { value: 'option-1', label: 'Option 1' },
-  { value: 'option-2', label: 'Option 2' },
-  { value: 'option-3', label: 'Option 3' },
-];
-
-<DropdownMenu
+<Dropdown
+  label="Type"
   items={items}
-  selectedValue={selected}
-  onSelect={handleSelect}
-  isOpen={isOpen}
-  onClose={() => setIsOpen(false)}
+  value={type}
+  onChange={setType}
 />
 ```
 </CodeBlock>
-
-### With Icons and Sections
-
-<CodeBlock language="tsx">
-```tsx
-const items: DropdownItem[] = [
-  { type: 'header', label: 'Incidents' },
-  { type: 'icon', value: 'first-aid', label: 'First Aid', icon: 'first-aid' },
-  { type: 'icon', value: 'fire', label: 'Fire', icon: 'fire' },
-  { type: 'divider' },
-  { type: 'header', label: 'Reports' },
-  { type: 'icon', value: 'survey', label: 'Survey', icon: 'survey' },
-];
-
-<DropdownMenu
-  items={items}
-  selectedValue={selected}
-  onSelect={handleSelect}
-  isOpen={isOpen}
-  onClose={() => setIsOpen(false)}
-/>
-```
-</CodeBlock>
-
-### Custom Rendered Items
-
-<CodeBlock language="tsx">
-```tsx
-const items: DropdownItem[] = [
-  { value: 'normal', label: 'Normal Option' },
-  {
-    type: 'custom',
-    value: 'custom',
-    render: ({ selected, disabled }) => (
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <span>Custom Item</span>
-        <Badge size="xsmall" color={selected ? 'primary' : 'neutral'}>
-          New
-        </Badge>
-      </div>
-    ),
-  },
-];
-```
-</CodeBlock>
-
-### Disabled Items
-
-<CodeBlock language="tsx">
-```tsx
-const items: DropdownItem[] = [
-  { value: 'enabled', label: 'Enabled Option' },
-  { value: 'disabled', label: 'Disabled Option', disabled: true },
-  { type: 'icon', value: 'locked', label: 'Locked', icon: 'settings', disabled: true },
-];
-```
-</CodeBlock>
-
-</Section>
-
-<Section divider>
-
-## Keyboard Navigation
-
-| Key | Action |
-|-----|--------|
-| `Arrow Down` | Focus next selectable item (wraps to first) |
-| `Arrow Up` | Focus previous selectable item (wraps to last) |
-| `Enter` | Select focused item and close |
-| `Escape` | Close dropdown |
-
-**Note**: Keyboard navigation automatically skips non-selectable items (dividers and headers).
-
-</Section>
-
-<Section divider>
-
-## Accessibility
-
-- Uses `role="listbox"` for the menu container
-- Uses `role="option"` for selectable items
-- Uses `role="separator"` for dividers
-- Uses `aria-selected` to indicate selected state
-- Uses `aria-disabled` for disabled items
-- Manages focus automatically on open
-- Supports keyboard navigation
-
-</Section>
-
-<Section>
-
-## Best Practices
-
-### When to Use
-
-- Selecting from a list of 3-15 options
-- Filtering or navigation actions
-- Secondary commands in a toolbar
-- Context menus
-
-### When Not to Use
-
-- More than 15 options (consider search/autocomplete)
-- Primary page navigation (use nav elements)
-- Forms requiring multiple selections (use checkboxes)
-- Critical actions (use explicit buttons)
-
-### Content Guidelines
-
-- Keep labels concise (1-3 words)
-- Use sentence case, not title case
-- Group related items with headers
-- Use icons consistently within a menu
-- Limit icon variety (3-5 different icons max)
-- Use dividers sparingly (don't over-segment)
-
-### Positioning
-
-- Appears below trigger by default (`top: 100% + 4px`)
-- Left-aligned with trigger element
-- Consider viewport boundaries for custom positioning
-- Ensure adequate spacing from screen edges
 
 </Section>

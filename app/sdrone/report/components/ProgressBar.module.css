@@ -8,7 +8,7 @@
 
 .barContainer {
     height: 4px;
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
     border-radius: 2px;
     overflow: hidden;
 }

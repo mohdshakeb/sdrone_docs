@@ -75,7 +75,7 @@ export default function AppSidebar({ className = '' }: { className?: string }) {
                     onClick={toggleTheme}
                     aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
                     style={{
-                        background: 'var(--bg-strong)',
+                        background: 'var(--bg-emphasis)',
                         border: '1px solid var(--border-subtle)',
                         borderRadius: '9999px',
                         width: '100%',
@@ -85,7 +85,7 @@ export default function AppSidebar({ className = '' }: { className?: string }) {
                         justifyContent: 'center',
                         gap: 'var(--space-2)',
                         cursor: 'pointer',
-                        color: 'var(--fg-neutral)',
+                        color: 'var(--fg-default)',
                         transition: 'all 0.2s ease'
                     }}
                     className="text-caption-strong"

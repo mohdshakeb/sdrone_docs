@@ -12,13 +12,13 @@
 .header {
   padding: var(--space-4);
   border-bottom: 1px solid var(--border-subtle);
-  background-color: var(--bg-page);
+  background-color: var(--bg-canvas);
 }
 
 .title {
   font-size: 16px;
   font-weight: var(--font-weight-semibold);
-  color: var(--fg-neutral);
+  color: var(--fg-default);
   margin: 0 0 var(--space-2) 0;
 }
 

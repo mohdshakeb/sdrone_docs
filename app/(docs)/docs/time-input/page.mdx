@@ -1,0 +1,77 @@
+import TimeInput from '@/components/ui/TimeInput';
+
+# Time Input
+
+The TimeInput component provides a native time picker interface with consistent styling and size variants.
+
+<Section divider>
+
+## Variants
+
+### Sizes
+
+<Preview layout="flex-col" gap="24px">
+  <TimeInput size="sm" />
+  <TimeInput size="md" />
+  <TimeInput size="lg" />
+</Preview>
+
+### States
+
+<Preview layout="flex-col" gap="24px">
+  <TimeInput placeholder="Default state" />
+  <TimeInput hasError />
+  <TimeInput disabled />
+</Preview>
+
+</Section>
+
+<Section divider>
+
+## Properties
+
+<PropsTable component="TimeInput" />
+
+</Section>
+
+<Section divider>
+
+## Specification
+
+### Size Mapping
+
+Same as TextInput - see [Text Input](/docs/text-input#specification) for details.
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+import TimeInput from '@/components/ui/TimeInput';
+
+// Basic usage
+<TimeInput
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+/>
+
+// With error state
+<TimeInput
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+  hasError={!!errors.time}
+/>
+
+// Small size
+<TimeInput
+  size="sm"
+  value={time}
+  onChange={(e) => setTime(e.target.value)}
+/>
+```
+</CodeBlock>
+
+</Section>

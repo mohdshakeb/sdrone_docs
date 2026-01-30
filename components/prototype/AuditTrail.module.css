@@ -28,7 +28,7 @@
 }
 
 .headerText {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .entryCount {
@@ -103,7 +103,7 @@
 }
 
 .action {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .timestamp {

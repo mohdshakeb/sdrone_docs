@@ -1,0 +1,109 @@
+import FormField from '@/components/ui/FormField';
+import TextInput from '@/components/ui/TextInput';
+import Textarea from '@/components/ui/Textarea';
+
+# Form Field
+
+The FormField component wraps input components to provide labels, help text, and error messages with proper accessibility.
+
+<Section divider>
+
+## Variants
+
+### Basic Field
+
+<Preview layout="flex-col" gap="24px">
+  <FormField
+    id="example-name"
+    label="Full Name"
+    required
+    helpText="Enter your first and last name"
+  >
+    <TextInput placeholder="John Doe" />
+  </FormField>
+</Preview>
+
+### With Error
+
+<Preview layout="flex-col" gap="24px">
+  <FormField
+    id="example-email"
+    label="Email Address"
+    required
+    error="Please enter a valid email address"
+  >
+    <TextInput placeholder="you@example.com" hasError />
+  </FormField>
+</Preview>
+
+### With Textarea
+
+<Preview layout="flex-col" gap="24px">
+  <FormField
+    id="example-description"
+    label="Description"
+    helpText="Provide a brief description"
+  >
+    <Textarea placeholder="Enter description..." rows={3} />
+  </FormField>
+</Preview>
+
+</Section>
+
+<Section divider>
+
+## Properties
+
+<PropsTable component="FormField" />
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+import FormField from '@/components/ui/FormField';
+import TextInput from '@/components/ui/TextInput';
+
+// Basic usage
+<FormField
+  id="username"
+  label="Username"
+  required
+  helpText="Choose a unique username"
+>
+  <TextInput
+    value={username}
+    onChange={(e) => setUsername(e.target.value)}
+  />
+</FormField>
+
+// With error state
+<FormField
+  id="email"
+  label="Email"
+  required
+  error={errors.email}
+>
+  <TextInput
+    type="email"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    hasError={!!errors.email}
+  />
+</FormField>
+
+// With hidden label
+<FormField
+  id="search"
+  label="Search"
+  hideLabel
+>
+  <TextInput placeholder="Search..." />
+</FormField>
+```
+</CodeBlock>
+
+</Section>

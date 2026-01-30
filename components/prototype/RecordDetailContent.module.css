@@ -25,7 +25,7 @@
 
 .reviewText {
     margin: 0;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     white-space: pre-wrap;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .reviewValue {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     display: flex;
     flex-direction: column;
     gap: 0;

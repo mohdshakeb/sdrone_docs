@@ -51,7 +51,7 @@
 }
 
 .title {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     margin: 0;
     padding-top: var(--space-3);
 }
@@ -73,7 +73,7 @@
 
 .closeButton:hover {
     background-color: var(--bg-subtle);
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .closeButton:focus-visible {
@@ -131,7 +131,7 @@
 }
 
 .metadataValue {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 /* Description */

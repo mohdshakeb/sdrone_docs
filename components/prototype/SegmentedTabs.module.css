@@ -27,7 +27,7 @@
 }
 
 .tab:not(.tabActive):hover {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .tab:focus-visible {
@@ -36,8 +36,8 @@
 }
 
 .tabActive {
-    background-color: var(--bg-strong);
-    color: var(--fg-neutral);
+    background-color: var(--bg-emphasis);
+    color: var(--fg-default);
 }
 
 /* Mobile responsive */

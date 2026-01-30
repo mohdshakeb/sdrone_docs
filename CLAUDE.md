@@ -141,6 +141,48 @@ If developer approves a new token:
 4. Document the new token in the relevant `/docs` page
 5. Ensure consistent naming with existing tokens
 
+### Token Naming Convention
+
+The design system follows industry-standard naming patterns (Material Design 3, Radix UI, Tailwind) with clear hierarchies:
+
+**Background Tokens:**
+- `--bg-canvas` - Main page background
+- `--bg-base` - Base layer backgrounds
+- `--bg-surface` - Surface elements (cards, panels)
+- `--bg-subtle` - Subtle backgrounds
+- `--bg-emphasis` - Emphasized/contrasting backgrounds
+- `--bg-hover` - Hover state backgrounds
+- `--bg-accent` - Primary accent color
+- `--bg-accent-soft` - Light accent backgrounds
+- `--bg-accent-hover` - Accent hover state
+
+**Foreground/Text Tokens:**
+- `--fg-default` - Primary text color (most content)
+- `--fg-secondary` - Secondary text color
+- `--fg-subtle` - Subtle text (de-emphasized content)
+- `--fg-muted` - Muted text (disabled, placeholders)
+- `--fg-accent` - Accent color text
+- `--fg-accent-emphasis` - High-emphasis accent text
+- `--fg-accent-soft` - Soft accent text
+- `--fg-on-accent` - Text on accent backgrounds
+
+**Border Tokens:**
+- `--border-default` - Standard borders
+- `--border-subtle` - Subtle borders/dividers
+- `--border-emphasis` - Strong/emphasized borders
+
+**Status Tokens** (for information, negative, neutral, notice, positive, primary):
+- `--bg-{status}-soft` - Light backgrounds for status (light bg, dark text)
+- `--fg-{status}-soft` - Text for soft status backgrounds
+- `--bg-{status}-solid` - Solid backgrounds for status (dark bg, light text)
+- `--fg-{status}-solid` - Text for solid status backgrounds
+
+**Naming Principles:**
+- Hierarchy: `muted < subtle < default < emphasis` (consistent across all types)
+- Purpose-based names describe visual weight, not lightness/darkness
+- Status clarity: `-soft` (light emphasis) and `-solid` (strong emphasis)
+- Consistent patterns across light and dark themes
+
 ---
 
 ## Component Development Guidelines

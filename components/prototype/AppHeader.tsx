@@ -5,6 +5,8 @@ import { useRouter, usePathname } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import styles from './AppHeader.module.css';
 import { Icon } from '@/components/ui/Icon';
+import Link from 'next/link';
+import { useTheme } from '@/components/ui/ThemeProvider';
 
 // Breadcrumb item for innerPage variant
 export interface BreadcrumbItem {
@@ -14,7 +16,7 @@ export interface BreadcrumbItem {
 
 export interface AppHeaderProps {
     // Variant control
-    variant?: 'default' | 'form' | 'innerPage';
+    variant?: 'default' | 'form' | 'innerPage' | 'docs';
 
     // Form variant props
     formTitle?: string;
@@ -50,6 +52,13 @@ export default function AppHeader({
 }: AppHeaderProps = {}) {
     const router = useRouter();
     const pathname = usePathname();
+
+    const { theme, toggleTheme } = useTheme();
+    const [mounted, setMounted] = React.useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const getPageTitle = () => {
         if (pathname === '/sdrone') return 'Inbox';
@@ -93,13 +102,14 @@ export default function AppHeader({
         return (
             <header className={styles.header}>
                 <div className={styles.innerPageLeft}>
-                    <button
-                        className={styles.formBackButton}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        iconOnly
                         onClick={handleBackClick}
                         aria-label="Go back"
-                    >
-                        <Icon name="arrow-left" size={20} />
-                    </button>
+                        leadingIcon={<Icon name="arrow-left" size={20} />}
+                    />
                     <h1 className={`${styles.innerPageTitle} text-body-strong`}>
                         {innerPageTitle}
                     </h1>
@@ -153,13 +163,14 @@ export default function AppHeader({
             return (
                 <header className={styles.header}>
                     <div className={styles.formLeft}>
-                        <button
-                            className={styles.formBackButton}
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            iconOnly
                             onClick={onFormBack}
                             aria-label="Go back"
-                        >
-                            <Icon name="arrow-left" size={20} />
-                        </button>
+                            leadingIcon={<Icon name="arrow-left" size={20} />}
+                        />
                         <h1 className={`${styles.formTitle} text-body-strong`}>{formTitle}</h1>
                     </div>
                 </header>
@@ -169,13 +180,14 @@ export default function AppHeader({
         return (
             <header className={styles.header}>
                 <div className={styles.formLeft}>
-                    <button
-                        className={styles.formBackButton}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        iconOnly
                         onClick={onFormBack}
                         aria-label="Go back to previous step"
-                    >
-                        <Icon name="arrow-left" size={20} />
-                    </button>
+                        leadingIcon={<Icon name="arrow-left" size={20} />}
+                    />
                     <h1 className={`${styles.formTitle} text-body-strong`}>{formTitle}</h1>
                 </div>
 
@@ -208,6 +220,46 @@ export default function AppHeader({
         );
     }
 
+    // Documentation variant
+    if (variant === 'docs') {
+        return (
+            <header className={styles.header}>
+                <div className={styles.left}>
+                    <Link href="/" className={styles.brand}>
+                        Design System
+                    </Link>
+                </div>
+
+                <div className={styles.right}>
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        iconOnly
+                        onClick={toggleTheme}
+                        aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
+                    >
+                        {!mounted ? (
+                            <div style={{ width: 20, height: 20 }} />
+                        ) : theme === 'light' ? (
+                            <Icon name="moon" size={20} />
+                        ) : (
+                            <Icon name="sun" size={20} />
+                        )}
+                    </Button>
+
+                    <Button
+                        size="sm"
+                        variant="primary"
+                        href="/sdrone"
+                        target="_blank"
+                    >
+                        Prototype
+                    </Button>
+                </div>
+            </header>
+        );
+    }
+
     // Default variant rendering
     return (
         <header className={styles.header}>
@@ -228,8 +280,13 @@ export default function AppHeader({
 
                 <div className={styles.divider} />
 
-                <Button size="sm" variant="negative" leadingIcon={<Icon name="sos" size={24} />}>
-                </Button>
+                <Button
+                    size="sm"
+                    variant="negative"
+                    iconOnly
+                    leadingIcon={<Icon name="sos" size={24} />}
+                    aria-label="SOS"
+                />
             </div>
         </header>
     );

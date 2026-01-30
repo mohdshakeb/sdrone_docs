@@ -5,55 +5,115 @@ import { BaseModal } from './BaseModal';
 import Button from './Button';
 import styles from './Modal.module.css';
 
-// List item for list-based modals
+/** List item option for list-based modals */
 export interface ModalListItem {
+  /** Unique value for the list item */
   value: string;
+  /** Display label for the list item */
   label: string;
+  /** Whether the item is disabled and cannot be selected */
   disabled?: boolean;
 }
 
-// List Modal Props
+/** Props for list selection modal variant */
 export interface ListModalProps {
+  /** Modal variant type */
   variant: 'list';
+  /** Whether the modal is open */
   isOpen: boolean;
+  /** Callback when modal is closed */
   onClose: () => void;
+  /** Modal title */
   title: string;
+  /** Array of selectable list items */
   items: ModalListItem[];
+  /** Currently selected value */
   selectedValue?: string;
+  /** Callback when user confirms selection */
   onConfirm: (value: string) => void;
+  /** Label for confirm button
+   * @default 'Confirm'
+   */
   confirmLabel?: string;
+  /** Label for cancel button
+   * @default 'Cancel'
+   */
   cancelLabel?: string;
+  /** Whether to show the close button
+   * @default true
+   */
   showCloseButton?: boolean;
+  /** Modal size
+   * @default 'md'
+   */
   size?: 'sm' | 'md' | 'lg';
+  /** Additional CSS class name */
   className?: string;
 }
 
-// Info Modal Props
+/** Props for informational modal variant */
 export interface InfoModalProps {
+  /** Modal variant type */
   variant: 'info';
+  /** Whether the modal is open */
   isOpen: boolean;
+  /** Callback when modal is closed */
   onClose: () => void;
+  /** Modal title */
   title: string;
+  /** Modal content */
   children: React.ReactNode;
+  /** Label for dismiss button
+   * @default 'OK'
+   */
   dismissLabel?: string;
+  /** Whether to show the close button
+   * @default true
+   */
   showCloseButton?: boolean;
+  /** Modal size
+   * @default 'md'
+   */
   size?: 'sm' | 'md' | 'lg';
+  /** Additional CSS class name */
   className?: string;
 }
 
-// Action Modal Props
+/** Props for action confirmation modal variant */
 export interface ActionModalProps {
+  /** Modal variant type */
   variant: 'action';
+  /** Whether the modal is open */
   isOpen: boolean;
+  /** Callback when modal is closed */
   onClose: () => void;
+  /** Modal title */
   title: string;
+  /** Modal content */
   children: React.ReactNode;
+  /** Callback when user confirms the action */
   onConfirm: () => void;
+  /** Label for confirm button
+   * @default 'Confirm'
+   */
   confirmLabel?: string;
+  /** Label for cancel button
+   * @default 'Cancel'
+   */
   cancelLabel?: string;
+  /** Visual variant for confirm button
+   * @default 'primary'
+   */
   confirmVariant?: 'primary' | 'negative' | 'positive';
+  /** Whether to show the close button
+   * @default true
+   */
   showCloseButton?: boolean;
+  /** Modal size
+   * @default 'md'
+   */
   size?: 'sm' | 'md' | 'lg';
+  /** Additional CSS class name */
   className?: string;
 }
 

@@ -18,7 +18,7 @@
 }
 
 .button:disabled {
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
     color: var(--fg-muted);
     cursor: not-allowed;
 }
@@ -81,6 +81,27 @@
     padding-right: var(--space-6);
 }
 
+/* Icon-only sizing overrides */
+.xs.iconOnly {
+    width: 28px;
+    padding: 0;
+}
+
+.sm.iconOnly {
+    width: 32px;
+    padding: 0;
+}
+
+.md.iconOnly {
+    width: 40px;
+    padding: 0;
+}
+
+.lg.iconOnly {
+    width: 48px;
+    padding: 0;
+}
+
 /* Variants */
 .primary {
     background-color: var(--bg-accent);
@@ -97,8 +118,8 @@
 }
 
 .secondary {
-    background-color: var(--bg-strong);
-    color: var(--fg-neutral);
+    background-color: var(--bg-emphasis);
+    color: var(--fg-default);
     border-color: transparent;
 }
 
@@ -108,12 +129,12 @@
 }
 
 .secondary:active:not(:disabled) {
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
     filter: brightness(95%);
 }
 
 .negative {
-    background-color: var(--bg-negative-intense);
+    background-color: var(--bg-negative-solid);
     color: var(--color-white);
     border-color: transparent;
 }
@@ -127,7 +148,7 @@
 }
 
 .notice {
-    background-color: var(--bg-notice-intense);
+    background-color: var(--bg-notice-solid);
     color: var(--color-white);
     border-color: transparent;
 }
@@ -140,8 +161,23 @@
     filter: brightness(90%);
 }
 
+.ghost {
+    background-color: transparent;
+    color: var(--fg-subtle);
+    border-color: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+    background-color: var(--bg-hover);
+    color: var(--fg-default);
+}
+
+.ghost:active:not(:disabled) {
+    background-color: var(--bg-emphasis);
+}
+
 .positive {
-    background-color: var(--bg-positive-intense);
+    background-color: var(--bg-positive-solid);
     color: var(--color-white);
     border-color: transparent;
 }

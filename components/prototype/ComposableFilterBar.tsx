@@ -99,27 +99,27 @@ export const ComposableFilterBar: React.FC<ComposableFilterBarProps> = ({
 
                 // Compute display value for FilterChip
                 let displayValue: string | undefined;
+                let displayCount: number | undefined;
+
                 if (count > 0) {
-                    // Find first selected option from either items or options
-                    let firstLabel = selectedValues[0];
-                    if (config.items) {
-                        const firstItem = config.items.find(
-                            (item) => item.type !== 'divider' && item.type !== 'header' && item.value === selectedValues[0]
-                        );
-                        if (firstItem && firstItem.type !== 'divider' && firstItem.type !== 'header') {
-                            // Handle different item types
-                            if (firstItem.type === 'text' || firstItem.type === 'icon') {
-                                firstLabel = firstItem.label;
-                            } else {
-                                // Custom type - use value as fallback
-                                firstLabel = firstItem.value;
+                    if (count === 1) {
+                        // Find label for single selection
+                        const firstVal = selectedValues[0];
+                        if (config.items) {
+                            const firstItem = config.items.find(
+                                (item) => item.type !== 'divider' && item.type !== 'header' && item.value === firstVal
+                            );
+                            if (firstItem && (firstItem.type === 'text' || firstItem.type === 'icon')) {
+                                displayValue = firstItem.label;
                             }
+                        } else if (config.options) {
+                            const firstOption = config.options.find((opt) => opt.value === firstVal);
+                            displayValue = firstOption?.label || firstVal;
                         }
-                    } else if (config.options) {
-                        const firstOption = config.options.find((opt) => opt.value === selectedValues[0]);
-                        firstLabel = firstOption?.label || selectedValues[0];
+                    } else {
+                        // For multiple, use the badge
+                        displayCount = count;
                     }
-                    displayValue = count > 1 ? `${firstLabel} +${count - 1}` : firstLabel;
                 }
 
                 return (
@@ -133,6 +133,7 @@ export const ComposableFilterBar: React.FC<ComposableFilterBarProps> = ({
                             items={config.items}
                             value={selectedValues[0] || null}
                             displayValue={displayValue || null}
+                            count={displayCount}
                             selectedValues={selectedValues}
                             onChange={(value) => {
                                 if (value === null) {

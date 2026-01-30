@@ -48,14 +48,14 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background-color: var(--bg-accent-subtle);
+    background-color: var(--bg-accent-soft);
     color: var(--fg-accent);
     margin-bottom: var(--space-2);
 }
 
 .entryTitle {
     margin: 0;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .entryDescription {
@@ -121,7 +121,7 @@
 
 .reviewText {
     margin: 0;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     white-space: pre-wrap;
 }
 
@@ -148,5 +148,5 @@
 }
 
 .reviewValue {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }

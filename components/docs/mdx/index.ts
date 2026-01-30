@@ -4,6 +4,9 @@
 export { Preview } from './Preview';
 export type { PreviewProps } from './Preview';
 
+export { DocItem } from './DocItem';
+export type { DocItemProps } from './DocItem';
+
 export { PropsTable } from './PropsTable';
 export type { PropsTableProps, PropRow } from './PropsTable';
 

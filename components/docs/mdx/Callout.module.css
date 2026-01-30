@@ -9,33 +9,33 @@
 
 /* Type Variants */
 .type-note {
-  background-color: var(--bg-neutral-subtle);
-  border-color: var(--fg-neutral-subtle);
-  color: var(--fg-neutral);
+  background-color: var(--bg-neutral-soft);
+  border-color: var(--fg-neutral-soft);
+  color: var(--fg-default);
 }
 
 .type-info {
-  background-color: var(--bg-information-subtle);
-  border-color: var(--fg-information-subtle);
-  color: var(--fg-neutral);
+  background-color: var(--bg-information-soft);
+  border-color: var(--fg-information-soft);
+  color: var(--fg-default);
 }
 
 .type-warning {
-  background-color: var(--bg-notice-subtle);
-  border-color: var(--fg-notice-subtle);
-  color: var(--fg-neutral);
+  background-color: var(--bg-notice-soft);
+  border-color: var(--fg-notice-soft);
+  color: var(--fg-default);
 }
 
 .type-error {
-  background-color: var(--bg-negative-subtle);
-  border-color: var(--fg-negative-subtle);
-  color: var(--fg-neutral);
+  background-color: var(--bg-negative-soft);
+  border-color: var(--fg-negative-soft);
+  color: var(--fg-default);
 }
 
 .type-success {
-  background-color: var(--bg-positive-subtle);
-  border-color: var(--fg-positive-subtle);
-  color: var(--fg-neutral);
+  background-color: var(--bg-positive-soft);
+  border-color: var(--fg-positive-soft);
+  color: var(--fg-default);
 }
 
 /* Header */
@@ -49,7 +49,7 @@
 }
 
 .title {
-  color: var(--fg-neutral);
+  color: var(--fg-default);
 }
 
 /* Content */

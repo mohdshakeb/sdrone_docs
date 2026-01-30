@@ -1,11 +1,17 @@
 import Dropdown from '@/components/ui/Dropdown';
 
-interface DatePickerDropdownProps {
+export interface DatePickerDropdownProps {
+    /** Label for the date picker */
     label: string;
+    /** Currently selected date value */
     value: Date | null;
+    /** Callback when date selection changes */
     onChange: (value: Date | null) => void;
+    /** Disabled state */
     disabled?: boolean;
+    /** Minimum selectable date */
     minDate?: Date;
+    /** Maximum selectable date */
     maxDate?: Date;
 }
 

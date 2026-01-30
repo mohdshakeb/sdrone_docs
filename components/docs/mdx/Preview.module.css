@@ -2,14 +2,14 @@
 
 .preview {
   border-radius: 8px;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-default);
   margin-block: var(--space-6);
   overflow: hidden;
 }
 
 /* Background Variants */
 .bg-default {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-canvas);
 }
 
 .bg-subtle {
@@ -17,7 +17,7 @@
 }
 
 .bg-strong {
-  background-color: var(--bg-page);
+  background-color: var(--bg-canvas);
 }
 
 /* Padding Variants */
@@ -57,14 +57,29 @@
 /* Alignment */
 .align-start {
   align-items: flex-start;
+  justify-content: flex-start;
 }
 
 .align-center {
   align-items: center;
+  justify-content: center;
+}
+
+/* 
+ * doc-item: A utility for documentation blocks (e.g., Label + Component).
+ * It creates a vertical stack that is centered relative to its host.
+ */
+.doc-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .align-end {
   align-items: flex-end;
+  justify-content: flex-end;
 }
 
 /* Layout: Flex Wrap (default) */
@@ -73,8 +88,9 @@
   flex-wrap: wrap;
 }
 
-/* Layout: Stack */
-.layout-stack {
+/* Layout: Stack / Vertical */
+.layout-stack,
+.layout-flex-col {
   display: flex;
   flex-direction: column;
 }
@@ -99,6 +115,7 @@
 
 /* Responsive: Collapse grids to single column on mobile */
 @media (max-width: 640px) {
+
   .layout-grid-2,
   .layout-grid-3,
   .layout-grid-4 {

@@ -74,10 +74,15 @@ const SosIcon = ({ size, color, className }: { size?: number | string; color?: s
     />
 );
 
-interface IconProps extends React.SVGAttributes<SVGElement> {
+export interface IconProps extends React.SVGAttributes<SVGElement> {
+    /** Icon identifier from the available icon set */
     name: IconName;
+    /** Icon size in pixels
+     * @default 20
+     */
     size?: IconSize;
-    color?: string; // Optional, defaults to currentColor
+    /** Icon color (defaults to currentColor if not specified) */
+    color?: string;
 }
 
 const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; color?: string; className?: string }>> = {

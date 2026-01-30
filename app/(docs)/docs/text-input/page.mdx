@@ -1,0 +1,91 @@
+import TextInput from '@/components/ui/TextInput';
+
+# Text Input
+
+The TextInput component provides a single-line text entry field with consistent styling and error state support.
+
+<Section divider>
+
+## Variants
+
+### Sizes
+
+<Preview layout="flex-wrap" gap="md">
+  <TextInput placeholder="Small size" size="sm" fullWidth={false} />
+  <TextInput placeholder="Medium size (default)" size="md" fullWidth={false} />
+  <TextInput placeholder="Large size" size="lg" fullWidth={false} />
+</Preview>
+
+### States
+
+<Preview layout="flex-col" gap="lg">
+  <TextInput placeholder="Default state" />
+  <TextInput placeholder="Error state" hasError />
+  <TextInput placeholder="Disabled state" disabled />
+</Preview>
+
+</Section>
+
+<Section divider>
+
+## Properties
+
+<PropsTable component="TextInput" />
+
+</Section>
+
+<Section divider>
+
+## Specification
+
+### Size Mapping
+
+| Size | Height | Padding (H) | Padding (V) | Font Size |
+|------|--------|-------------|-------------|-----------|
+| `sm` | 32px | 12px | 8px | 12px |
+| `md` | 40px | 16px | 12px | 14px |
+| `lg` | 48px | 20px | 16px | 16px |
+
+### Color Tokens
+
+| State | Background | Border | Text |
+|-------|------------|--------|------|
+| Default | `--bg-default` | `--border-strong` | `--fg-default` |
+| Focus | `--bg-default` | `--border-accent` | `--fg-default` |
+| Error | `--bg-default` | `--border-negative` | `--fg-default` |
+| Disabled | `--bg-subtle` | `--border-muted` | `--fg-muted` |
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+import TextInput from '@/components/ui/TextInput';
+
+// Basic usage
+<TextInput
+  placeholder="Enter your name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+/>
+
+// With error state
+<TextInput
+  placeholder="Email address"
+  hasError={!!errors.email}
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
+
+// Small size
+<TextInput
+  size="sm"
+  placeholder="Search..."
+/>
+```
+</CodeBlock>
+
+</Section>

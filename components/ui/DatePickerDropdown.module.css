@@ -39,7 +39,7 @@
 
 .monthYear {
     font-weight: var(--font-weight-medium);
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .navButtons {
@@ -63,8 +63,8 @@
 }
 
 .navButton:hover {
-    background-color: var(--bg-strong);
-    color: var(--fg-neutral);
+    background-color: var(--bg-emphasis);
+    color: var(--fg-default);
 }
 
 .navButton:focus-visible {
@@ -107,7 +107,7 @@
     background: transparent;
     border: none;
     border-radius: 50%;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     cursor: pointer;
     transition: background-color 0.1s ease, color 0.1s ease;
     font-family: inherit;
@@ -115,7 +115,7 @@
 }
 
 .day:hover:not(.dayDisabled):not(.daySelected) {
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
 }
 
 .day:focus-visible {
@@ -177,8 +177,8 @@
 }
 
 .clearDateButton:hover {
-    background-color: var(--bg-strong);
-    color: var(--fg-neutral);
+    background-color: var(--bg-emphasis);
+    color: var(--fg-default);
 }
 
 .clearDateButton:focus-visible {

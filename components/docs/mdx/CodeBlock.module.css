@@ -5,7 +5,7 @@
   border-radius: 8px;
   border: 1px solid var(--border-subtle);
   overflow: hidden;
-  background-color: var(--bg-page);
+  background-color: var(--bg-canvas);
 }
 
 /* Header */
@@ -30,7 +30,7 @@
 .filename {
   font-family: var(--font-mono);
   font-size: 13px;
-  color: var(--fg-neutral);
+  color: var(--fg-default);
   font-weight: var(--font-weight-medium);
   white-space: nowrap;
   overflow: hidden;
@@ -41,7 +41,7 @@
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--fg-muted);
-  background-color: var(--bg-page);
+  background-color: var(--bg-canvas);
   padding: 2px 8px;
   border-radius: 4px;
   text-transform: lowercase;
@@ -55,7 +55,7 @@
   gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   background-color: var(--bg-surface);
-  border: 1px solid var(--border-base);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   color: var(--fg-subtle);
   font-size: 13px;
@@ -66,9 +66,9 @@
 }
 
 .copyButton:hover {
-  background-color: var(--bg-page);
-  border-color: var(--border-strong);
-  color: var(--fg-neutral);
+  background-color: var(--bg-canvas);
+  border-color: var(--border-emphasis);
+  color: var(--fg-default);
 }
 
 .copyButton:active {
@@ -90,7 +90,7 @@
   width: 32px;
   height: 32px;
   background-color: var(--bg-surface);
-  border: 1px solid var(--border-base);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   color: var(--fg-subtle);
   cursor: pointer;
@@ -99,9 +99,9 @@
 }
 
 .floatingCopyButton:hover {
-  background-color: var(--bg-page);
-  border-color: var(--border-strong);
-  color: var(--fg-neutral);
+  background-color: var(--bg-canvas);
+  border-color: var(--border-emphasis);
+  color: var(--fg-default);
   opacity: 1;
 }
 
@@ -127,7 +127,7 @@
 
 .code {
   font-family: inherit;
-  color: var(--fg-neutral);
+  color: var(--fg-default);
   background: transparent;
 }
 
@@ -138,16 +138,16 @@
 }
 
 .codeContainer::-webkit-scrollbar-track {
-  background-color: var(--bg-page);
+  background-color: var(--bg-canvas);
 }
 
 .codeContainer::-webkit-scrollbar-thumb {
-  background-color: var(--border-base);
+  background-color: var(--border-default);
   border-radius: 4px;
 }
 
 .codeContainer::-webkit-scrollbar-thumb:hover {
-  background-color: var(--border-strong);
+  background-color: var(--border-emphasis);
 }
 
 /* Mobile responsive */

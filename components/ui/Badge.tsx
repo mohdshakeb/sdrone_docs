@@ -15,11 +15,22 @@ const SIZE_TO_TYPOGRAPHY: Record<BadgeSize, string> = {
     large: 'text-body-strong',
 };
 
-interface BadgeProps {
+export interface BadgeProps {
+    /** Badge content/label */
     children: React.ReactNode;
+    /** Color variant of the badge
+     * @default 'neutral'
+     */
     color?: BadgeColor;
+    /** Size variant of the badge
+     * @default 'medium'
+     */
     size?: BadgeSize;
+    /** Visual emphasis level
+     * @default 'subtle'
+     */
     emphasis?: BadgeEmphasis;
+    /** Additional CSS class name */
     className?: string;
 }
 

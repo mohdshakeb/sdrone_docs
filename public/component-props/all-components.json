@@ -1,0 +1,913 @@
+{
+  "TimeInput": {
+    "componentName": "TimeInput",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "Size variant of the input",
+        "defaultValue": "md"
+      },
+      {
+        "name": "hasError",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the input has an error",
+        "defaultValue": "false"
+      },
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "required": false,
+        "description": "Full width input",
+        "defaultValue": "true"
+      }
+    ],
+    "filePath": "components/ui/TimeInput.tsx"
+  },
+  "Textarea": {
+    "componentName": "Textarea",
+    "description": "",
+    "props": [
+      {
+        "name": "hasError",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the textarea has an error",
+        "defaultValue": "false"
+      },
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "required": false,
+        "description": "Full width textarea",
+        "defaultValue": "true"
+      },
+      {
+        "name": "showCharCount",
+        "type": "boolean",
+        "required": false,
+        "description": "Show character count",
+        "defaultValue": "false"
+      },
+      {
+        "name": "maxLength",
+        "type": "number",
+        "required": false,
+        "description": "Maximum character count (for display purposes)"
+      },
+      {
+        "name": "resize",
+        "type": "\"none\" | \"vertical\" | \"horizontal\" | \"both\"",
+        "required": false,
+        "description": "Whether the textarea is resizable",
+        "defaultValue": "vertical"
+      }
+    ],
+    "filePath": "components/ui/Textarea.tsx"
+  },
+  "TextInput": {
+    "componentName": "TextInput",
+    "description": "",
+    "props": [
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "Size variant of the input",
+        "defaultValue": "md"
+      },
+      {
+        "name": "hasError",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the input has an error",
+        "defaultValue": "false"
+      },
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "required": false,
+        "description": "Full width input",
+        "defaultValue": "true"
+      }
+    ],
+    "filePath": "components/ui/TextInput.tsx"
+  },
+  "Select": {
+    "componentName": "Select",
+    "description": "",
+    "props": [
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "required": true,
+        "description": "Available options"
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "description": "Placeholder text (shown as disabled first option)"
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "Size variant",
+        "defaultValue": "md"
+      },
+      {
+        "name": "hasError",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the select has an error",
+        "defaultValue": "false"
+      },
+      {
+        "name": "fullWidth",
+        "type": "boolean",
+        "required": false,
+        "description": "Full width select",
+        "defaultValue": "true"
+      }
+    ],
+    "filePath": "components/ui/Select.tsx"
+  },
+  "RadioGroup": {
+    "componentName": "RadioGroup",
+    "description": "",
+    "props": [
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "description": "Unique name for the radio group"
+      },
+      {
+        "name": "options",
+        "type": "RadioOption[]",
+        "required": true,
+        "description": "Available options"
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "description": "Currently selected value"
+      },
+      {
+        "name": "onChange",
+        "type": "(value: string) => void",
+        "required": false,
+        "description": "Callback when selection changes"
+      },
+      {
+        "name": "direction",
+        "type": "\"vertical\" | \"horizontal\"",
+        "required": false,
+        "description": "Layout direction",
+        "defaultValue": "vertical"
+      },
+      {
+        "name": "hasError",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the field has an error",
+        "defaultValue": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Disable all options",
+        "defaultValue": "false"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional className",
+        "defaultValue": ""
+      },
+      {
+        "name": "aria-label",
+        "type": "string",
+        "required": false,
+        "description": "ARIA label for the group"
+      },
+      {
+        "name": "aria-labelledby",
+        "type": "string",
+        "required": false,
+        "description": "ARIA labelledby for the group"
+      }
+    ],
+    "filePath": "components/ui/RadioGroup.tsx"
+  },
+  "ModalVariants": {
+    "componentName": "ModalVariants",
+    "description": "ListModal - Selection modal with list of options",
+    "props": [
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the modal is open"
+      },
+      {
+        "name": "onClose",
+        "type": "() => void",
+        "required": true,
+        "description": "Callback when modal is closed"
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "description": "Modal title"
+      },
+      {
+        "name": "items",
+        "type": "ModalListItem[]",
+        "required": true,
+        "description": "Array of selectable list items"
+      },
+      {
+        "name": "selectedValue",
+        "type": "string",
+        "required": false,
+        "description": "Currently selected value",
+        "defaultValue": ""
+      },
+      {
+        "name": "onConfirm",
+        "type": "(value: string) => void",
+        "required": true,
+        "description": "Callback when user confirms selection"
+      },
+      {
+        "name": "confirmLabel",
+        "type": "string",
+        "required": false,
+        "description": "Label for confirm button",
+        "defaultValue": "Confirm"
+      },
+      {
+        "name": "cancelLabel",
+        "type": "string",
+        "required": false,
+        "description": "Label for cancel button",
+        "defaultValue": "Cancel"
+      },
+      {
+        "name": "showCloseButton",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether to show the close button",
+        "defaultValue": "true"
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "Modal size",
+        "defaultValue": "md"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS class name",
+        "defaultValue": ""
+      }
+    ],
+    "filePath": "components/ui/ModalVariants.tsx"
+  },
+  "Modal": {
+    "componentName": "Modal",
+    "description": "List item option for list-based modals",
+    "props": [],
+    "filePath": "components/ui/Modal.tsx"
+  },
+  "Icon": {
+    "componentName": "Icon",
+    "description": "",
+    "props": [
+      {
+        "name": "name",
+        "type": "\"inbox\" | \"archive\" | \"alert\" | \"chart\" | \"settings\" | \"add\" | \"arrow-down\" | \"arrow-up\" | \"chevron-down\" | \"sun\" | \"moon\" | \"history\" | \"fire\" | \"close\" | \"user\" | \"survey\" | \"first-aid\" | \"menu\" | \"sos\" | \"upload\" | \"file\" | \"image\" | \"check\" | \"arrow-left\" | \"arrow-right\" | \"delete\" | \"search\" | \"filter\"",
+        "required": true,
+        "description": "Icon identifier from the available icon set"
+      },
+      {
+        "name": "size",
+        "type": "14 | 16 | 20 | 24 | 32",
+        "required": false,
+        "description": "Icon size in pixels",
+        "defaultValue": "20"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "required": false,
+        "description": "Icon color (defaults to currentColor if not specified)"
+      }
+    ],
+    "filePath": "components/ui/Icon.tsx"
+  },
+  "FormField": {
+    "componentName": "FormField",
+    "description": "",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true,
+        "description": "Unique identifier for associating label with input"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "description": "Label text displayed above the input"
+      },
+      {
+        "name": "required",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the field is required",
+        "defaultValue": "false"
+      },
+      {
+        "name": "error",
+        "type": "string",
+        "required": false,
+        "description": "Error message to display"
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false,
+        "description": "Help text displayed below the input"
+      },
+      {
+        "name": "hideLabel",
+        "type": "boolean",
+        "required": false,
+        "description": "Hide the label visually (still accessible to screen readers)",
+        "defaultValue": "false"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "description": "Children - the actual input element"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional className for the wrapper",
+        "defaultValue": ""
+      },
+      {
+        "name": "charCount",
+        "type": "number",
+        "required": false,
+        "description": "Current character count for display"
+      },
+      {
+        "name": "maxLength",
+        "type": "number",
+        "required": false,
+        "description": "Maximum character count to display alongside charCount"
+      }
+    ],
+    "filePath": "components/ui/FormField.tsx"
+  },
+  "FilterChipDropdown": {
+    "componentName": "FilterChipDropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "DropdownOption[]",
+        "required": false,
+        "description": "@deprecated Use `items` instead"
+      },
+      {
+        "name": "items",
+        "type": "DropdownItem[]",
+        "required": false,
+        "description": "New discriminated union items prop"
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "(value: string) => void",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "filePath": "components/ui/FilterChipDropdown.tsx"
+  },
+  "FilterChip": {
+    "componentName": "FilterChip",
+    "description": "",
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "description": "Filter label/name displayed in the chip"
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": false,
+        "description": "Selected value text (shown when single value is selected)"
+      },
+      {
+        "name": "selected",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the filter is currently selected",
+        "defaultValue": "false"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "required": false,
+        "description": "Number of selected items (shown when multiple values are selected)"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Disabled state",
+        "defaultValue": "false"
+      },
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the dropdown is currently open",
+        "defaultValue": "false"
+      },
+      {
+        "name": "onClick",
+        "type": "() => void",
+        "required": false,
+        "description": "Callback when the chip is clicked"
+      },
+      {
+        "name": "onClear",
+        "type": "(e: MouseEvent<Element, MouseEvent>) => void",
+        "required": false,
+        "description": "Callback when the clear button is clicked"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS class name",
+        "defaultValue": ""
+      }
+    ],
+    "filePath": "components/ui/FilterChip.tsx"
+  },
+  "FileInput": {
+    "componentName": "FileInput",
+    "description": "",
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "description": "Unique identifier"
+      },
+      {
+        "name": "accept",
+        "type": "string",
+        "required": false,
+        "description": "Accepted file types (e.g., 'image/*', '.pdf,.doc')"
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "required": false,
+        "description": "Allow multiple file selection",
+        "defaultValue": "false"
+      },
+      {
+        "name": "maxFiles",
+        "type": "number",
+        "required": false,
+        "description": "Maximum number of files allowed",
+        "defaultValue": "10"
+      },
+      {
+        "name": "maxSize",
+        "type": "number",
+        "required": false,
+        "description": "Maximum file size in bytes"
+      },
+      {
+        "name": "files",
+        "type": "File[]",
+        "required": false,
+        "description": "Current files (controlled)",
+        "defaultValue": "[]"
+      },
+      {
+        "name": "onChange",
+        "type": "(files: File[]) => void",
+        "required": false,
+        "description": "Callback when files change"
+      },
+      {
+        "name": "hasError",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the field has an error",
+        "defaultValue": "false"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Disabled state",
+        "defaultValue": "false"
+      },
+      {
+        "name": "placeholder",
+        "type": "string",
+        "required": false,
+        "description": "Custom placeholder text",
+        "defaultValue": "Drag files here or click to browse"
+      },
+      {
+        "name": "helpText",
+        "type": "string",
+        "required": false,
+        "description": "Help text shown below dropzone"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional className",
+        "defaultValue": ""
+      }
+    ],
+    "filePath": "components/ui/FileInput.tsx"
+  },
+  "DropdownMenu": {
+    "componentName": "DropdownMenu",
+    "description": "",
+    "props": [
+      {
+        "name": "options",
+        "type": "DropdownOption[]",
+        "required": false,
+        "description": "@deprecated Use `items` instead"
+      },
+      {
+        "name": "items",
+        "type": "DropdownItem[]",
+        "required": false,
+        "description": "Dropdown items with support for text, icons, headers, dividers, and custom rendering"
+      },
+      {
+        "name": "selectedValue",
+        "type": "string",
+        "required": false,
+        "description": "Currently selected value (for single selection)"
+      },
+      {
+        "name": "selectedValues",
+        "type": "string[]",
+        "required": false,
+        "description": "Array of selected values for multiselect (takes precedence over selectedValue)"
+      },
+      {
+        "name": "onSelect",
+        "type": "(value: string) => void",
+        "required": true,
+        "description": "Callback when an item is selected"
+      },
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": "Whether the dropdown menu is currently open"
+      },
+      {
+        "name": "onClose",
+        "type": "() => void",
+        "required": true,
+        "description": "Callback to close the dropdown"
+      }
+    ],
+    "filePath": "components/ui/DropdownMenu.tsx"
+  },
+  "Dropdown": {
+    "componentName": "Dropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"list\" | \"date\"",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "DropdownOption[]",
+        "required": false,
+        "description": "@deprecated Use `items` instead"
+      },
+      {
+        "name": "items",
+        "type": "DropdownItem[]",
+        "required": false,
+        "description": "New discriminated union items prop"
+      },
+      {
+        "name": "value",
+        "type": "string | Date",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "displayValue",
+        "type": "string",
+        "required": false,
+        "description": "Override the displayed value in FilterChip (useful for multiselect)"
+      },
+      {
+        "name": "selectedValues",
+        "type": "string[]",
+        "required": false,
+        "description": "Array of selected values for multiselect checkmarks"
+      },
+      {
+        "name": "onChange",
+        "type": "((value: string) => void) | ((value: Date) => void)",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "minDate",
+        "type": "Date",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "maxDate",
+        "type": "Date",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "filePath": "components/ui/Dropdown.tsx"
+  },
+  "DatePickerDropdown": {
+    "componentName": "DatePickerDropdown",
+    "description": "",
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "description": "Label for the date picker"
+      },
+      {
+        "name": "value",
+        "type": "Date",
+        "required": true,
+        "description": "Currently selected date value"
+      },
+      {
+        "name": "onChange",
+        "type": "(value: Date) => void",
+        "required": true,
+        "description": "Callback when date selection changes"
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "description": "Disabled state"
+      },
+      {
+        "name": "minDate",
+        "type": "Date",
+        "required": false,
+        "description": "Minimum selectable date"
+      },
+      {
+        "name": "maxDate",
+        "type": "Date",
+        "required": false,
+        "description": "Maximum selectable date"
+      }
+    ],
+    "filePath": "components/ui/DatePickerDropdown.tsx"
+  },
+  "CalendarPanel": {
+    "componentName": "CalendarPanel",
+    "description": "",
+    "props": [],
+    "filePath": "components/ui/CalendarPanel.tsx"
+  },
+  "Button": {
+    "componentName": "Button",
+    "description": "",
+    "props": [
+      {
+        "name": "variant",
+        "type": "\"primary\" | \"secondary\" | \"negative\" | \"notice\" | \"positive\" | \"ghost\"",
+        "required": false,
+        "description": "Visual style variant of the button",
+        "defaultValue": "primary"
+      },
+      {
+        "name": "size",
+        "type": "\"xs\" | \"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "Size of the button",
+        "defaultValue": "md"
+      },
+      {
+        "name": "iconOnly",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the button only contains an icon (for square/circular layout)",
+        "defaultValue": "false"
+      },
+      {
+        "name": "leadingIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Icon displayed before the button text"
+      },
+      {
+        "name": "trailingIcon",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Icon displayed after the button text"
+      },
+      {
+        "name": "href",
+        "type": "string",
+        "required": false,
+        "description": "When provided, renders the button as a Next.js Link"
+      },
+      {
+        "name": "target",
+        "type": "string",
+        "required": false,
+        "description": "Link target attribute (only used when href is provided)"
+      },
+      {
+        "name": "rel",
+        "type": "string",
+        "required": false,
+        "description": "Rel attribute for security (e.g., 'noopener noreferrer')"
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "description": "Button label content"
+      }
+    ],
+    "filePath": "components/ui/Button.tsx"
+  },
+  "BaseModal": {
+    "componentName": "BaseModal",
+    "description": "BaseModal - Low-level modal component handling:\n- Portal rendering\n- Animation states\n- Focus management\n- Body scroll lock\n- Backdrop and keyboard interactions",
+    "props": [
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "onClose",
+        "type": "() => void",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "showCloseButton",
+        "type": "boolean",
+        "required": false,
+        "description": "",
+        "defaultValue": "true"
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\"",
+        "required": false,
+        "description": "",
+        "defaultValue": "md"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": ""
+      },
+      {
+        "name": "footer",
+        "type": "ReactNode",
+        "required": false,
+        "description": ""
+      }
+    ],
+    "filePath": "components/ui/BaseModal.tsx"
+  },
+  "Badge": {
+    "componentName": "Badge",
+    "description": "",
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "description": "Badge content/label"
+      },
+      {
+        "name": "color",
+        "type": "\"information\" | \"negative\" | \"neutral\" | \"notice\" | \"positive\" | \"primary\"",
+        "required": false,
+        "description": "Color variant of the badge",
+        "defaultValue": "neutral"
+      },
+      {
+        "name": "size",
+        "type": "\"xsmall\" | \"small\" | \"medium\" | \"large\"",
+        "required": false,
+        "description": "Size variant of the badge",
+        "defaultValue": "medium"
+      },
+      {
+        "name": "emphasis",
+        "type": "\"subtle\" | \"intense\"",
+        "required": false,
+        "description": "Visual emphasis level",
+        "defaultValue": "subtle"
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "Additional CSS class name",
+        "defaultValue": ""
+      }
+    ],
+    "filePath": "components/ui/Badge.tsx"
+  }
+}

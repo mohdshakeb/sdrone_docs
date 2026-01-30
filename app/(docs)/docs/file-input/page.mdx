@@ -1,0 +1,90 @@
+import FileInput from '@/components/ui/FileInput';
+
+# File Input
+
+The FileInput component provides drag-and-drop file upload with file list management and validation.
+
+<Section divider>
+
+## Variants
+
+### Basic Example
+
+<Preview>
+  <FileInput
+    placeholder="Drag files here or click to browse"
+    helpText="Supports PDF, DOC, and image files"
+    accept=".pdf,.doc,.docx,image/*"
+  />
+</Preview>
+
+### Multiple Files
+
+<Preview>
+  <FileInput
+    placeholder="Upload multiple files"
+    helpText="Maximum 5 files"
+    accept=".pdf,.doc,.docx,image/*"
+    multiple
+    maxFiles={5}
+  />
+</Preview>
+
+### With Error State
+
+<Preview>
+  <FileInput
+    placeholder="File upload"
+    hasError
+  />
+</Preview>
+
+</Section>
+
+<Section divider>
+
+## Properties
+
+<PropsTable component="FileInput" />
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+import FileInput from '@/components/ui/FileInput';
+
+// Basic usage
+<FileInput
+  accept=".pdf,.doc,.docx"
+  files={files}
+  onChange={setFiles}
+  placeholder="Upload documents"
+/>
+
+// Multiple files with size limit
+<FileInput
+  accept=".pdf,.doc,.docx"
+  multiple
+  maxFiles={3}
+  maxSize={5242880} // 5MB
+  files={files}
+  onChange={setFiles}
+  placeholder="Upload documents"
+  helpText="Maximum 3 files, 5MB each"
+/>
+
+// With error state
+<FileInput
+  files={files}
+  onChange={setFiles}
+  hasError={!!errors.files}
+  placeholder="Required file upload"
+/>
+```
+</CodeBlock>
+
+</Section>

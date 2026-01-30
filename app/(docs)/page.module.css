@@ -1,12 +1,12 @@
 .page {
-  --background: var(--bg-page);
+  --background: var(--bg-canvas);
   --foreground: transparent;
 
-  --text-primary: var(--fg-neutral);
+  --text-primary: var(--fg-default);
   --text-secondary: var(--fg-subtle);
 
   --button-primary-hover: var(--color-primary-700);
-  --button-secondary-hover: var(--bg-strong);
+  --button-secondary-hover: var(--bg-emphasis);
   --button-secondary-border: var(--border-subtle);
 
   display: flex;
@@ -128,14 +128,14 @@ a.secondary {
 
 @media (prefers-color-scheme: dark) {
   .page {
-    --background: var(--bg-page);
+    --background: var(--bg-canvas);
     --foreground: transparent;
 
-    --text-primary: var(--fg-neutral);
+    --text-primary: var(--fg-default);
     --text-secondary: var(--fg-subtle);
 
     --button-primary-hover: var(--color-primary-700);
-    --button-secondary-hover: var(--bg-strong);
+    --button-secondary-hover: var(--bg-emphasis);
     --button-secondary-border: var(--border-subtle);
   }
 }

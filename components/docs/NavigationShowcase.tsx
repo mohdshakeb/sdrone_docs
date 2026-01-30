@@ -22,7 +22,7 @@ export default function NavigationShowcase() {
                         <AppSidebar className="demo-sidebar" />
                     </div>
 
-                    <div style={{ flex: 1, backgroundColor: 'var(--bg-page)', padding: 0 /* Reset padding to allow full header width */ }}>
+                    <div style={{ flex: 1, backgroundColor: 'var(--bg-canvas)', padding: 0 /* Reset padding to allow full header width */ }}>
                         <AppHeader />
                         <div style={{ padding: '24px' }}>
                             <div style={{ padding: '24px', border: '1px dashed var(--border-subtle)', borderRadius: '8px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--fg-subtle)' }}>

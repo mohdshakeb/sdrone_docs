@@ -3,9 +3,13 @@
 import React from 'react';
 import styles from './Select.module.css';
 
+/** Option item for Select component */
 export interface SelectOption {
+    /** Unique value for the option */
     value: string;
+    /** Display label for the option */
     label: string;
+    /** Whether the option is disabled */
     disabled?: boolean;
 }
 

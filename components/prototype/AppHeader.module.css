@@ -12,6 +12,19 @@
     z-index: 5;
 }
 
+.brand {
+    font-family: var(--font-base);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--text-16);
+    color: var(--fg-default);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.brand:hover {
+    color: var(--fg-accent);
+}
+
 .left {
     display: flex;
     align-items: baseline;
@@ -20,7 +33,7 @@
 }
 
 .title {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     /* Typography will be applied via utility class */
 }
 
@@ -53,7 +66,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: var(--bg-accent-subtle);
+    background-color: var(--bg-accent-soft);
     color: var(--fg-accent);
     /* Use accent color for text on subtle background */
     display: flex;
@@ -72,32 +85,8 @@
     /* 12px between back button and title */
 }
 
-.formBackButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    color: var(--fg-neutral);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.1s ease;
-    padding: 0;
-}
-
-.formBackButton:hover {
-    background-color: var(--bg-hover);
-}
-
-.formBackButton:focus-visible {
-    outline: 2px solid var(--bg-accent);
-    outline-offset: 2px;
-}
-
 .formTitle {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     margin: 0;
     /* Typography applied via utility class */
 }
@@ -150,7 +139,7 @@
 }
 
 .innerPageTitle {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     margin: 0;
 }
 
@@ -178,7 +167,7 @@
 }
 
 .breadcrumbLink:hover {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     text-decoration: underline;
 }
 

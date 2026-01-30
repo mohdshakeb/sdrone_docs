@@ -23,7 +23,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ title, description, icon
                 width: '64px',
                 height: '64px',
                 borderRadius: '50%',
-                backgroundColor: 'var(--bg-strong)',
+                backgroundColor: 'var(--bg-emphasis)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -32,7 +32,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({ title, description, icon
             }}>
                 <Icon name={icon} size={32} />
             </div>
-            <h2 className="text-heading" style={{ color: 'var(--fg-neutral)', marginBottom: 'var(--space-2)' }}>{title}</h2>
+            <h2 className="text-heading" style={{ color: 'var(--fg-default)', marginBottom: 'var(--space-2)' }}>{title}</h2>
             <p className="text-body" style={{ maxWidth: '400px' }}>{description}</p>
         </div>
     );

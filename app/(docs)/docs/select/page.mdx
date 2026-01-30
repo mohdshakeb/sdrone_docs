@@ -1,0 +1,123 @@
+import Select from '@/components/ui/Select';
+
+# Select
+
+The Select component provides a dropdown menu for selecting from predefined options with consistent styling.
+
+<Section divider>
+
+## Variants
+
+### Sizes
+
+<Preview layout="flex-col" gap="24px">
+  <Select
+    options={[
+      { value: 'sm', label: 'Small' },
+      { value: 'md', label: 'Medium' },
+      { value: 'lg', label: 'Large' },
+    ]}
+    size="sm"
+    placeholder="Small size"
+  />
+  <Select
+    options={[
+      { value: 'option1', label: 'Option 1' },
+      { value: 'option2', label: 'Option 2' },
+      { value: 'option3', label: 'Option 3' },
+    ]}
+    placeholder="Medium size (default)"
+  />
+  <Select
+    options={[
+      { value: 'option1', label: 'Option 1' },
+      { value: 'option2', label: 'Option 2' },
+      { value: 'option3', label: 'Option 3' },
+    ]}
+    size="lg"
+    placeholder="Large size"
+  />
+</Preview>
+
+### States
+
+<Preview layout="flex-col" gap="24px">
+  <Select
+    options={[{ value: 'error', label: 'Error state' }]}
+    hasError
+    placeholder="Error state"
+  />
+  <Select
+    options={[{ value: 'disabled', label: 'Disabled' }]}
+    disabled
+    placeholder="Disabled state"
+  />
+</Preview>
+
+</Section>
+
+<Section divider>
+
+## Properties
+
+<PropsTable component="Select" />
+
+### SelectOption Interface
+
+<CodeBlock language="tsx">
+```tsx
+interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+```
+</CodeBlock>
+
+</Section>
+
+<Section divider>
+
+## Specification
+
+### Size Mapping
+
+Same as TextInput - see [Text Input](/docs/text-input#specification) for details.
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+import Select from '@/components/ui/Select';
+
+const options = [
+  { value: 'us', label: 'United States' },
+  { value: 'uk', label: 'United Kingdom' },
+  { value: 'ca', label: 'Canada' },
+];
+
+// Basic usage
+<Select
+  options={options}
+  placeholder="Select country..."
+  value={country}
+  onChange={(e) => setCountry(e.target.value)}
+/>
+
+// With disabled options
+<Select
+  options={[
+    { value: 'active', label: 'Active' },
+    { value: 'pending', label: 'Pending', disabled: true },
+    { value: 'completed', label: 'Completed' },
+  ]}
+  placeholder="Select status..."
+/>
+```
+</CodeBlock>
+
+</Section>

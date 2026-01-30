@@ -1,21 +1,9 @@
 import FilterChip from '@/components/ui/FilterChip';
-import { FilterChipDemo, FilterChipInteractive, FilterChipDropdownDemo, FilterChipDropdownAdvancedDemo } from '@/components/docs/FilterChipShowcase';
+import { FilterChipDemo, FilterChipInteractive } from '@/components/docs/FilterChipShowcase';
 
 # Filter Chip
 
-Filter chips allow users to filter content by selecting one or more criteria. They are interactive elements that toggle between states.
-
-<Section divider>
-
-## Overview
-
-The `FilterChip` component provides:
-- **Default state**: Unselected, ready to be clicked
-- **Selected state**: Active filter with visual highlight
-- **Multiple selected**: Shows a count badge when multiple options within that filter are selected
-- **Disabled state**: Non-interactive, grayed out
-
-</Section>
+Filter chips allow users to filter content by selecting one or more criteria with interactive toggle states.
 
 <Section divider>
 
@@ -23,15 +11,15 @@ The `FilterChip` component provides:
 
 ### States
 
-<FilterChipDemo />
+<Preview>
+  <FilterChipDemo />
+</Preview>
 
 ### Interactive Example
 
-<FilterChipInteractive />
-
-### Dropdown Example
-
-<FilterChipDropdownDemo />
+<Preview>
+  <FilterChipInteractive />
+</Preview>
 
 </Section>
 
@@ -39,52 +27,7 @@ The `FilterChip` component provides:
 
 ## Properties
 
-<PropsTable data={[
-  {
-    prop: 'children',
-    type: 'ReactNode',
-    required: true,
-    description: 'Primary chip label (e.g., "Report Type")'
-  },
-  {
-    prop: 'value',
-    type: 'string',
-    description: 'Selected parameter value'
-  },
-  {
-    prop: 'selected',
-    type: 'boolean',
-    default: 'false',
-    description: 'Whether the chip is selected'
-  },
-  {
-    prop: 'count',
-    type: 'number',
-    description: 'Number of items selected if multiple'
-  },
-  {
-    prop: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    description: 'Disables interaction'
-  },
-  {
-    prop: 'isOpen',
-    type: 'boolean',
-    default: 'false',
-    description: 'Controls chevron rotation (for dropdown)'
-  },
-  {
-    prop: 'onClick',
-    type: '() => void',
-    description: 'Click handler for main area'
-  },
-  {
-    prop: 'onClear',
-    type: '() => void',
-    description: 'Click handler for clear action'
-  }
-]} />
+<PropsTable component="FilterChip" />
 
 </Section>
 
@@ -94,35 +37,24 @@ The `FilterChip` component provides:
 
 ### Dimensions
 
-<Specification data={[
-  { property: 'Height', value: '32px' },
-  { property: 'Padding', value: '0 12px (--space-3)' },
-  { property: 'Gap (internal)', value: '8px (--space-2)' },
-  { property: 'Border Radius', value: '9999px (pill)' }
-]} />
+| Property | Value |
+|----------|-------|
+| Height | 32px |
+| Padding | 0 12px |
+| Gap (internal) | 8px |
+| Border Radius | 9999px (pill) |
 
-### Tokens Used
+### Color Tokens
 
-| State | Background | Border | Text |
-|-------|------------|--------|------|
-| Default | `--bg-strong` | — | `--fg-subtle` |
-| Hover | `--border-subtle` | — | `--fg-subtle` |
-| Selected (Value) | `--bg-strong` | — | `--fg-accent` |
-| Count Tag | `--bg-accent-subtle` | — | `--fg-accent` |
-
-### Count Badge
-
-<Specification data={[
-  { property: 'Min Width', value: '18px' },
-  { property: 'Height', value: '18px' },
-  { property: 'Background', value: '--fg-accent' },
-  { property: 'Text', value: '--fg-on-accent' },
-  { property: 'Font Size', value: '10px' }
-]} />
+| State | Background | Text |
+|-------|------------|------|
+| Default | `--bg-strong` | `--fg-subtle` |
+| Selected | `--bg-strong` | `--fg-accent` |
+| Count Badge | `--bg-accent` | `--fg-on-accent` |
 
 </Section>
 
-<Section divider>
+<Section>
 
 ## Usage
 
@@ -130,10 +62,10 @@ The `FilterChip` component provides:
 ```tsx
 import FilterChip from '@/components/ui/FilterChip';
 
-// Basic (Default)
+// Default state
 <FilterChip>Report Type</FilterChip>
 
-// Selected (Single)
+// Selected with value
 <FilterChip
   selected
   value="First Aid"
@@ -142,7 +74,7 @@ import FilterChip from '@/components/ui/FilterChip';
   Report Type
 </FilterChip>
 
-// Multiple Selected
+// Multiple selected (count)
 <FilterChip
   count={3}
   onClear={() => handleClear()}
@@ -152,259 +84,6 @@ import FilterChip from '@/components/ui/FilterChip';
 
 // Disabled
 <FilterChip disabled>Category</FilterChip>
-```
-</CodeBlock>
-
-</Section>
-
-<Section divider>
-
-## Dropdown Integration
-
-<Callout type="warning" title="Deprecation Notice">
-`FilterChipDropdown` and `DatePickerDropdown` are now deprecated. Use the unified `Dropdown` component instead. See the [Dropdown documentation](/docs/dropdown) for details.
-</Callout>
-
-### Unified Dropdown Component (Recommended)
-
-The `Dropdown` component provides a unified API for both list selection and date picking:
-
-<CodeBlock language="tsx">
-```tsx
-import Dropdown from '@/components/ui/Dropdown';
-
-// List variant (default)
-<Dropdown label="Type" options={options} value={value} onChange={onChange} />
-
-// Date variant
-<Dropdown variant="date" label="Date" value={date} onChange={setDate} />
-```
-</CodeBlock>
-
-</Section>
-
-<Section divider>
-
-## FilterChipDropdown (Deprecated)
-
-<Callout type="warning">
-**Deprecated**: Use `Dropdown` component instead. This component is maintained for backward compatibility.
-</Callout>
-
-A convenience wrapper that combines `FilterChip` with `DropdownMenu` for the common use case of selecting from a list of options.
-
-### Properties
-
-<PropsTable data={[
-  {
-    prop: 'label',
-    type: 'string',
-    required: true,
-    description: 'The chip label text'
-  },
-  {
-    prop: 'options',
-    type: 'DropdownOption[]',
-    required: true,
-    description: 'Array of selectable options'
-  },
-  {
-    prop: 'value',
-    type: 'string | null',
-    required: true,
-    description: 'Currently selected value'
-  },
-  {
-    prop: 'onChange',
-    type: '(value: string | null) => void',
-    required: true,
-    description: 'Called when selection changes'
-  },
-  {
-    prop: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    description: 'Disables interaction'
-  }
-]} />
-
-### DropdownOption Type
-
-<CodeBlock language="ts">
-```ts
-interface DropdownOption {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-```
-</CodeBlock>
-
-### Usage
-
-<CodeBlock language="tsx">
-```tsx
-import FilterChipDropdown from '@/components/ui/FilterChipDropdown';
-
-const options = [
-  { value: 'first-aid', label: 'First Aid' },
-  { value: 'near-miss', label: 'Near miss' },
-  { value: 'safety-audit', label: 'Safety audit' },
-];
-
-<FilterChipDropdown
-  label="Report Type"
-  options={options}
-  value={selectedValue}
-  onChange={setSelectedValue}
-/>
-```
-</CodeBlock>
-
-</Section>
-
-<Section divider>
-
-## Advanced: Icons, Dividers & Headers
-
-Dropdowns support multiple item types via the `items` prop for more complex menus.
-
-### Preview
-
-<FilterChipDropdownAdvancedDemo />
-
-### DropdownItem Types
-
-<CodeBlock language="ts">
-```ts
-// Text-only (backward compatible)
-interface DropdownTextOption {
-  type?: 'text';
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-
-// Text with icon
-interface DropdownIconOption {
-  type: 'icon';
-  value: string;
-  label: string;
-  icon: IconName;
-  disabled?: boolean;
-}
-
-// Non-selectable items
-interface DropdownDivider { type: 'divider'; }
-interface DropdownHeader { type: 'header'; label: string; }
-
-// Custom rendered item
-interface DropdownCustomOption {
-  type: 'custom';
-  value: string;
-  render: (props: { selected: boolean; disabled: boolean }) => ReactNode;
-  disabled?: boolean;
-}
-```
-</CodeBlock>
-
-### Usage with Items
-
-<CodeBlock language="tsx">
-```tsx
-import FilterChipDropdown, { type DropdownItem } from '@/components/ui/FilterChipDropdown';
-
-const items: DropdownItem[] = [
-  { type: 'header', label: 'Incidents' },
-  { type: 'icon', value: 'first-aid', label: 'First Aid', icon: 'first-aid' },
-  { type: 'icon', value: 'fire', label: 'Fire', icon: 'fire' },
-  { type: 'divider' },
-  { type: 'header', label: 'Audits' },
-  { type: 'icon', value: 'survey', label: 'Survey', icon: 'survey' },
-];
-
-<FilterChipDropdown
-  label="Type"
-  items={items}
-  value={selectedValue}
-  onChange={setSelectedValue}
-/>
-```
-</CodeBlock>
-
-</Section>
-
-<Section>
-
-## DatePickerDropdown (Deprecated)
-
-<Callout type="warning">
-**Deprecated**: Use `Dropdown variant="date"` instead. This component is maintained for backward compatibility.
-</Callout>
-
-A compound component for date selection, following the same pattern as FilterChipDropdown.
-
-### Properties
-
-<PropsTable data={[
-  {
-    prop: 'label',
-    type: 'string',
-    required: true,
-    description: 'The chip label text'
-  },
-  {
-    prop: 'value',
-    type: 'Date | null',
-    required: true,
-    description: 'Currently selected date'
-  },
-  {
-    prop: 'onChange',
-    type: '(value: Date | null) => void',
-    required: true,
-    description: 'Called when date changes'
-  },
-  {
-    prop: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    description: 'Disables interaction'
-  },
-  {
-    prop: 'minDate',
-    type: 'Date',
-    description: 'Earliest selectable date'
-  },
-  {
-    prop: 'maxDate',
-    type: 'Date',
-    description: 'Latest selectable date'
-  }
-]} />
-
-### Usage
-
-<CodeBlock language="tsx">
-```tsx
-import DatePickerDropdown from '@/components/ui/DatePickerDropdown';
-
-const [date, setDate] = useState<Date | null>(null);
-
-<DatePickerDropdown
-  label="Date"
-  value={date}
-  onChange={setDate}
-/>
-
-// With constraints
-<DatePickerDropdown
-  label="Start Date"
-  value={startDate}
-  onChange={setStartDate}
-  minDate={new Date()}
-  maxDate={new Date(2025, 11, 31)}
-/>
 ```
 </CodeBlock>
 

@@ -1,0 +1,91 @@
+import Textarea from '@/components/ui/Textarea';
+
+# Textarea
+
+The Textarea component provides multi-line text entry with optional character counting and resize control.
+
+<Section divider>
+
+## Variants
+
+### Basic Examples
+
+<Preview layout="flex-col" gap="24px">
+  <Textarea placeholder="Enter description..." rows={3} />
+  <Textarea placeholder="With character count" showCharCount maxLength={200} rows={3} />
+  <Textarea placeholder="Error state" hasError rows={3} />
+</Preview>
+
+### Resize Options
+
+<Preview layout="flex-col" gap="24px">
+  <Textarea placeholder="Resize vertical (default)" resize="vertical" rows={3} />
+  <Textarea placeholder="Resize none" resize="none" rows={3} />
+  <Textarea placeholder="Resize both" resize="both" rows={3} />
+</Preview>
+
+</Section>
+
+<Section divider>
+
+## Properties
+
+<PropsTable component="Textarea" />
+
+</Section>
+
+<Section divider>
+
+## Specification
+
+### Dimensions
+
+| Property | Value |
+|----------|-------|
+| Min Height | Based on `rows` prop (default 3) |
+| Padding (H) | 16px |
+| Padding (V) | 12px |
+| Font Size | 14px |
+
+### Color Tokens
+
+Same as TextInput - see [Text Input](/docs/text-input#specification) for details.
+
+</Section>
+
+<Section>
+
+## Usage
+
+<CodeBlock language="tsx" filename="example.tsx">
+```tsx
+import Textarea from '@/components/ui/Textarea';
+
+// Basic usage
+<Textarea
+  placeholder="Enter description..."
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  rows={4}
+/>
+
+// With character count
+<Textarea
+  placeholder="Comments (max 500 characters)"
+  value={comments}
+  onChange={(e) => setComments(e.target.value)}
+  showCharCount
+  maxLength={500}
+  rows={4}
+/>
+
+// No resize
+<Textarea
+  placeholder="Fixed size"
+  resize="none"
+  rows={6}
+/>
+```
+</CodeBlock>
+
+</Section>

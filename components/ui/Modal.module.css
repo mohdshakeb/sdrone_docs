@@ -22,7 +22,7 @@
 /* Dialog container */
 .dialog {
     position: relative;
-    background: var(--bg-on-page);
+    background: var(--bg-base);
     border-radius: 12px;
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
         0 10px 10px -5px rgba(0, 0, 0, 0.04);
@@ -62,13 +62,13 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--space-6) var(--space-8);
-    border-bottom: 1px solid var(--border-base);
+    border-bottom: 1px solid var(--border-default);
     flex-shrink: 0;
 }
 
 .title {
     margin: 0;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     border: none;
     padding: 0;
 }
@@ -89,8 +89,8 @@
 }
 
 .closeButton:hover {
-    background-color: var(--bg-strong);
-    color: var(--fg-neutral);
+    background-color: var(--bg-emphasis);
+    color: var(--fg-default);
 }
 
 .closeButton:focus-visible {
@@ -115,7 +115,7 @@
 }
 
 .body::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
+    background: var(--border-emphasis);
     border-radius: 4px;
 }
 
@@ -145,7 +145,7 @@
 }
 
 .listBody::-webkit-scrollbar-thumb {
-    background: var(--border-strong);
+    background: var(--border-emphasis);
     border-radius: 4px;
 }
 
@@ -162,7 +162,7 @@
     padding: var(--space-4) var(--space-8);
     background: transparent;
     border: none;
-    color: var(--fg-on-surface);
+    color: var(--fg-secondary);
     font-family: inherit;
     text-align: left;
     cursor: pointer;
@@ -171,8 +171,8 @@
 }
 
 .listItem:hover {
-    background-color: var(--bg-strong);
-    color: var(--fg-neutral);
+    background-color: var(--bg-emphasis);
+    color: var(--fg-default);
 }
 
 .listItem:focus-visible {
@@ -182,11 +182,11 @@
 
 .listItemSelected {
     color: var(--fg-accent-intense);
-    background-color: var(--bg-accent-subtle);
+    background-color: var(--bg-accent-soft);
 }
 
 .listItemSelected:hover {
-    background-color: var(--bg-accent-subtle);
+    background-color: var(--bg-accent-soft);
 }
 
 .listItemDisabled {
@@ -212,7 +212,7 @@
     justify-content: flex-end;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-8);
-    border-top: 1px solid var(--border-base);
+    border-top: 1px solid var(--border-default);
     flex-shrink: 0;
 }
 

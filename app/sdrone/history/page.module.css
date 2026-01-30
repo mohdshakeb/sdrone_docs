@@ -7,7 +7,7 @@
     position: sticky;
     top: 64px;
     z-index: 10;
-    background-color: var(--bg-page);
+    background-color: var(--bg-canvas);
 }
 
 .filterContainer {

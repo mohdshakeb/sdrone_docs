@@ -21,42 +21,42 @@ export default function SemanticColorTable() {
     const isDark = theme === 'dark';
 
     const lightBackgrounds = [
-        { name: 'bg-page', ref: 'warm-50', desc: 'Main page background' },
+        { name: 'bg-canvas', ref: 'warm-50', desc: 'Main page background' },
         { name: 'bg-subtle', ref: 'white', desc: 'Secondary backgrounds' },
-        { name: 'bg-strong', ref: 'warm-100', desc: 'Contrasting elements' },
+        { name: 'bg-emphasis', ref: 'warm-100', desc: 'Contrasting elements' },
         { name: 'bg-surface', ref: 'white', desc: 'Surface elements (Cards, Chips)' },
         { name: 'bg-accent', ref: 'primary-600', desc: 'Primary actions' },
-        { name: 'bg-accent-subtle', ref: 'primary-alpha-20', desc: 'Light accent backgrounds' },
-        { name: 'border-strong', ref: 'warm-400', desc: 'Strong borders' },
+        { name: 'bg-accent-soft', ref: 'primary-alpha-20', desc: 'Light accent backgrounds' },
+        { name: 'border-emphasis', ref: 'warm-400', desc: 'Strong borders' },
         { name: 'border-subtle', ref: 'warm-100', desc: 'Subtle separators' },
     ];
 
     const darkBackgrounds = [
-        { name: 'bg-page', ref: 'cool-950', desc: 'Main page background' },
+        { name: 'bg-canvas', ref: 'cool-950', desc: 'Main page background' },
         { name: 'bg-subtle', ref: 'cool-900', desc: 'Secondary backgrounds' },
-        { name: 'bg-strong', ref: 'cool-800', desc: 'Contrasting elements' },
+        { name: 'bg-emphasis', ref: 'cool-800', desc: 'Contrasting elements' },
         { name: 'bg-surface', ref: 'cool-800', desc: 'Surface elements (Cards, Chips)' },
         { name: 'bg-accent', ref: 'primary-600', desc: 'Primary actions' },
-        { name: 'bg-accent-subtle', ref: 'primary-alpha-20', desc: 'Light accent backgrounds' },
-        { name: 'border-strong', ref: 'cool-400', desc: 'Strong borders' },
+        { name: 'bg-accent-soft', ref: 'primary-alpha-20', desc: 'Light accent backgrounds' },
+        { name: 'border-emphasis', ref: 'cool-400', desc: 'Strong borders' },
         { name: 'border-subtle', ref: 'cool-800', desc: 'Subtle separators' },
     ];
 
     const lightForegrounds = [
-        { name: 'fg-neutral', ref: 'warm-900', bg: 'var(--color-warm-50)' },
+        { name: 'fg-default', ref: 'warm-900', bg: 'var(--color-warm-50)' },
         { name: 'fg-subtle', ref: 'warm-600', bg: 'var(--color-warm-50)' },
         { name: 'fg-muted', ref: 'warm-300', bg: 'var(--color-warm-50)' },
         { name: 'fg-accent', ref: 'primary-500', bg: 'var(--color-warm-50)' },
-        { name: 'fg-accent-light', ref: 'primary-900', bg: 'var(--color-primary-alpha-20)' },
+        { name: 'fg-accent-emphasis', ref: 'primary-900', bg: 'var(--color-primary-alpha-20)' },
         { name: 'fg-on-accent', ref: 'white', bg: 'var(--color-primary-600)' },
     ];
 
     const darkForegrounds = [
-        { name: 'fg-neutral', ref: 'cool-50', bg: 'var(--color-cool-950)' },
+        { name: 'fg-default', ref: 'cool-50', bg: 'var(--color-cool-950)' },
         { name: 'fg-subtle', ref: 'cool-400', bg: 'var(--color-cool-950)' },
         { name: 'fg-muted', ref: 'cool-500', bg: 'var(--color-cool-950)' },
         { name: 'fg-accent', ref: 'primary-500', bg: 'var(--color-cool-950)' },
-        { name: 'fg-accent-light', ref: 'primary-50', bg: 'var(--color-primary-600)' },
+        { name: 'fg-accent-emphasis', ref: 'primary-50', bg: 'var(--color-primary-600)' },
         { name: 'fg-on-accent', ref: 'white', bg: 'var(--color-primary-600)' },
     ];
 

@@ -26,7 +26,7 @@
     justify-content: center;
     min-height: 140px;
     padding: var(--space-6);
-    border: 2px dashed var(--border-base);
+    border: 2px dashed var(--border-default);
     border-radius: 12px;
     background-color: var(--bg-surface);
     cursor: pointer;
@@ -34,36 +34,36 @@
 }
 
 .dropzone:hover:not(.disabled) {
-    border-color: var(--border-strong);
-    background-color: var(--bg-strong);
+    border-color: var(--border-emphasis);
+    background-color: var(--bg-emphasis);
 }
 
 .dropzone:focus-visible {
     outline: none;
     border-color: var(--bg-accent);
-    box-shadow: 0 0 0 2px var(--bg-accent-subtle);
+    box-shadow: 0 0 0 2px var(--bg-accent-soft);
 }
 
 /* Drag over state */
 .dragOver {
     border-color: var(--bg-accent);
-    background-color: var(--bg-accent-subtle);
+    background-color: var(--bg-accent-soft);
 }
 
 /* Error state */
 .error {
-    border-color: var(--bg-negative-intense);
+    border-color: var(--bg-negative-solid);
 }
 
 .error:focus-visible {
-    box-shadow: 0 0 0 2px var(--bg-negative-subtle);
+    box-shadow: 0 0 0 2px var(--bg-negative-soft);
 }
 
 /* Disabled state */
 .disabled {
     opacity: 0.6;
     cursor: not-allowed;
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
 }
 
 /* Dropzone content */
@@ -81,7 +81,7 @@
 
 .placeholder {
     margin: 0;
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .helpText {
@@ -104,7 +104,7 @@
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-3) var(--space-4);
-    background-color: var(--bg-strong);
+    background-color: var(--bg-emphasis);
     border-radius: 8px;
 }
 
@@ -122,7 +122,7 @@
 }
 
 .fileName {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -149,8 +149,8 @@
 }
 
 .removeButton:hover:not(:disabled) {
-    background-color: var(--bg-negative-subtle);
-    color: var(--fg-negative-subtle);
+    background-color: var(--bg-negative-soft);
+    color: var(--fg-negative-soft);
 }
 
 .removeButton:focus-visible {

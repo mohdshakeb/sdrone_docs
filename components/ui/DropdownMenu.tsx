@@ -73,16 +73,20 @@ function normalizeItems(options?: DropdownOption[], items?: DropdownItem[]): Dro
     return [];
 }
 
-interface DropdownMenuProps {
+export interface DropdownMenuProps {
     /** @deprecated Use `items` instead */
     options?: DropdownOption[];
-    /** New discriminated union items prop */
+    /** Dropdown items with support for text, icons, headers, dividers, and custom rendering */
     items?: DropdownItem[];
+    /** Currently selected value (for single selection) */
     selectedValue?: string;
     /** Array of selected values for multiselect (takes precedence over selectedValue) */
     selectedValues?: string[];
+    /** Callback when an item is selected */
     onSelect: (value: string) => void;
+    /** Whether the dropdown menu is currently open */
     isOpen: boolean;
+    /** Callback to close the dropdown */
     onClose: () => void;
 }
 

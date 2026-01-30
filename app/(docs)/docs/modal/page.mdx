@@ -1,218 +1,160 @@
 import Modal from '@/components/ui/Modal';
-import { ListModalExample, InfoModalExample, ActionModalExample, SizeVariantsExample, DisabledItemsExample, ScrollableContentExample, LongListExample } from '@/components/docs/ModalShowcase';
+import { ListModalExample, InfoModalExample, ActionModalExample } from '@/components/docs/ModalShowcase';
 
 # Modal
 
-Modals are dialog overlays that focus user attention on a specific task or piece of information. They temporarily interrupt the user's workflow to display important content or gather input.
+Modals are dialog overlays that focus user attention on a specific task or information, temporarily interrupting the main workflow.
 
----
+<Section divider>
 
-## Overview
+## Variants
 
-The `Modal` component provides three variants:
-- **List-based**: User selects from a list of options, then confirms with a button
-- **Informational**: Displays content with a single dismiss button
-- **Action-based**: Confirms user actions (like delete or submit) with cancel and confirm buttons
+### List Modal
 
-All modals include:
-- Semi-transparent backdrop that dims background content
-- Portal rendering to document.body for proper z-index stacking
-- Full keyboard navigation and accessibility support
-- Focus trap to keep keyboard focus within the modal
-- Body scroll lock while modal is open
-- Smooth open/close animations
+Selection workflow where users choose from predefined options.
 
----
+<Preview>
+  <ListModalExample />
+</Preview>
 
-## Preview
+### Info Modal
 
-### List-Based Modal
+Display important information or instructions that require acknowledgment.
 
-Use for selection workflows where users choose from predefined options.
+<Preview>
+  <InfoModalExample />
+</Preview>
 
-<ListModalExample />
+### Action Modal
 
-### Informational Modal
+Confirm destructive or significant actions before proceeding.
 
-Use to display important information or instructions that require acknowledgment.
+<Preview>
+  <ActionModalExample />
+</Preview>
 
-<InfoModalExample />
+</Section>
 
-### Action-Based Modal
-
-Use to confirm destructive or significant actions before proceeding.
-
-<ActionModalExample />
-
----
-
-## Size Variants
-
-Modals come in three sizes to accommodate different content needs.
-
-<SizeVariantsExample />
-
-- **Small (sm)**: 400px max-width - compact confirmations
-- **Medium (md)**: 560px max-width - default, most common use cases
-- **Large (lg)**: 720px max-width - content requiring more horizontal space
-
----
-
-## Advanced Examples
-
-### List with Disabled Items
-
-Items can be disabled to prevent selection while remaining visible.
-
-<DisabledItemsExample />
-
-### Scrollable Content
-
-When content exceeds viewport height, the body becomes scrollable while header and footer remain fixed.
-
-<ScrollableContentExample />
-
-### Long Lists
-
-Lists automatically scroll when they contain many items.
-
-<LongListExample />
-
----
+<Section divider>
 
 ## Properties
 
-### Base Props (All Variants)
+<PropsTable component="ListModalProps" />
+
+### Info Modal Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `variant` | `'list' \| 'info' \| 'action'` | — | Modal type (required) |
-| `isOpen` | `boolean` | — | Controls modal visibility |
-| `onClose` | `() => void` | — | Called when modal should close |
-| `title` | `string` | — | Modal heading text |
-| `showCloseButton` | `boolean` | `true` | Show X button in header |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Modal width |
-| `className` | `string` | — | Additional CSS classes |
-
-### List Variant Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `items` | `ModalListItem[]` | — | Array of selectable items |
-| `selectedValue` | `string` | — | Currently selected item value |
-| `onConfirm` | `(value: string) => void` | — | Called with selected value |
-| `confirmLabel` | `string` | `'Confirm'` | Confirm button text |
-| `cancelLabel` | `string` | `'Cancel'` | Cancel button text |
-
-### Info Variant Props
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | — | Modal content to display |
+| `variant` | `'info'` | — | Modal type |
+| `isOpen` | `boolean` | — | Controls visibility |
+| `onClose` | `() => void` | — | Close callback |
+| `title` | `string` | — | Modal title |
+| `children` | `ReactNode` | — | Modal content |
 | `dismissLabel` | `string` | `'OK'` | Dismiss button text |
+| `showCloseButton` | `boolean` | `true` | Show X button |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Modal width |
 
-### Action Variant Props
+### Action Modal Props
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | — | Modal content to display |
-| `onConfirm` | `() => void` | — | Called when user confirms |
+| `variant` | `'action'` | — | Modal type |
+| `isOpen` | `boolean` | — | Controls visibility |
+| `onClose` | `() => void` | — | Close callback |
+| `title` | `string` | — | Modal title |
+| `children` | `ReactNode` | — | Modal content |
+| `onConfirm` | `() => void` | — | Confirm callback |
 | `confirmLabel` | `string` | `'Confirm'` | Confirm button text |
 | `cancelLabel` | `string` | `'Cancel'` | Cancel button text |
-| `confirmVariant` | `'primary' \| 'negative' \| 'positive'` | `'primary'` | Confirm button style |
+| `confirmVariant` | `'primary' \| 'negative' \| 'positive'` | `'primary'` | Button variant |
+| `showCloseButton` | `boolean` | `true` | Show X button |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Modal width |
 
-### ModalListItem
+</Section>
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `value` | `string` | Unique identifier for the item |
-| `label` | `string` | Display text shown to user |
-| `disabled` | `boolean` | Prevents selection if true |
+<Section divider>
 
----
+## Specification
 
-## State Management
+### Sizes
 
-Use the `useModal` hook to manage modal visibility:
+| Size | Max Width | Use Case |
+|------|-----------|----------|
+| `sm` | 400px | Compact confirmations |
+| `md` | 560px | Default, most common |
+| `lg` | 720px | Content requiring more space |
 
-```tsx
-import { useModal } from '@/components/ui/hooks/useModal';
+</Section>
 
-const modal = useModal(); // or useModal(true) to start open
+<Section>
 
-// Returns: { isOpen, open, close, toggle }
-```
+## Usage
 
----
+### List Modal
 
-## Usage Examples
-
-### List-Based Modal
-
+<CodeBlock language="tsx" filename="example.tsx">
 ```tsx
 'use client';
 
 import { useState } from 'react';
 import Modal, { ModalListItem } from '@/components/ui/Modal';
-import { useModal } from '@/components/ui/hooks/useModal';
 import Button from '@/components/ui/Button';
 
-export default function ReportIncident() {
-  const modal = useModal();
+export default function Example() {
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('');
 
   const items: ModalListItem[] = [
     { value: 'near-miss', label: 'Near Miss / Hazard' },
     { value: 'first-aid', label: 'First Aid' },
     { value: 'incident', label: 'First Incident Report' },
-    { value: 'accident', label: 'Accident Detail Report' },
-    { value: 'unsure', label: 'Not sure' },
   ];
 
   return (
     <>
-      <Button onClick={modal.open}>Report Incident</Button>
+      <Button onClick={() => setIsOpen(true)}>Report Incident</Button>
 
       <Modal
         variant="list"
-        isOpen={modal.isOpen}
-        onClose={modal.close}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
         title="What are you reporting?"
         items={items}
         selectedValue={selectedType}
         onConfirm={(value) => {
           setSelectedType(value);
-          modal.close();
-          // Navigate or perform action
+          setIsOpen(false);
         }}
-        confirmLabel="Continue"
       />
     </>
   );
 }
 ```
+</CodeBlock>
 
-### Informational Modal
+### Info Modal
 
+<CodeBlock language="tsx" filename="info-modal.tsx">
 ```tsx
 <Modal
   variant="info"
-  isOpen={modal.isOpen}
-  onClose={modal.close}
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
   title="Safety Guidelines"
-  dismissLabel="Got it"
 >
   <p>All incidents must be reported within 24 hours...</p>
 </Modal>
 ```
+</CodeBlock>
 
-### Action-Based Modal
+### Action Modal
 
+<CodeBlock language="tsx" filename="action-modal.tsx">
 ```tsx
 <Modal
   variant="action"
-  isOpen={modal.isOpen}
-  onClose={modal.close}
+  isOpen={isOpen}
+  onClose={() => setIsOpen(false)}
   title="Delete Report"
   onConfirm={handleDelete}
   confirmLabel="Delete"
@@ -221,76 +163,6 @@ export default function ReportIncident() {
   <p>Are you sure? This action cannot be undone.</p>
 </Modal>
 ```
+</CodeBlock>
 
----
-
-## Keyboard Navigation
-
-| Key | Action |
-|-----|--------|
-| `Escape` | Close modal |
-| `Tab` | Move focus forward (trapped within modal) |
-| `Shift + Tab` | Move focus backward (trapped within modal) |
-| `Arrow Down` | Next list item (list variant) |
-| `Arrow Up` | Previous list item (list variant) |
-| `Enter` | Select focused item or activate button |
-| `Space` | Activate focused button |
-
----
-
-## Accessibility
-
-The Modal component is built with accessibility in mind:
-
-- **ARIA Attributes**: Uses `role="dialog"`, `aria-modal="true"`, and `aria-labelledby`
-- **Focus Management**: Automatically focuses first element on open and restores focus on close
-- **Focus Trap**: Prevents Tab key from leaving the modal
-- **Keyboard Navigation**: Full keyboard support for all interactions
-- **Screen Readers**: Proper labeling and state announcements
-- **List Semantics**: List variant uses `role="listbox"` and `role="option"` with `aria-selected`
-
----
-
-## Best Practices
-
-### When to Use
-
-- **List Modal**: Selecting from predefined options (incident types, categories, statuses)
-- **Info Modal**: Displaying important information that requires acknowledgment
-- **Action Modal**: Confirming destructive actions (delete, cancel, submit)
-
-### When Not to Use
-
-- For simple confirmations, consider inline alerts or toasts
-- For complex multi-step workflows, consider a dedicated page or wizard
-- Don't nest modals within modals - use a single modal with navigation if needed
-- Don't use for non-critical information that can be shown inline
-
-### Content Guidelines
-
-- Keep titles short and descriptive (1-5 words)
-- Use clear, action-oriented button labels
-- Limit content length - modals should be scannable
-- For long content, consider linking to a dedicated page instead
-
-### Interaction Guidelines
-
-- Clicking the backdrop closes the modal
-- Always provide a way to cancel or close (X button or Cancel button)
-- Use appropriate button variants (negative for destructive actions)
-- Disable confirm button in list variant until selection is made
-
----
-
-## Design Tokens
-
-The Modal component uses the design system's semantic tokens:
-
-- **Background**: `--bg-surface` (dialog), `rgba(0, 0, 0, 0.5)` (backdrop)
-- **Text**: `--fg-neutral` (title), `--fg-accent` (selected items)
-- **Borders**: `--border-subtle` (header/footer dividers)
-- **Spacing**: `--space-*` scale throughout
-- **Typography**: `.text-heading` (title), `.text-body` (content)
-- **Border Radius**: 12px (dialog), 6px (close button)
-
-Dark mode is automatically supported through the theme system.
+</Section>

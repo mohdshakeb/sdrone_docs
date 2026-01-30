@@ -72,11 +72,11 @@ Based on `1440px` screen width.
 ### Visual Example (12 Columns)
 
 <div className="grid-12" style={{
-  background: 'var(--bg-page)',
+  background: 'var(--bg-canvas)',
   padding: '0 24px',
   gap: '16px',
   margin: '2rem 0',
-  border: '1px dashed var(--border-strong)'
+  border: '1px dashed var(--border-emphasis)'
 }}>
   {Array.from({ length: 12 }).map((_, i) => (
     <div key={i} style={{
@@ -86,7 +86,7 @@ Based on `1440px` screen width.
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: '12px',
-      color: 'var(--fg-neutral)'
+      color: 'var(--fg-default)'
     }}>Col</div>
   ))}
 </div>

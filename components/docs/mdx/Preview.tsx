@@ -5,13 +5,13 @@ export interface PreviewProps {
   /** The content to display in the preview */
   children: React.ReactNode;
   /** Layout mode for arranging children */
-  layout?: 'grid-2' | 'grid-3' | 'grid-4' | 'flex-wrap' | 'stack';
+  layout?: 'grid-2' | 'grid-3' | 'grid-4' | 'flex-wrap' | 'stack' | 'flex-col';
   /** Background variant */
   background?: 'default' | 'subtle' | 'strong';
   /** Padding size */
   padding?: 'none' | 'sm' | 'md' | 'lg';
   /** Gap between items */
-  gap?: 'none' | 'sm' | 'md' | 'lg';
+  gap?: 'none' | 'sm' | 'md' | 'lg' | string;
   /** Alignment of items */
   align?: 'start' | 'center' | 'end';
   /** Additional CSS class */
@@ -31,17 +31,25 @@ export function Preview({
   align = 'center',
   className = '',
 }: PreviewProps) {
+  const isTokenGap = ['none', 'sm', 'md', 'lg'].includes(gap);
+
   const classNames = [
     styles.preview,
     styles[`layout-${layout}`],
     styles[`bg-${background}`],
     styles[`padding-${padding}`],
-    styles[`gap-${gap}`],
+    isTokenGap ? styles[`gap-${gap}`] : '',
     styles[`align-${align}`],
     className,
   ]
     .filter(Boolean)
     .join(' ');
 
-  return <div className={classNames}>{children}</div>;
+  const inlineStyle = !isTokenGap ? { gap } : {};
+
+  return (
+    <div className={classNames} style={inlineStyle}>
+      {children}
+    </div>
+  );
 }

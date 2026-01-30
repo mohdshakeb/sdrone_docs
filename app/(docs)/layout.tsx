@@ -1,5 +1,5 @@
 import Sidebar from '@/components/docs/Sidebar'
-import Header from '@/components/docs/Header'
+import AppHeader from '@/components/prototype/AppHeader'
 
 export default function DocsLayout({
     children,
@@ -10,8 +10,8 @@ export default function DocsLayout({
         <div className="app-shell" data-docs="true">
             <Sidebar />
             <main className="main-content">
-                <Header />
-                <div style={{ padding: 'var(--space-8)' }}>
+                <AppHeader variant="docs" />
+                <div className="docs-content" style={{ padding: 'var(--space-8) var(--space-8) var(--space-12) var(--space-8)' }}>
                     {children}
                 </div>
             </main>

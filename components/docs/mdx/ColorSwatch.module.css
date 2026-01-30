@@ -11,7 +11,7 @@
 }
 
 .swatch:hover {
-  border-color: var(--border-base);
+  border-color: var(--border-default);
 }
 
 /* Layout: Card (default) */
@@ -52,14 +52,14 @@
 .name {
   font-size: 14px;
   font-weight: var(--font-weight-semibold);
-  color: var(--fg-neutral);
+  color: var(--fg-default);
 }
 
 .token {
   font-family: var(--font-mono);
   font-size: 12px;
   color: var(--fg-subtle);
-  background-color: var(--bg-page);
+  background-color: var(--bg-canvas);
   padding: 2px 6px;
   border-radius: 4px;
   align-self: flex-start;

@@ -34,66 +34,66 @@
 
 /* Information */
 .information_subtle {
-    background-color: var(--bg-information-subtle);
-    color: var(--fg-information-subtle);
+    background-color: var(--bg-information-soft);
+    color: var(--fg-information-soft);
 }
 
 .information_intense {
-    background-color: var(--bg-information-intense);
-    color: var(--fg-information-intense);
+    background-color: var(--bg-information-solid);
+    color: var(--fg-information-solid);
 }
 
 /* Negative */
 .negative_subtle {
-    background-color: var(--bg-negative-subtle);
-    color: var(--fg-negative-subtle);
+    background-color: var(--bg-negative-soft);
+    color: var(--fg-negative-soft);
 }
 
 .negative_intense {
-    background-color: var(--bg-negative-intense);
-    color: var(--fg-negative-intense);
+    background-color: var(--bg-negative-solid);
+    color: var(--fg-negative-solid);
 }
 
 /* Neutral */
 .neutral_subtle {
-    background-color: var(--bg-neutral-subtle);
-    color: var(--fg-neutral-subtle);
+    background-color: var(--bg-neutral-soft);
+    color: var(--fg-neutral-soft);
 }
 
 .neutral_intense {
-    background-color: var(--bg-neutral-intense);
-    color: var(--fg-neutral-intense);
+    background-color: var(--bg-neutral-solid);
+    color: var(--fg-neutral-solid);
 }
 
 /* Notice */
 .notice_subtle {
-    background-color: var(--bg-notice-subtle);
-    color: var(--fg-notice-subtle);
+    background-color: var(--bg-notice-soft);
+    color: var(--fg-notice-soft);
 }
 
 .notice_intense {
-    background-color: var(--bg-notice-intense);
-    color: var(--fg-notice-intense);
+    background-color: var(--bg-notice-solid);
+    color: var(--fg-notice-solid);
 }
 
 /* Positive */
 .positive_subtle {
-    background-color: var(--bg-positive-subtle);
-    color: var(--fg-positive-subtle);
+    background-color: var(--bg-positive-soft);
+    color: var(--fg-positive-soft);
 }
 
 .positive_intense {
-    background-color: var(--bg-positive-intense);
-    color: var(--fg-positive-intense);
+    background-color: var(--bg-positive-solid);
+    color: var(--fg-positive-solid);
 }
 
 /* Primary */
 .primary_subtle {
-    background-color: var(--bg-primary-subtle);
-    color: var(--fg-primary-subtle);
+    background-color: var(--bg-primary-soft);
+    color: var(--fg-primary-soft);
 }
 
 .primary_intense {
-    background-color: var(--bg-primary-intense);
-    color: var(--fg-primary-intense);
+    background-color: var(--bg-primary-solid);
+    color: var(--fg-primary-solid);
 }

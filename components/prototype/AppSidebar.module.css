@@ -38,16 +38,16 @@
 }
 
 .link:hover {
-    background: var(--bg-strong);
-    color: var(--fg-neutral);
+    background: var(--bg-emphasis);
+    color: var(--fg-default);
     text-decoration: none;
     /* Disable underline on hover */
 }
 
 /* Selected State */
 .link[data-active="true"] {
-    background: var(--bg-accent-subtle);
-    color: var(--fg-accent-light);
+    background: var(--bg-accent-soft);
+    color: var(--fg-accent-emphasis);
     /* Selected text color */
 }
 
@@ -61,7 +61,7 @@
 }
 
 .link:hover .icon {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .link[data-active="true"] .icon {

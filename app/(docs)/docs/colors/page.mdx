@@ -18,7 +18,7 @@ These are the raw values available in our palette.
       key={step}
       token={`--color-primary-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -31,7 +31,7 @@ These are the raw values available in our palette.
       key={step}
       token={`--color-cool-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -44,7 +44,7 @@ These are the raw values available in our palette.
       key={step}
       token={`--color-warm-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -65,7 +65,7 @@ These palettes are used for feedback states (badges, alerts, notifications).
       key={step}
       token={`--color-blue-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -78,7 +78,7 @@ These palettes are used for feedback states (badges, alerts, notifications).
       key={step}
       token={`--color-red-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -91,7 +91,7 @@ These palettes are used for feedback states (badges, alerts, notifications).
       key={step}
       token={`--color-yellow-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -104,7 +104,7 @@ These palettes are used for feedback states (badges, alerts, notifications).
       key={step}
       token={`--color-green-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -117,7 +117,7 @@ These palettes are used for feedback states (badges, alerts, notifications).
       key={step}
       token={`--color-purple-${step}`}
       name={step}
-      showValue={false}
+      showValue={true}
     />
   ))}
 </Preview>
@@ -131,8 +131,8 @@ These palettes are used for feedback states (badges, alerts, notifications).
 Semantic tokens abstract the raw values to ensure consistency and themeability. The table below updates automatically based on your current theme (use the toggle in the header).
 
 <Callout type="info" title="Theme Policy">
-- **Light Mode**: Uses the **Warm Palette** (e.g., `fg-neutral` → `warm-900`).
-- **Dark Mode**: Uses the **Cool Palette** (e.g., `fg-neutral` → `cool-50`).
+- **Light Mode**: Uses the **Warm Palette** (e.g., `fg-default` → `warm-900`).
+- **Dark Mode**: Uses the **Cool Palette** (e.g., `fg-default` → `cool-50`).
 </Callout>
 
 <SemanticColorTable />
@@ -148,7 +148,7 @@ Semantic tokens abstract the raw values to ensure consistency and themeability. 
 // Always use semantic tokens in components
 <div style={{
   backgroundColor: 'var(--bg-surface)',
-  color: 'var(--fg-neutral)',
+  color: 'var(--fg-default)',
   border: '1px solid var(--border-subtle)'
 }}>
   Content

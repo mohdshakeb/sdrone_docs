@@ -22,7 +22,7 @@
     border: 1px solid var(--border-subtle);
     border-radius: 999px;
     background-color: var(--bg-subtle);
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
@@ -31,13 +31,13 @@
 }
 
 .input:hover {
-    border-color: var(--border-base);
+    border-color: var(--border-default);
 }
 
 .input:focus {
     outline: none;
-    border-color: var(--border-strong);
-    box-shadow: 0 0 0 2px var(--bg-strong);
+    border-color: var(--border-emphasis);
+    box-shadow: 0 0 0 2px var(--bg-emphasis);
 }
 
 .clearButton {
@@ -59,7 +59,7 @@
 
 .clearButton:hover {
     background-color: var(--bg-hover);
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .clearButton:focus-visible {

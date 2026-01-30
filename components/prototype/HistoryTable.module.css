@@ -33,7 +33,7 @@
 }
 
 .th.sortable:hover {
-    color: var(--fg-neutral);
+    color: var(--fg-default);
 }
 
 .thContent {
@@ -61,7 +61,7 @@
 }
 
 .tr:hover {
-    background-color: var(--bg-on-page);
+    background-color: var(--bg-base);
 }
 
 .tr:focus-visible {
@@ -72,7 +72,7 @@
 
 .td {
     padding: var(--space-3) var(--space-4);
-    color: var(--fg-neutral);
+    color: var(--fg-default);
     vertical-align: middle;
 }
 
