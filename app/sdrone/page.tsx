@@ -6,7 +6,7 @@ import ComposableFilterBar from '@/components/prototype/ComposableFilterBar';
 import type { FilterConfig, FilterValues } from '@/components/prototype/ComposableFilterBar';
 import TaskDetailPanel from '@/components/prototype/TaskDetailPanel';
 import EmptyState from '@/components/prototype/EmptyState';
-import { MOCK_TASKS, REPORT_TYPE_ITEMS, STATUS_OPTIONS, Task } from '@/data/mock-data';
+import { MOCK_TASKS, REPORT_TYPE_ITEMS_ALL_TAB, STATUS_OPTIONS, Task } from '@/data/mock-data';
 import styles from './page.module.css';
 
 /**
@@ -38,7 +38,7 @@ export default function InboxPage() {
       id: 'reportType',
       type: 'dropdown',
       label: 'Report Type',
-      items: REPORT_TYPE_ITEMS,
+      items: REPORT_TYPE_ITEMS_ALL_TAB,
     },
     {
       id: 'status',
@@ -61,8 +61,17 @@ export default function InboxPage() {
     // Filter by report type
     if (filters.reportType) {
       tasks = tasks.filter((task) => {
+        // Special handling for collapsed "Permit to Work" - match any permit subtype
+        if (filters.reportType === 'permit-to-work') {
+          const permitSubtypes = ['general work', 'cold work', 'hot work', 'height work', 'permit to work'];
+          return permitSubtypes.some(subtype =>
+            task.subtitle.toLowerCase().includes(subtype) ||
+            subtype.includes(task.subtitle.toLowerCase())
+          );
+        }
+
         // Find the report type item to get its label
-        const item = REPORT_TYPE_ITEMS.find(
+        const item = REPORT_TYPE_ITEMS_ALL_TAB.find(
           (item) =>
             item.type !== 'divider' &&
             item.type !== 'header' &&

@@ -27,6 +27,16 @@ import {
     RiSearchLine,
     RiFilterLine,
     RiArrowDownLine,
+    RiBarricadeFill,
+    RiTodoFill,
+    RiFileShield2Fill,
+    RiFileTextFill,
+    RiGroupFill,
+    RiDossierFill,
+    RiTaskFill,
+    RiPassValidFill,
+    RiSpeakFill,
+    RiCheckboxCircleFill,
 } from 'react-icons/ri';
 
 export type IconName =
@@ -57,7 +67,17 @@ export type IconName =
     | 'arrow-right'
     | 'delete'
     | 'search'
-    | 'filter';
+    | 'filter'
+    | 'barricade'
+    | 'todo'
+    | 'shield'
+    | 'file-text'
+    | 'group'
+    | 'dossier'
+    | 'task'
+    | 'pass-valid'
+    | 'speak'
+    | 'checkbox-circle';
 
 export type IconSize = 14 | 16 | 20 | 24 | 32;
 
@@ -114,6 +134,17 @@ const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; c
     'delete': RiDeleteBinLine,
     'search': RiSearchLine,
     'filter': RiFilterLine,
+    'barricade': RiBarricadeFill,
+    'todo': RiTodoFill,
+    'shield': RiFileShield2Fill,
+    'file-text': RiFileTextFill,
+    'group': RiGroupFill,
+    'dossier': RiDossierFill,
+    'task': RiTaskFill,
+    'pass-valid': RiPassValidFill,
+    'speak': RiSpeakFill,
+    'checkbox-circle': RiCheckboxCircleFill,
+
 };
 
 export const Icon: React.FC<IconProps> = ({ name, size = 20, className = '', ...props }) => {

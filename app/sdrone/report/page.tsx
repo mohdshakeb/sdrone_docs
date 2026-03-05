@@ -8,8 +8,8 @@ import type { IncidentType } from './types';
 
 // Components
 import AppHeader from '@/components/prototype/AppHeader';
-import ProgressBar from './components/ProgressBar';
-import StepContainer from './components/StepContainer';
+import ProgressBar from '@/components/prototype/form/ProgressBar';
+import StepContainer from '@/components/prototype/form/StepContainer';
 import ConfirmationScreen from './components/ConfirmationScreen';
 
 // Steps

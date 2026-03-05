@@ -34,23 +34,21 @@ export default function AppSidebar({ className = '' }: { className?: string }) {
     return (
         <nav className={`${styles.nav} ${className}`}>
             <div className={styles.logoContainer}>
-                <Link href="/sdrone" style={{ display: 'flex' }}>
+                <Link href="/sdrone" className={styles.logoLink}>
                     <img
                         src="/logo_light.png"
                         alt="Logo"
                         className={styles.logoLight}
-                        style={{ height: '36px', width: 'auto', objectFit: 'contain' }}
                     />
                     <img
                         src="/logo_dark.png"
                         alt="Logo"
                         className={styles.logoDark}
-                        style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
                     />
                 </Link>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            <div className={styles.navContainer}>
                 {NAV_ITEMS.map((item) => {
                     const isActive = pathname === item.href;
 
@@ -70,28 +68,14 @@ export default function AppSidebar({ className = '' }: { className?: string }) {
                 })}
             </div>
 
-            <div style={{ marginTop: 'auto', paddingTop: 'var(--space-4)', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'center' }}>
+            <div className={styles.themeToggleContainer}>
                 <button
                     onClick={toggleTheme}
                     aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
-                    style={{
-                        background: 'var(--bg-emphasis)',
-                        border: '1px solid var(--border-subtle)',
-                        borderRadius: '9999px',
-                        width: '100%',
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 'var(--space-2)',
-                        cursor: 'pointer',
-                        color: 'var(--fg-default)',
-                        transition: 'all 0.2s ease'
-                    }}
-                    className="text-caption-strong"
+                    className={`${styles.themeToggleButton} text-caption-strong`}
                 >
                     {!mounted ? (
-                        <div style={{ width: 20, height: 20 }} />
+                        <div className={styles.placeholderIcon} />
                     ) : theme === 'light' ? (
                         <>
                             <Icon name="moon" size={20} />

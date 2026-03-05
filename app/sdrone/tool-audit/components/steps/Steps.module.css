@@ -1,0 +1,246 @@
+/* Shared styles for tool audit step components */
+
+/* Entry Step */
+.entryContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-8) var(--space-4);
+    min-height: 60vh;
+    gap: var(--space-6);
+}
+
+.entryIconWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.entryHeaderWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    max-width: 480px;
+}
+
+.entryActionWrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: var(--space-2);
+}
+
+.entryIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--bg-accent-soft);
+    color: var(--fg-accent);
+    margin-bottom: var(--space-2);
+}
+
+.entryTitle {
+    margin: 0;
+    color: var(--fg-default);
+}
+
+.entryDescription {
+    margin: 0;
+    color: var(--fg-subtle);
+    max-width: 400px;
+}
+
+/* Fields layout */
+.fieldsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
+}
+
+.fieldRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+@media (max-width: 480px) {
+    .fieldRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Checklist summary bar */
+.checklistSummary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--bg-emphasis);
+    border-radius: 8px;
+    margin-bottom: var(--space-2);
+}
+
+.summaryCount {
+    color: var(--fg-default);
+}
+
+.summaryDamaged {
+    color: var(--fg-negative-soft);
+}
+
+.summaryDot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--fg-muted);
+}
+
+/* Checklist container */
+.checklistContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+/* Observations & Actions */
+.actionsSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.actionsSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.actionsSectionTitle {
+    margin: 0;
+    color: var(--fg-default);
+}
+
+.actionsEmpty {
+    padding: var(--space-6);
+    text-align: center;
+    color: var(--fg-muted);
+    border: 1px dashed var(--border-subtle);
+    border-radius: 8px;
+}
+
+/* Review Step */
+.reviewContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.reviewSection {
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.reviewSection:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.reviewSectionTitle {
+    margin: 0 0 var(--space-3) 0;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.reviewText {
+    margin: 0;
+    color: var(--fg-default);
+    white-space: pre-wrap;
+}
+
+.reviewGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-3);
+}
+
+.reviewItem {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-0_5);
+}
+
+.reviewLabel {
+    color: var(--fg-subtle);
+}
+
+.reviewValue {
+    color: var(--fg-default);
+}
+
+/* Review tool summary stats */
+.reviewStats {
+    display: flex;
+    gap: var(--space-6);
+    margin-bottom: var(--space-3);
+}
+
+.reviewStat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-0_5);
+}
+
+.reviewStatValue {
+    color: var(--fg-default);
+}
+
+.reviewStatLabel {
+    color: var(--fg-subtle);
+}
+
+/* Review damaged tool list */
+.reviewDamagedList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+}
+
+.reviewDamagedItem {
+    padding: var(--space-3);
+    background-color: var(--bg-emphasis);
+    border-radius: 8px;
+    border-left: 3px solid var(--fg-negative-soft);
+}
+
+.reviewDamagedName {
+    margin: 0 0 var(--space-1) 0;
+    color: var(--fg-default);
+}
+
+.reviewDamagedRemarks {
+    margin: 0;
+    color: var(--fg-subtle);
+}
+
+/* Review action list */
+.reviewActionList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+}
+
+.reviewActionItem {
+    padding: var(--space-3);
+    background-color: var(--bg-emphasis);
+    border-radius: 8px;
+}

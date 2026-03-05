@@ -21,17 +21,53 @@ export interface Task {
   badgeColor: BadgeColor;
 }
 
-// Report type dropdown items
+// Report type dropdown items (full version with all subtypes)
 export const REPORT_TYPE_ITEMS: DropdownItem[] = [
   { type: 'header', label: 'Incidents' },
+  { type: 'icon', value: 'near-miss', label: 'Near Miss', icon: 'barricade' },
   { type: 'icon', value: 'first-aid', label: 'First Aid', icon: 'first-aid' },
-  { type: 'icon', value: 'first-incident', label: 'First incident report', icon: 'fire' },
-  { type: 'icon', value: 'accident-detail', label: 'Accident detail report', icon: 'sos' },
-  { type: 'icon', value: 'near-miss', label: 'Near miss', icon: 'alert' },
+  { type: 'icon', value: 'first-incident', label: 'FIR', icon: 'fire' },
+  { type: 'icon', value: 'accident-detail', label: 'ADR', icon: 'file-text' },
   { type: 'divider' },
   { type: 'header', label: 'Audits' },
-  { type: 'icon', value: 'tool-audit', label: 'Tool audit', icon: 'settings' },
-  { type: 'icon', value: 'safety-audit', label: 'Safety audit', icon: 'survey' },
+  { type: 'icon', value: 'safety-audit', label: 'Safety Audit', icon: 'survey' },
+  { type: 'icon', value: 'tool-audit', label: 'Tool Audit', icon: 'todo' },
+  { type: 'divider' },
+  { type: 'header', label: 'Compliance' },
+  { type: 'icon', value: 'meetings', label: 'Meetings', icon: 'group' },
+  { type: 'icon', value: 'health-check', label: 'Health Check', icon: 'dossier' },
+  { type: 'icon', value: 'audit', label: 'Audit', icon: 'task' },
+  { type: 'divider' },
+  { type: 'header', label: 'Permit to Work' },
+  { type: 'icon', value: 'general-work', label: 'General Work', icon: 'pass-valid' },
+  { type: 'icon', value: 'cold-work', label: 'Cold Work', icon: 'pass-valid' },
+  { type: 'icon', value: 'hot-work', label: 'Hot Work', icon: 'pass-valid' },
+  { type: 'icon', value: 'height-work', label: 'Height Work', icon: 'pass-valid' },
+  { type: 'divider' },
+  { type: 'header', label: 'Toolbox Talk' },
+  { type: 'icon', value: 'toolbox-talk', label: 'Toolbox Talk', icon: 'speak' },
+];
+
+// Report type dropdown items for "All" tab view (collapsed Permit to Work and Toolbox Talk without headers)
+export const REPORT_TYPE_ITEMS_ALL_TAB: DropdownItem[] = [
+  { type: 'header', label: 'Incidents' },
+  { type: 'icon', value: 'near-miss', label: 'Near Miss', icon: 'barricade' },
+  { type: 'icon', value: 'first-aid', label: 'First Aid', icon: 'first-aid' },
+  { type: 'icon', value: 'first-incident', label: 'FIR', icon: 'fire' },
+  { type: 'icon', value: 'accident-detail', label: 'ADR', icon: 'file-text' },
+  { type: 'divider' },
+  { type: 'header', label: 'Audits' },
+  { type: 'icon', value: 'safety-audit', label: 'Safety Audit', icon: 'survey' },
+  { type: 'icon', value: 'tool-audit', label: 'Tool Audit', icon: 'todo' },
+  { type: 'divider' },
+  { type: 'header', label: 'Compliance' },
+  { type: 'icon', value: 'meetings', label: 'Meetings', icon: 'group' },
+  { type: 'icon', value: 'health-check', label: 'Health Check', icon: 'dossier' },
+  { type: 'icon', value: 'audit', label: 'Audit', icon: 'task' },
+  { type: 'divider' },
+  { type: 'icon', value: 'permit-to-work', label: 'Permit to Work', icon: 'pass-valid' },
+  { type: 'divider' },
+  { type: 'icon', value: 'toolbox-talk', label: 'Toolbox Talk', icon: 'speak' },
 ];
 
 // Status dropdown options
@@ -119,7 +155,7 @@ export const MOCK_TASKS: Task[] = [
     reportedBy: 'Meera Patel',
     reportedOn: 'Thu, 15 Jan',
     location: 'Generator Room',
-    iconName: 'alert',
+    iconName: 'barricade',
     badgeColor: 'negative',
   },
   {
@@ -146,6 +182,32 @@ export const LOCATION_OPTIONS = [
   { value: 'fueling-station', label: 'Fueling Station' },
   { value: 'deck-b', label: 'Deck B' },
   { value: 'office-block', label: 'Office Block' },
+];
+
+// Person options for advanced filters
+export const PERSON_OPTIONS = [
+  { value: 'sanjay-mehta', label: 'Sanjay Mehta' },
+  { value: 'anita-desai', label: 'Anita Desai' },
+  { value: 'rahul-sharma', label: 'Rahul Sharma' },
+  { value: 'priya-rao', label: 'Priya Rao' },
+  { value: 'vikram-singh', label: 'Vikram Singh' },
+  { value: 'karan-johar', label: 'Karan Johar' },
+  { value: 'meera-patel', label: 'Dr. Meera Patel' },
+  { value: 'arjun-kumar', label: 'Arjun Kumar' },
+];
+
+// Severity options for advanced filters
+export const SEVERITY_OPTIONS = [
+  { value: 'critical', label: 'Critical' },
+  { value: 'high', label: 'High' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'low', label: 'Low' },
+];
+
+// SLA breached options for advanced filters
+export const SLA_OPTIONS = [
+  { value: 'true', label: 'Yes' },
+  { value: 'false', label: 'No' },
 ];
 
 // Mock history records

@@ -1,9 +1,9 @@
 /* TimeInput component styles */
 .input {
     display: block;
-    border: 1px solid var(--border-default);
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background-color: var(--bg-surface);
+    background-color: var(--input-bg);
     color: var(--fg-default);
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -12,27 +12,16 @@
 
 .input::-webkit-calendar-picker-indicator {
     cursor: pointer;
-    filter: var(--time-picker-filter, none);
+    filter: var(--input-indicator-filter);
 }
 
-/* Dark mode time picker indicator */
-[data-theme='dark'] .input::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-}
-
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme='light']) .input::-webkit-calendar-picker-indicator {
-        filter: invert(1);
-    }
-}
-
-.input:hover:not(:disabled) {
-    border-color: var(--border-emphasis);
+.input:hover:not(:disabled):not(:focus) {
+    border-color: var(--input-border-hover);
 }
 
 .input:focus {
-    border-color: var(--bg-accent);
-    box-shadow: 0 0 0 2px var(--bg-accent-soft);
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 2px var(--input-ring);
 }
 
 .input:disabled {

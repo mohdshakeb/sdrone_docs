@@ -298,7 +298,7 @@
     "props": [
       {
         "name": "name",
-        "type": "\"inbox\" | \"archive\" | \"alert\" | \"chart\" | \"settings\" | \"add\" | \"arrow-down\" | \"arrow-up\" | \"chevron-down\" | \"sun\" | \"moon\" | \"history\" | \"fire\" | \"close\" | \"user\" | \"survey\" | \"first-aid\" | \"menu\" | \"sos\" | \"upload\" | \"file\" | \"image\" | \"check\" | \"arrow-left\" | \"arrow-right\" | \"delete\" | \"search\" | \"filter\"",
+        "type": "\"inbox\" | \"archive\" | \"alert\" | \"chart\" | \"settings\" | \"add\" | \"arrow-down\" | \"arrow-up\" | \"chevron-down\" | \"sun\" | \"moon\" | \"history\" | \"fire\" | \"close\" | \"user\" | \"survey\" | \"first-aid\" | \"menu\" | \"sos\" | \"upload\" | \"file\" | \"image\" | \"check\" | \"arrow-left\" | \"arrow-right\" | \"delete\" | \"search\" | \"filter\" | \"barricade\" | \"todo\" | \"shield\" | \"file-text\" | \"group\" | \"dossier\" | \"task\" | \"pass-valid\" | \"speak\" | \"checkbox-circle\"",
         "required": true,
         "description": "Icon identifier from the available icon set"
       },
@@ -676,6 +676,12 @@
         "type": "string[]",
         "required": false,
         "description": "Array of selected values for multiselect checkmarks"
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "required": false,
+        "description": ""
       },
       {
         "name": "onChange",

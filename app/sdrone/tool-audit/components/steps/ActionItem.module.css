@@ -1,0 +1,36 @@
+/* ActionItem component styles */
+.actionCard {
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: var(--space-4);
+}
+
+.actionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+}
+
+.actionTitle {
+    margin: 0;
+    color: var(--fg-default);
+}
+
+.actionFields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.actionFieldRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+}
+
+@media (max-width: 480px) {
+    .actionFieldRow {
+        grid-template-columns: 1fr;
+    }
+}

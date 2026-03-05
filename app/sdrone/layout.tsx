@@ -10,10 +10,11 @@ export default function SDroneLayout({
     children: React.ReactNode
 }) {
     const pathname = usePathname();
-    const isReportPage = pathname?.startsWith('/sdrone/report');
+    const isFullScreenForm = pathname?.startsWith('/sdrone/report')
+        || pathname?.startsWith('/sdrone/tool-audit');
 
-    // Report page uses full-screen layout without sidebar
-    if (isReportPage) {
+    // Full-screen form pages use layout without sidebar
+    if (isFullScreenForm) {
         return <>{children}</>;
     }
 

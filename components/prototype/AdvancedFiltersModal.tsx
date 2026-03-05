@@ -5,6 +5,7 @@ import { BaseModal } from '@/components/ui/BaseModal';
 import Dropdown from '@/components/ui/Dropdown';
 import TextInput from '@/components/ui/TextInput';
 import Button from '@/components/ui/Button';
+import { PERSON_OPTIONS, SEVERITY_OPTIONS, SLA_OPTIONS } from '@/data/mock-data';
 import styles from './AdvancedFiltersModal.module.css';
 
 export interface AdvancedFilterValues {
@@ -26,30 +27,6 @@ export interface AdvancedFiltersModalProps {
     /** Callback when filters are applied */
     onApply: (values: AdvancedFilterValues) => void;
 }
-
-// Mock options for filters
-const PERSON_OPTIONS = [
-    { value: 'sanjay-mehta', label: 'Sanjay Mehta' },
-    { value: 'anita-desai', label: 'Anita Desai' },
-    { value: 'rahul-sharma', label: 'Rahul Sharma' },
-    { value: 'priya-rao', label: 'Priya Rao' },
-    { value: 'vikram-singh', label: 'Vikram Singh' },
-    { value: 'karan-johar', label: 'Karan Johar' },
-    { value: 'meera-patel', label: 'Dr. Meera Patel' },
-    { value: 'arjun-kumar', label: 'Arjun Kumar' },
-];
-
-const SEVERITY_OPTIONS = [
-    { value: 'critical', label: 'Critical' },
-    { value: 'high', label: 'High' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'low', label: 'Low' },
-];
-
-const SLA_OPTIONS = [
-    { value: 'true', label: 'Yes' },
-    { value: 'false', label: 'No' },
-];
 
 const DEFAULT_VALUES: AdvancedFilterValues = {
     reportedBy: null,

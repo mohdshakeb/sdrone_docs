@@ -128,12 +128,6 @@ export default function DropdownMenu({
             return;
         }
 
-        const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                onClose();
-            }
-        };
-
         const handleKeyDown = (event: KeyboardEvent) => {
             const focusableOptions = getFocusableOptions();
             if (focusableOptions.length === 0) return;
@@ -179,14 +173,12 @@ export default function DropdownMenu({
             }
         };
 
-        document.addEventListener('mousedown', handleClickOutside);
         document.addEventListener('keydown', handleKeyDown);
 
         // Focus first focusable option on open - REMOVED to prevent auto-highlighting
         // Navigation should be user-initiated (hover or arrow keys)
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [isOpen, onClose, normalizedItems, selectedValue, getFocusableOptions, focusOption, onSelect]);
@@ -271,7 +263,7 @@ export default function DropdownMenu({
                 {item.label}
                 {isSelected && (
                     <div className={styles.checkmarkContainer}>
-                        <Icon name="check" size={16} />
+                        <Icon name="checkbox-circle" size={20} />
                     </div>
                 )}
             </button>

@@ -11,6 +11,7 @@
     align-items: center;
     gap: var(--space-1);
     color: var(--fg-default);
+    padding: 0 var(--space-1);
 }
 
 /* Required indicator */
@@ -26,7 +27,7 @@
 
 /* Help text */
 .helpText {
-    color: var(--fg-subtle);
+    color: var(--fg-muted);
     margin: 0;
 }
 
@@ -35,6 +36,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    padding: 0 var(--space-1);
     gap: var(--space-4);
     margin-top: calc(var(--space-1) * -1);
     /* Pull up to reduce gap from input */

@@ -3,7 +3,7 @@
 import React from 'react';
 import Badge from '@/components/ui/Badge';
 import type { HistoryRecord } from '@/types/history';
-import { STATUS_BADGE_COLORS, CATEGORY_ICONS } from '@/types/history';
+import { STATUS_BADGE_COLORS } from '@/types/history';
 import styles from './RecordDetailContent.module.css';
 
 export interface RecordDetailContentProps {

@@ -128,7 +128,7 @@
   --fg-default: var(--color-warm-900);
   --fg-secondary: var(--color-warm-600);
   --fg-subtle: var(--color-warm-600);
-  --fg-muted: var(--color-warm-300);
+  --fg-muted: var(--color-warm-400);
   --fg-accent: var(--color-primary-500);
   --fg-accent-emphasis: var(--color-primary-900);
   --fg-accent-soft: var(--color-primary-700);
@@ -182,6 +182,15 @@
   --lh-140: 1.4;
   --lh-16px: 16px;
   --lh-12px: 12px;
+
+  /* Input Components */
+  --input-bg: transparent;
+  --input-border: var(--border-subtle);
+  --input-border-hover: var(--border-default);
+  --input-border-focus: var(--border-emphasis);
+  --input-ring: var(--bg-emphasis);
+  --input-placeholder: var(--fg-muted);
+  --input-indicator-filter: none;
 }
 
 /* Typography Utilities */
@@ -323,6 +332,9 @@
   --fg-positive-solid: var(--color-white);
   --bg-primary-solid: var(--color-primary-500);
   --fg-primary-solid: var(--color-white);
+
+  /* Input Components - Dark Mode */
+  --input-indicator-filter: invert(1);
 }
 
 /* System Preference Fallback (only if no theme set) */

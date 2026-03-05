@@ -11,7 +11,7 @@ export type RecordCategory =
 
 // Record Subtypes mapped to categories
 export const RECORD_SUBTYPES: Record<RecordCategory, string[]> = {
-    Incident: ['Near Miss', 'First Aid', 'FIR'],
+    Incident: ['Near Miss', 'First Aid', 'FIR', 'ADR'],
     Audit: ['Safety Audit', 'Tool Audit'],
     Compliance: ['Meetings', 'Health Check', 'Audit'],
     'Permit to Work': ['General Work', 'Cold Work', 'Hot Work', 'Height Work'],
@@ -51,11 +51,11 @@ export const STATUS_BADGE_COLORS: Record<RecordStatus, BadgeColor> = {
 
 // Map category to icon
 export const CATEGORY_ICONS: Record<RecordCategory, IconName> = {
-    Incident: 'alert',
-    Audit: 'survey',
-    Compliance: 'check',
-    'Permit to Work': 'file',
-    'Toolbox Talk': 'inbox',
+    Incident: 'barricade',
+    Audit: 'task',
+    Compliance: 'dossier',
+    'Permit to Work': 'pass-valid',
+    'Toolbox Talk': 'speak',
 };
 
 // Person reference

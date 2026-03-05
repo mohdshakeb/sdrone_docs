@@ -10,9 +10,9 @@
     display: block;
     min-height: 100px;
     padding: var(--space-3) var(--space-4);
-    border: 1px solid var(--border-default);
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background-color: var(--bg-subtle);
+    background-color: var(--input-bg);
     color: var(--fg-default);
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -20,16 +20,16 @@
 }
 
 .textarea::placeholder {
-    color: var(--fg-muted);
+    color: var(--input-placeholder);
 }
 
-.textarea:hover:not(:disabled) {
-    border-color: var(--border-emphasis);
+.textarea:hover:not(:disabled):not(:focus) {
+    border-color: var(--input-border-hover);
 }
 
 .textarea:focus {
-    border-color: var(--bg-accent);
-    box-shadow: 0 0 0 2px var(--bg-accent-soft);
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 2px var(--input-ring);
 }
 
 .textarea:disabled {

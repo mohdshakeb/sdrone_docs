@@ -7,14 +7,13 @@ import SegmentedTabs from '@/components/prototype/SegmentedTabs';
 import ComposableFilterBar from '@/components/prototype/ComposableFilterBar';
 import AdvancedFiltersModal from '@/components/prototype/AdvancedFiltersModal';
 import HistoryTable from '@/components/prototype/HistoryTable';
-import { MOCK_HISTORY_RECORDS, LOCATION_OPTIONS } from '@/data/mock-data';
+import { MOCK_HISTORY_RECORDS, LOCATION_OPTIONS, REPORT_TYPE_ITEMS, REPORT_TYPE_ITEMS_ALL_TAB } from '@/data/mock-data';
 import {
     HISTORY_TABS,
     RECORD_SUBTYPES,
     RECORD_STATUSES,
     DEFAULT_FILTER_STATE,
     type HistoryRecord,
-    type RecordCategory,
     type SortColumn,
     type SortDirection,
     type HistoryFilterState,
@@ -24,49 +23,57 @@ import type { FilterConfig, FilterValues } from '@/components/prototype/Composab
 import type { DropdownItem } from '@/components/ui/Dropdown';
 import styles from './page.module.css';
 
-// Get subtypes for the active tab
-const getSubtypesForTab = (tabId: string): string[] => {
-    const tab = HISTORY_TABS.find((t) => t.id === tabId);
-    if (!tab || !tab.category) {
-        // "All" tab - return all subtypes
-        return Object.values(RECORD_SUBTYPES).flat();
-    }
-    return RECORD_SUBTYPES[tab.category] || [];
-};
-
 // Check if Type filter should be visible for the tab
 const shouldShowTypeFilter = (tabId: string): boolean => {
     // Hide Type filter for Toolbox Talk tab (only one subtype)
     return tabId !== 'toolbox-talk';
 };
 
-// Get grouped type items with section headers for dropdowns
-const getGroupedTypeItems = (activeTab: string): DropdownItem[] => {
+// Get type items for the active tab
+// When on "all" tab: show collapsed version (Permit to Work and Toolbox Talk without sub-categories)
+// When on specific tab: show only subtypes for that category (no headers)
+const getTypeItemsForTab = (activeTab: string): DropdownItem[] => {
     if (activeTab === 'all') {
-        // All categories - show all with headers, single items without header
-        const items: DropdownItem[] = [];
-        let isFirst = true;
-        Object.entries(RECORD_SUBTYPES).forEach(([category, subtypes]) => {
-            if (!isFirst) items.push({ type: 'divider' });
-
-            if (subtypes.length === 1) {
-                // Single subtype - add without header (like Toolbox Talk)
-                items.push({ type: 'text', value: subtypes[0], label: subtypes[0] });
-            } else {
-                // Multiple subtypes - add with header
-                items.push({ type: 'header', label: category });
-                subtypes.forEach((subtype) => {
-                    items.push({ type: 'text', value: subtype, label: subtype });
-                });
-            }
-            isFirst = false;
-        });
-        return items;
-    } else {
-        // Single category - just list subtypes without header
-        const subtypes = getSubtypesForTab(activeTab);
-        return subtypes.map((st) => ({ type: 'text', value: st, label: st }));
+        // Show all report types with headers, but collapsed Permit to Work and Toolbox Talk
+        return REPORT_TYPE_ITEMS_ALL_TAB;
     }
+
+    // Find the category for this tab
+    const tab = HISTORY_TABS.find((t) => t.id === activeTab);
+    if (!tab?.category) {
+        return REPORT_TYPE_ITEMS;
+    }
+
+    // Get subtypes for this category
+    const subtypes = RECORD_SUBTYPES[tab.category] || [];
+    if (subtypes.length === 0) {
+        return [];
+    }
+
+    // Check if we should hide icons (for Permit to Work tab)
+    const isPermitTab = tab.category === 'Permit to Work';
+
+    // Find matching items from REPORT_TYPE_ITEMS by matching labels to subtypes
+    const filteredItems: DropdownItem[] = [];
+    REPORT_TYPE_ITEMS.forEach((item) => {
+        if (item.type === 'icon' || item.type === 'text') {
+            // Check if this item's label matches any subtype in this category (strict match)
+            const matchesSubtype = subtypes.some(
+                (subtype) => item.label.trim().toLowerCase() === subtype.trim().toLowerCase()
+            );
+
+            if (matchesSubtype) {
+                // If it's a permit tab, force type to 'text' to hide icons
+                if (isPermitTab) {
+                    filteredItems.push({ ...item, type: 'text' });
+                } else {
+                    filteredItems.push(item);
+                }
+            }
+        }
+    });
+
+    return filteredItems;
 };
 
 export default function HistoryPage() {
@@ -140,7 +147,7 @@ export default function HistoryPage() {
                 id: 'types',
                 type: 'multiselect',
                 label: 'Type',
-                items: getGroupedTypeItems(activeTab),
+                items: getTypeItemsForTab(activeTab),
                 visible: showTypeFilter,
             },
             {
@@ -205,9 +212,31 @@ export default function HistoryPage() {
             );
         }
 
-        // Filter by types
+        // Filter by types (match dropdown value to record type label)
         if (filters.types && filters.types.length > 0) {
-            records = records.filter((r) => filters.types.includes(r.type));
+            records = records.filter((r) => {
+                // Check if any selected type matches the record type
+                return filters.types.some((selectedValue) => {
+                    // Special handling for collapsed "Permit to Work" - match any permit subtype
+                    if (selectedValue === 'permit-to-work') {
+                        const permitTypes = ['general work', 'cold work', 'hot work', 'height work'];
+                        return permitTypes.some(permitType =>
+                            r.type.toLowerCase().includes(permitType) ||
+                            permitType.includes(r.type.toLowerCase())
+                        );
+                    }
+
+                    // Use the items list based on current tab
+                    const itemsList = activeTab === 'all' ? REPORT_TYPE_ITEMS_ALL_TAB : REPORT_TYPE_ITEMS;
+                    const item = itemsList.find(
+                        (i) => i.type !== 'divider' && i.type !== 'header' && i.value === selectedValue
+                    );
+                    if (!item || item.type === 'divider' || item.type === 'header') return false;
+                    const itemLabel = (item as { label: string }).label;
+                    return r.type.toLowerCase().includes(itemLabel.toLowerCase()) ||
+                        itemLabel.toLowerCase().includes(r.type.toLowerCase());
+                });
+            });
         }
 
         // Filter by statuses

@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--fg-subtle);
+}
+
+.iconCircle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--bg-emphasis);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+    color: var(--fg-muted);
+}
+
+.title {
+    color: var(--fg-default);
+    margin-bottom: var(--space-2);
+}
+
+.description {
+    max-width: 400px;
+}

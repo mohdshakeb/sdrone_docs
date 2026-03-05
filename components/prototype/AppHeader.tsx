@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Button from '@/components/ui/Button';
 import styles from './AppHeader.module.css';
 import { Icon } from '@/components/ui/Icon';
+import DropdownMenu from '@/components/ui/DropdownMenu';
+import type { DropdownItem } from '@/components/ui/DropdownMenu';
 import Link from 'next/link';
 import { useTheme } from '@/components/ui/ThemeProvider';
 
@@ -27,6 +29,7 @@ export interface AppHeaderProps {
     onFormSubmit?: () => void;
     isEntryStep?: boolean;
     isReviewStep?: boolean;
+    submitLabel?: string;
 
     // Inner page variant props
     innerPageTitle?: string;
@@ -45,6 +48,7 @@ export default function AppHeader({
     onFormSubmit,
     isEntryStep = false,
     isReviewStep = false,
+    submitLabel = 'Submit Report',
     innerPageTitle,
     breadcrumbs = [],
     onBack,
@@ -55,6 +59,10 @@ export default function AppHeader({
 
     const { theme, toggleTheme } = useTheme();
     const [mounted, setMounted] = React.useState(false);
+
+    // Start New dropdown state (for default variant)
+    const [startNewOpen, setStartNewOpen] = useState(false);
+    const startNewRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setMounted(true);
@@ -88,6 +96,20 @@ export default function AppHeader({
             return () => document.removeEventListener('keydown', handleEscape);
         }
     }, [variant, onFormBack, onBack]);
+
+    // Click-outside handler for Start New dropdown
+    useEffect(() => {
+        if (!startNewOpen) return;
+
+        const handleClickOutside = (e: MouseEvent) => {
+            if (startNewRef.current && !startNewRef.current.contains(e.target as Node)) {
+                setStartNewOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [startNewOpen]);
 
     // Inner page variant rendering (detail pages with back button, title, breadcrumbs)
     if (variant === 'innerPage') {
@@ -212,7 +234,7 @@ export default function AppHeader({
                             onClick={onFormSubmit}
                             disabled={!isReviewStep}
                         >
-                            Submit Report
+                            {submitLabel}
                         </Button>
                     </div>
                 </div>
@@ -260,6 +282,34 @@ export default function AppHeader({
         );
     }
 
+    // Start New dropdown items - matches REPORT_TYPE_ITEMS but excludes Incidents section
+    const startNewItems: DropdownItem[] = [
+        { type: 'header', label: 'Audits' },
+        { type: 'icon', value: 'safety-audit', label: 'Safety Audit', icon: 'survey', disabled: true },
+        { type: 'icon', value: 'tool-audit', label: 'Tool Audit', icon: 'todo' },
+        { type: 'divider' },
+        { type: 'header', label: 'Compliance' },
+        { type: 'icon', value: 'meetings', label: 'Meetings', icon: 'group', disabled: true },
+        { type: 'icon', value: 'health-check', label: 'Health Check', icon: 'dossier', disabled: true },
+        { type: 'icon', value: 'audit', label: 'Audit', icon: 'task', disabled: true },
+        { type: 'divider' },
+        { type: 'header', label: 'Permit to Work' },
+        { type: 'icon', value: 'general-work', label: 'General Work', icon: 'pass-valid', disabled: true },
+        { type: 'icon', value: 'cold-work', label: 'Cold Work', icon: 'pass-valid', disabled: true },
+        { type: 'icon', value: 'hot-work', label: 'Hot Work', icon: 'pass-valid', disabled: true },
+        { type: 'icon', value: 'height-work', label: 'Height Work', icon: 'pass-valid', disabled: true },
+        { type: 'divider' },
+        { type: 'header', label: 'Toolbox Talk' },
+        { type: 'icon', value: 'toolbox-talk', label: 'Toolbox Talk', icon: 'speak', disabled: true },
+    ];
+
+    const handleStartNewSelect = (value: string) => {
+        setStartNewOpen(false);
+        if (value === 'tool-audit') {
+            router.push('/sdrone/tool-audit');
+        }
+    };
+
     // Default variant rendering
     return (
         <header className={styles.header}>
@@ -270,9 +320,22 @@ export default function AppHeader({
 
             <div className={styles.right}>
                 <div className={styles.buttonGroup}>
-                    <Button size="sm" variant="secondary" leadingIcon={<Icon name="add" size={16} />}>
-                        Start New
-                    </Button>
+                    <div className={styles.startNewWrapper} ref={startNewRef}>
+                        <Button
+                            size="sm"
+                            variant="secondary"
+                            leadingIcon={<Icon name="add" size={16} />}
+                            onClick={() => setStartNewOpen((prev) => !prev)}
+                        >
+                            Start New
+                        </Button>
+                        <DropdownMenu
+                            items={startNewItems}
+                            isOpen={startNewOpen}
+                            onSelect={handleStartNewSelect}
+                            onClose={() => setStartNewOpen(false)}
+                        />
+                    </div>
                     <Button size="sm" variant="primary" onClick={() => router.push('/sdrone/report')}>
                         Report Incident
                     </Button>
