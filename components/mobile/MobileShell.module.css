@@ -60,7 +60,7 @@
 
 
 /* Graceful degradation: fill viewport on small screens */
-@media (max-width: 430px) {
+@media (max-width: 480px) {
     .wrapper {
         padding: 0;
         align-items: stretch;
