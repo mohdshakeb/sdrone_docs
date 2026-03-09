@@ -1,0 +1,64 @@
+/* Mobile Menu page */
+
+.container {
+    padding: var(--space-4);
+    height: 100%;
+}
+
+.menuList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    text-decoration: none;
+    color: var(--fg-default);
+    border-radius: var(--space-3);
+    transition: background-color 0.15s ease;
+}
+
+.menuItem:hover {
+    background-color: var(--bg-hover);
+}
+
+.menuItem:active {
+    background-color: var(--bg-subtle);
+}
+
+.menuItem:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
+}
+
+.menuIcon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-subtle);
+    border-radius: var(--space-2);
+    color: var(--fg-secondary);
+    flex-shrink: 0;
+}
+
+.menuContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.menuLabel {
+    color: var(--fg-default);
+}
+
+.menuDescription {
+    color: var(--fg-secondary);
+}

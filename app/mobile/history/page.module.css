@@ -1,0 +1,18 @@
+/* Mobile History page styles */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tabsContainer {
+    flex-shrink: 0;
+}
+
+.listContainer {
+    flex: 1;
+    overflow-y: auto;
+    overflow-y: overlay;
+    padding: var(--space-3) var(--space-4);
+}

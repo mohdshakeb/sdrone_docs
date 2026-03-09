@@ -1,0 +1,23 @@
+/* StatusBar — Fake iOS status bar for mobile simulation */
+
+.statusBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px 8px;
+    color: var(--fg-default);
+    background-color: var(--bg-canvas);
+    flex-shrink: 0;
+    z-index: 90;
+}
+
+.time {
+    letter-spacing: 0.02em;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--fg-default);
+}

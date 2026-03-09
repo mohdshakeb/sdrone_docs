@@ -1,160 +1,234 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import TaskCard from '@/components/prototype/TaskCard';
-import ComposableFilterBar from '@/components/prototype/ComposableFilterBar';
-import type { FilterConfig, FilterValues } from '@/components/prototype/ComposableFilterBar';
-import TaskDetailPanel from '@/components/prototype/TaskDetailPanel';
-import EmptyState from '@/components/prototype/EmptyState';
-import { MOCK_TASKS, REPORT_TYPE_ITEMS_ALL_TAB, STATUS_OPTIONS, Task } from '@/data/mock-data';
+import React, { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import type { IconName } from '@/components/ui/Icon';
+import Badge from '@/components/ui/Badge';
+import Select from '@/components/ui/Select';
+import DashboardStatCard from '@/components/prototype/DashboardStatCard';
+import DashboardAlertCard from '@/components/prototype/DashboardAlertCard';
+import DashboardCategoryCard from '@/components/prototype/DashboardCategoryCard';
+import DashboardActivityLogItem from '@/components/prototype/DashboardActivityLogItem';
+import { MOCK_TASKS, MOCK_HISTORY_RECORDS } from '@/data/mock-data';
+import { CATEGORY_ICONS, STATUS_BADGE_COLORS } from '@/types/history';
+import type { RecordCategory } from '@/types/history';
+import { getGreeting, getFormattedDate, getShortDate } from '@/utils/formatters';
 import styles from './page.module.css';
 
-/**
- * Inbox Page - S-Drone task list with filtering
- *
- * Refactored for better separation of concerns:
- * - Data moved to data/mock-data.ts
- * - Uses ComposableFilterBar for consistent filtering UX
- * - Page focused on layout and state management
- */
-export default function InboxPage() {
-  const [filters, setFilters] = useState<{ reportType: string | null; status: string | null }>({
-    reportType: null,
-    status: null,
-  });
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+type AccentColor = 'default' | 'negative' | 'positive' | 'notice' | 'information';
 
-  // Handle filter changes
-  const handleFilterChange = (filterId: string, value: unknown) => {
-    setFilters((prev) => ({
-      ...prev,
-      [filterId]: value,
-    }));
-  };
+// Category display config
+const CATEGORIES: { key: RecordCategory; icon: IconName; accent: AccentColor }[] = [
+    { key: 'Incident', icon: 'barricade', accent: 'negative' },
+    { key: 'Audit', icon: 'task', accent: 'information' },
+    { key: 'Compliance', icon: 'dossier', accent: 'notice' },
+    { key: 'Permit to Work', icon: 'pass-valid', accent: 'positive' },
+    { key: 'Toolbox Talk', icon: 'speak', accent: 'default' },
+];
 
-  // Filter configurations
-  const filterConfigs: FilterConfig[] = useMemo(() => [
-    {
-      id: 'reportType',
-      type: 'dropdown',
-      label: 'Report Type',
-      items: REPORT_TYPE_ITEMS_ALL_TAB,
-    },
-    {
-      id: 'status',
-      type: 'dropdown',
-      label: 'Status',
-      options: STATUS_OPTIONS,
-    },
-  ], []);
+const PERIOD_OPTIONS = [
+    { value: 'today', label: 'Today' },
+    { value: 'last-week', label: 'Last 7 days' },
+    { value: 'last-month', label: 'Last 30 days' },
+    { value: 'all', label: 'All time' },
+];
 
-  // Filter values for ComposableFilterBar
-  const filterValues: FilterValues = {
-    reportType: filters.reportType,
-    status: filters.status,
-  };
+export default function DashboardPage() {
+    const router = useRouter();
+    const [categoryPeriod, setCategoryPeriod] = useState('all');
 
-  // Filter tasks based on selected filters
-  const filteredTasks = useMemo(() => {
-    let tasks = [...MOCK_TASKS];
+    // Compute dashboard stats
+    const stats = useMemo(() => ({
+        pending: MOCK_TASKS.filter(t => t.status !== 'Completed').length,
+        critical: MOCK_TASKS.filter(t => t.status === 'Critical').length,
+        underReview: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Under Review').length,
+        resolved: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Closed').length,
+    }), []);
 
-    // Filter by report type
-    if (filters.reportType) {
-      tasks = tasks.filter((task) => {
-        // Special handling for collapsed "Permit to Work" - match any permit subtype
-        if (filters.reportType === 'permit-to-work') {
-          const permitSubtypes = ['general work', 'cold work', 'hot work', 'height work', 'permit to work'];
-          return permitSubtypes.some(subtype =>
-            task.subtitle.toLowerCase().includes(subtype) ||
-            subtype.includes(task.subtitle.toLowerCase())
-          );
-        }
+    // Urgent items: Critical tasks + Action Required/Escalated records
+    const urgentItems = useMemo(() => {
+        const criticalTasks = MOCK_TASKS
+            .filter(t => t.status === 'Critical')
+            .map(t => ({
+                id: t.id,
+                icon: t.iconName,
+                title: t.title,
+                reportType: t.subtitle,
+                location: t.location,
+                reporterName: t.reportedBy,
+                reportedAt: t.reportedOn,
+                href: '/sdrone/inbox',
+            }));
 
-        // Find the report type item to get its label
-        const item = REPORT_TYPE_ITEMS_ALL_TAB.find(
-          (item) =>
-            item.type !== 'divider' &&
-            item.type !== 'header' &&
-            item.value === filters.reportType
-        );
-        if (!item || item.type === 'divider' || item.type === 'header') return true;
+        const urgentRecords = MOCK_HISTORY_RECORDS
+            .filter(r => r.status === 'Action Required' || r.status === 'Escalated')
+            .map(r => ({
+                id: r.id,
+                icon: CATEGORY_ICONS[r.category],
+                title: r.title,
+                reportType: r.type,
+                location: r.location.name,
+                reporterName: r.reportedBy.name,
+                reportedAt: getShortDate(r.updatedAt),
+                href: `/sdrone/history/${r.id}`,
+            }));
 
-        // Match the task subtitle with the item label
-        const itemLabel = item.type === 'icon' || item.type === 'text' ? item.label : '';
-        return (
-          task.subtitle.toLowerCase().includes(itemLabel.toLowerCase()) ||
-          itemLabel.toLowerCase().includes(task.subtitle.toLowerCase())
-        );
-      });
-    }
+        return [...criticalTasks, ...urgentRecords].slice(0, 4);
+    }, []);
 
-    // Filter by status
-    if (filters.status) {
-      // Find the status option to get its label
-      const statusOption = STATUS_OPTIONS.find((opt) => opt.value === filters.status);
-      if (statusOption) {
-        tasks = tasks.filter((task) => task.status === statusOption.label);
-      }
-    }
+    // Activity log: Mock 6 items for the new section
+    const activityLogItems = useMemo(() => [
+        { id: 'al-1', name: 'Ajay Nair', activity: 'created a Tool Audit', timestamp: '2 mins ago' },
+        { id: 'al-2', name: 'Sara Khan', activity: 'closed a General Work Permit', timestamp: '1 hour ago' },
+        { id: 'al-3', name: 'Rohan Sharma', activity: 'reported a Near Miss', timestamp: '3 hours ago' },
+        { id: 'al-4', name: 'Meera Patel', activity: 'escalated Safety Audit', timestamp: '5 hours ago' },
+        { id: 'al-5', name: 'Karan Johar', activity: 'completed Health Check', timestamp: '1 day ago' },
+        { id: 'al-6', name: 'Priya Rao', activity: 'scheduled a Toolbox Talk', timestamp: '2 days ago' },
+    ], []);
 
-    return tasks;
-  }, [filters.reportType, filters.status]);
+    // Category breakdown (filtered by period)
+    const categoryBreakdown = useMemo(() => {
+        const now = new Date();
+        const cutoff = categoryPeriod === 'today'
+            ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
+            : categoryPeriod === 'last-week'
+                ? new Date(now.getTime() - 7 * 86400000)
+                : categoryPeriod === 'last-month'
+                    ? new Date(now.getTime() - 30 * 86400000)
+                    : null;
 
-  const handleTaskClick = (taskId: string) => {
-    const task = MOCK_TASKS.find(t => t.id === taskId);
-    setSelectedTask(task || null);
-  };
+        const filteredRecords = cutoff
+            ? MOCK_HISTORY_RECORDS.filter(r => new Date(r.createdAt) >= cutoff)
+            : MOCK_HISTORY_RECORDS;
 
-  const handlePanelClose = () => {
-    setSelectedTask(null);
-  };
+        return CATEGORIES.map(({ key, icon, accent }) => {
+            const records = filteredRecords.filter(r => r.category === key);
+            const openCount = records.filter(r => r.status !== 'Closed').length;
+            return { category: key, icon, accent, total: records.length, open: openCount };
+        });
+    }, [categoryPeriod]);
 
-  const isPanelOpen = selectedTask !== null;
+    return (
+        <div className={styles.dashboard}>
+            {/* Greeting Section */}
+            <section className={styles.greeting}>
+                <div>
+                    <h2 className="text-heading">{getGreeting()}, John</h2>
+                    <p className={`${styles.greetingSubtext} text-body`}>
+                        Here&apos;s your safety overview
+                    </p>
+                </div>
+                <span className={`${styles.dateText} text-body`}>
+                    {getFormattedDate()}
+                </span>
+            </section>
 
-  return (
-    <div className={`${styles.pageContainer} ${isPanelOpen ? styles.pageContainerWithPanel : ''}`}>
-      {/* Filters - Sticky below header */}
-      <div className={styles.filterContainer}>
-        <ComposableFilterBar
-          filters={filterConfigs}
-          values={filterValues}
-          onChange={handleFilterChange}
-        />
-      </div>
+            {/* Quick Stats */}
+            <section className={styles.statsGrid}>
+                <DashboardStatCard
+                    icon="inbox"
+                    label="Pending Tasks"
+                    value={stats.pending}
+                    onClick={() => router.push('/sdrone/inbox')}
+                />
+                <DashboardStatCard
+                    icon="alert"
+                    label="Critical Items"
+                    value={stats.critical}
+                    accentColor="negative"
+                    onClick={() => router.push('/sdrone/inbox')}
+                />
+                <DashboardStatCard
+                    icon="archive"
+                    label="Under Review"
+                    value={stats.underReview}
+                    accentColor="notice"
+                    onClick={() => router.push('/sdrone/history')}
+                />
+                <DashboardStatCard
+                    icon="checkbox-circle"
+                    label="Resolved"
+                    value={stats.resolved}
+                    accentColor="positive"
+                    onClick={() => router.push('/sdrone/history')}
+                />
+            </section>
 
-      {/* Task Cards */}
-      <div className={styles.taskList}>
-        {filteredTasks.length === 0 ? (
-          <EmptyState
-            icon="inbox"
-            title="No tasks found"
-            description="Try adjusting your filters to see more results."
-          />
-        ) : (
-          filteredTasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              id={task.id}
-              title={task.title}
-              subtitle={task.subtitle}
-              status={task.status}
-              reportedBy={task.reportedBy}
-              reportedOn={task.reportedOn}
-              location={task.location}
-              iconName={task.iconName}
-              badgeColor={task.badgeColor}
-              onClick={handleTaskClick}
-              isSelected={selectedTask?.id === task.id}
-            />
-          ))
-        )}
-      </div>
+            {/* Two-Column Content */}
+            <section className={styles.contentGrid}>
+                {/* Attention Required */}
+                <div className={styles.contentSection}>
+                    <div className={styles.sectionHeader}>
+                        <span className="text-body-strong">Attention Required</span>
+                        <Badge color="negative" size="small">{urgentItems.length}</Badge>
+                    </div>
+                    <div className={styles.alertList}>
+                        {urgentItems.map(item => (
+                            <DashboardAlertCard
+                                key={item.id}
+                                icon={item.icon}
+                                title={item.title}
+                                reportType={item.reportType}
+                                location={item.location}
+                                reporterName={item.reporterName}
+                                reportedAt={item.reportedAt}
+                                onClick={() => router.push(item.href)}
+                            />
+                        ))}
+                    </div>
+                    <Link href="/sdrone/inbox" className={`${styles.seeAllLink} text-caption-strong`}>
+                        View all pending items
+                    </Link>
+                </div>
 
-      <TaskDetailPanel
-        task={selectedTask}
-        isOpen={isPanelOpen}
-        onClose={handlePanelClose}
-      />
-    </div>
-  );
+                {/* Recent Activity */}
+                <div className={styles.contentSection}>
+                    <div className={styles.sectionHeader}>
+                        <span className="text-body-strong">Recent Activity</span>
+                        <Link href="/sdrone/history" className={`${styles.seeAllLink} text-caption-strong`}>
+                            See all
+                        </Link>
+                    </div>
+                    <div className={styles.activityList}>
+                        {activityLogItems.map(item => (
+                            <DashboardActivityLogItem
+                                key={item.id}
+                                name={item.name}
+                                activity={item.activity}
+                                timestamp={item.timestamp}
+                            />
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Category Breakdown */}
+            <section className={styles.categorySection}>
+                <div className={styles.sectionHeader}>
+                    <span className="text-body-strong">Records by Category</span>
+                    <Select
+                        options={PERIOD_OPTIONS}
+                        value={categoryPeriod}
+                        onChange={(e) => setCategoryPeriod(e.target.value)}
+                        size="sm"
+                        fullWidth={false}
+                    />
+                </div>
+                <div className={styles.categoryGrid}>
+                    {categoryBreakdown.map(cat => (
+                        <DashboardCategoryCard
+                            key={cat.category}
+                            icon={cat.icon}
+                            label={cat.category}
+                            total={cat.total}
+                            open={cat.open}
+                            accentColor={cat.accent}
+                            onClick={() => router.push('/sdrone/history')}
+                        />
+                    ))}
+                </div>
+            </section>
+        </div>
+    );
 }

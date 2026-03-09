@@ -7,18 +7,16 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <div style={{ display: 'flex' }}>
+        <div className={styles.logoContainer}>
           <img
             src="/logo_light.png"
             alt="S-Drone Logo"
-            className="logo-light"
-            style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+            className={`${styles.logo} logo-light`}
           />
           <img
             src="/logo_dark.png"
             alt="S-Drone Logo"
-            className="logo-dark"
-            style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+            className={`${styles.logo} logo-dark`}
           />
         </div>
 
@@ -35,7 +33,14 @@ export default function Home() {
             className={styles.primary}
             target="_blank"
           >
-            View prototype
+            Web
+          </Link>
+          <Link
+            href="/mobile"
+            className={styles.primary}
+            target="_blank"
+          >
+            Mobile
           </Link>
           <a
             href="https://github.com/mohdshakeb/sdrone_docs.git"

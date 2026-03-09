@@ -37,9 +37,11 @@ import {
     RiPassValidFill,
     RiSpeakFill,
     RiCheckboxCircleFill,
+    RiHome5Fill,
 } from 'react-icons/ri';
 
 export type IconName =
+    | 'home'
     | 'inbox'
     | 'archive'
     | 'alert'
@@ -106,6 +108,7 @@ export interface IconProps extends React.SVGAttributes<SVGElement> {
 }
 
 const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; color?: string; className?: string }>> = {
+    'home': RiHome5Fill,
     'inbox': RiInbox2Fill,
     'archive': RiArchiveDrawerFill,
     'alert': RiAlertFill,

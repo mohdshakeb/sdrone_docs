@@ -32,9 +32,14 @@ These are the defined text styles available in our system. Usage in code corresp
   <tbody>
     {[
       {
+        class: 'text-display',
+        sample: 'Display',
+        props: '24px / 120% / SemiBold'
+      },
+      {
         class: 'text-heading',
         sample: 'Heading',
-        props: '24px / 120% / SemiBold'
+        props: '20px / 120% / Medium'
       },
       {
         class: 'text-body-base',
@@ -64,7 +69,7 @@ These are the defined text styles available in our system. Usage in code corresp
       {
         class: 'text-caption-small',
         sample: 'Caption Small',
-        props: '10px / 12px / SemiBold'
+        props: '10px / 12px / Medium'
       },
     ].map(style => (
       <tr key={style.class}>
@@ -105,7 +110,10 @@ Underlying CSS variables used to construct the styles above.
   { property: '12px', value: 'var(--text-12)' },
   { property: '14px', value: 'var(--text-14)' },
   { property: '16px', value: 'var(--text-16)' },
-  { property: '24px', value: 'var(--text-24)' }
+  { property: '20px', value: 'var(--text-20)' },
+  { property: '24px', value: 'var(--text-24)' },
+  { property: '32px', value: 'var(--text-32)' },
+  { property: '48px', value: 'var(--text-48)' }
 ]} />
 
 </Section>

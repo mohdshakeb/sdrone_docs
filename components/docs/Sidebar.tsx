@@ -47,6 +47,12 @@ export default function Sidebar({ className = '' }: { className?: string }) {
                         <li><Link href="/docs/form-field" onClick={() => setIsOpen(false)}>Form Field</Link></li>
                     </ul>
                 </div>
+                <div className={styles.section}>
+                    <h3 className={styles.heading}>Patterns</h3>
+                    <ul className={styles.list}>
+                        <li><Link href="/docs/navigation" onClick={() => setIsOpen(false)}>Navigation</Link></li>
+                    </ul>
+                </div>
             </nav>
 
             {/* Mobile Overlay */}

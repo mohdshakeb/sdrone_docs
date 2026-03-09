@@ -1,0 +1,82 @@
+/* MobileShell — Phone frame wrapper for mobile app simulation */
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--bg-emphasis);
+    padding: var(--space-8);
+}
+
+.device {
+    width: 390px;
+    height: 844px;
+    border-radius: 40px;
+    border: 6px solid var(--border-emphasis);
+    overflow: hidden;
+    position: relative;
+    background-color: var(--bg-canvas);
+    box-shadow:
+        0 0 0 2px var(--bg-subtle),
+        0 25px 60px -12px rgba(0, 0, 0, 0.3),
+        0 12px 28px -8px rgba(0, 0, 0, 0.15);
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Creates a containing block for position: fixed descendants,
+       so bottom sheets cover the full screen regardless of nesting depth */
+    will-change: transform;
+}
+
+/* ── Subtle scrollbars within the mobile device ── */
+
+.device ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.device ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.device ::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    /* hidden by default */
+    border-radius: 5px;
+}
+
+/* Show scrollbar thumb only on hover/scroll */
+.device *:hover::-webkit-scrollbar-thumb,
+.device *:active::-webkit-scrollbar-thumb,
+.device *:focus-within::-webkit-scrollbar-thumb {
+    background-color: var(--fg-muted);
+}
+
+
+/* Graceful degradation: fill viewport on small screens */
+@media (max-width: 430px) {
+    .wrapper {
+        padding: 0;
+        align-items: stretch;
+    }
+
+    .device {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-height: 880px) {
+    .device {
+        height: calc(100vh - var(--space-8) - var(--space-8));
+    }
+}

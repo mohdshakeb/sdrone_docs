@@ -15,7 +15,8 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-    { label: 'Inbox', href: '/sdrone', icon: 'inbox' },
+    { label: 'Home', href: '/sdrone', icon: 'home' },
+    { label: 'Inbox', href: '/sdrone/inbox', icon: 'inbox' },
     { label: 'History', href: '/sdrone/history', icon: 'archive' },
     { label: 'Alerts', href: '/sdrone/alerts', icon: 'alert' },
     { label: 'Insights', href: '/sdrone/insights', icon: 'chart' },

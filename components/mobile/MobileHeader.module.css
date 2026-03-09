@@ -1,0 +1,153 @@
+/* MobileHeader — Compact app header for mobile simulation */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 var(--space-4);
+    background-color: var(--bg-canvas);
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+/* ── Default variant: avatar + title left, actions right ── */
+
+.leftGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    min-width: 0;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--bg-accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatarText {
+    color: var(--fg-accent-emphasis);
+    line-height: 1;
+}
+
+.rightGroup {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    flex-shrink: 0;
+}
+
+.headerButton {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-default);
+    border-radius: var(--space-2);
+    transition: background-color 0.15s ease;
+}
+
+.headerButton:hover {
+    background-color: var(--bg-hover);
+}
+
+.headerButton:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
+}
+
+.headerButton:active {
+    background-color: var(--bg-subtle);
+}
+
+.sosButton {
+    background-color: var(--bg-negative-soft);
+    color: var(--fg-negative-soft);
+}
+
+.sosButton:hover {
+    background-color: var(--bg-negative-soft);
+    opacity: 0.85;
+}
+
+/* ── Logo (home screen) ── */
+
+.logoWrapper {
+    display: flex;
+    align-items: center;
+    height: 24px;
+}
+
+.logoLight {
+    display: block;
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logoDark {
+    display: none;
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+}
+
+:global([data-theme='dark']) .logoLight {
+    display: none;
+}
+
+:global([data-theme='dark']) .logoDark {
+    display: block;
+}
+
+/* ── Detail variant: back button + left-aligned title ── */
+
+.titleLeft {
+    color: var(--fg-default);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.rightSlot {
+    width: 40px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.backButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-default);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease;
+}
+
+.backButton:hover {
+    background-color: var(--bg-hover);
+}
+
+.backButton:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
+}

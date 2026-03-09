@@ -39,6 +39,11 @@
   --color-white: #FFFFFF;
   --color-black: #000000;
   --color-primary-alpha-20: rgba(240, 108, 0, 0.2);
+  --color-blue-alpha-20: rgba(37, 99, 235, 0.2);
+  --color-red-alpha-20: rgba(220, 38, 38, 0.2);
+  --color-yellow-alpha-20: rgba(217, 119, 6, 0.2);
+  --color-green-alpha-20: rgba(5, 150, 105, 0.2);
+  --color-purple-alpha-20: rgba(79, 70, 229, 0.2);
 
   /* Cool Gray */
   --color-cool-50: #FAFAFA;
@@ -135,15 +140,15 @@
   --fg-on-accent: var(--color-white);
 
   /* Status Colors - Soft (Light BG, Dark Text) */
-  --bg-information-soft: var(--color-blue-100);
+  --bg-information-soft: var(--color-blue-alpha-20);
   --fg-information-soft: var(--color-blue-900);
-  --bg-negative-soft: var(--color-red-100);
+  --bg-negative-soft: var(--color-red-alpha-20);
   --fg-negative-soft: var(--color-red-900);
-  --bg-neutral-soft: var(--color-purple-100);
+  --bg-neutral-soft: var(--color-purple-alpha-20);
   --fg-neutral-soft: var(--color-purple-900);
-  --bg-notice-soft: var(--color-yellow-100);
+  --bg-notice-soft: var(--color-yellow-alpha-20);
   --fg-notice-soft: var(--color-yellow-900);
-  --bg-positive-soft: var(--color-green-100);
+  --bg-positive-soft: var(--color-green-alpha-20);
   --fg-positive-soft: var(--color-green-900);
   --bg-primary-soft: var(--color-primary-alpha-20);
   --fg-primary-soft: var(--color-primary-900);
@@ -171,6 +176,8 @@
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
 
+  --text-48: 48px;
+  --text-32: 32px;
   --text-24: 24px;
   --text-20: 20px;
   --text-16: 16px;
@@ -306,15 +313,15 @@
   --fg-on-accent: var(--color-white);
 
   /* Status Colors - Soft */
-  --bg-information-soft: var(--color-blue-900);
+  --bg-information-soft: var(--color-blue-alpha-20);
   --fg-information-soft: var(--color-blue-100);
-  --bg-negative-soft: var(--color-red-900);
+  --bg-negative-soft: var(--color-red-alpha-20);
   --fg-negative-soft: var(--color-red-100);
-  --bg-neutral-soft: var(--color-purple-900);
+  --bg-neutral-soft: var(--color-purple-alpha-20);
   --fg-neutral-soft: var(--color-purple-100);
-  --bg-notice-soft: var(--color-yellow-900);
+  --bg-notice-soft: var(--color-yellow-alpha-20);
   --fg-notice-soft: var(--color-yellow-100);
-  --bg-positive-soft: var(--color-green-900);
+  --bg-positive-soft: var(--color-green-alpha-20);
   --fg-positive-soft: var(--color-green-100);
   --bg-primary-soft: var(--color-primary-alpha-20);
   --fg-primary-soft: var(--color-primary-50);
@@ -466,4 +473,10 @@ body {
   .main-content {
     margin-left: var(--sidebar-width);
   }
+}
+
+.page-content {
+  max-width: 1200px;
+  margin-inline: auto;
+  width: 100%;
 }

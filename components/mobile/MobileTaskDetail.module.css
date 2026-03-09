@@ -1,0 +1,133 @@
+/* MobileTaskDetail — Full-screen task detail overlay within the phone frame */
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 80;
+    background-color: var(--bg-canvas);
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 var(--space-4);
+    border-bottom: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+.backButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-default);
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease;
+}
+
+.backButton:hover {
+    background-color: var(--bg-hover);
+}
+
+.backButton:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
+}
+
+.headerTitle {
+    flex: 1;
+    color: var(--fg-default);
+}
+
+.headerSpacer {
+    width: 40px;
+    flex-shrink: 0;
+}
+
+.body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-y: overlay;
+    padding: var(--space-5) var(--space-4);
+}
+
+.titleSection {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+}
+
+.iconContainer {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg-accent);
+    flex-shrink: 0;
+}
+
+.title {
+    color: var(--fg-default);
+    margin: 0;
+}
+
+.section {
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.section:last-child {
+    border-bottom: none;
+}
+
+.statusRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--fg-subtle);
+}
+
+.sectionTitle {
+    color: var(--fg-subtle);
+    margin: 0 0 var(--space-3) 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metadataList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.metadataItem {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.metadataLabel {
+    color: var(--fg-muted);
+}
+
+.metadataValue {
+    color: var(--fg-default);
+}
+
+.description {
+    color: var(--fg-secondary);
+    margin: 0;
+    line-height: 1.5;
+}

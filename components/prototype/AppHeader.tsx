@@ -69,7 +69,8 @@ export default function AppHeader({
     }, []);
 
     const getPageTitle = () => {
-        if (pathname === '/sdrone') return 'Inbox';
+        if (pathname === '/sdrone') return 'Home';
+        if (pathname === '/sdrone/inbox') return 'Inbox';
         if (pathname === '/sdrone/history') return 'History';
         if (pathname === '/sdrone/alerts') return 'Alerts';
         if (pathname === '/sdrone/insights') return 'Insights';
@@ -77,7 +78,7 @@ export default function AppHeader({
         return 'App';
     };
 
-    const isInbox = pathname === '/sdrone';
+    const isInbox = pathname === '/sdrone/inbox';
 
     // Escape key handler for form and innerPage variants
     useEffect(() => {

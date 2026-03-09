@@ -1,0 +1,49 @@
+/* Sdrone Inbox Page Styles */
+
+.pageContainer {
+  position: relative;
+  min-height: 100vh;
+  transition: margin-right 200ms ease;
+  padding-top: var(--space-8);
+  padding-bottom: var(--space-12);
+}
+
+.pageContainerWithPanel {
+  margin-right: 480px;
+}
+
+.filterContainer {
+  position: sticky;
+  top: 64px;
+  /* Below AppHeader */
+  z-index: 10;
+  padding: var(--space-3) var(--space-8);
+  background-color: var(--bg-canvas);
+  margin-top: calc(var(--space-2) * -1);
+  margin-bottom: calc(var(--space-12) - var(--space-2));
+  width: 100%;
+}
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: 0 var(--space-8) var(--space-4) var(--space-8);
+}
+
+@media (max-width: 1023px) {
+  .pageContainerWithPanel {
+    margin-right: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .pageContainerWithPanel {
+    margin-right: 0;
+  }
+
+  .filterContainer {
+    top: 56px;
+    /* Adjust for smaller header on mobile if needed */
+  }
+}

@@ -1,0 +1,95 @@
+/* BottomSheet — iOS-style action sheet sliding up from bottom */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    transition: background-color 0.25s ease;
+}
+
+.overlay[data-open="true"] {
+    background-color: rgba(0, 0, 0, 0.4);
+    pointer-events: auto;
+}
+
+.sheet {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-surface);
+    border-radius: 16px 16px 0 0;
+    padding-bottom: 24px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    outline: none;
+}
+
+.sheet[data-open="true"] {
+    transform: translateY(0);
+}
+
+.handle {
+    width: 36px;
+    height: 4px;
+    background-color: var(--fg-muted);
+    border-radius: 100px;
+    margin: var(--space-2) auto var(--space-3);
+    opacity: 0.4;
+}
+
+.sheetHeader {
+    padding: 0 var(--space-5) var(--space-3);
+}
+
+.sheetTitle {
+    color: var(--fg-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.actionList {
+    display: flex;
+    flex-direction: column;
+}
+
+.actionItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-default);
+    text-align: left;
+    width: 100%;
+    transition: background-color 0.15s ease;
+}
+
+.actionItem:hover {
+    background-color: var(--bg-hover);
+}
+
+.actionItem:active {
+    background-color: var(--bg-subtle);
+}
+
+.actionItem:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
+}
+
+.actionIcon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-subtle);
+    border-radius: var(--space-2);
+    color: var(--fg-secondary);
+    flex-shrink: 0;
+}

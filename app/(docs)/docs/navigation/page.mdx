@@ -10,7 +10,11 @@ Navigation components provide the structural framework for applications. They he
 
 The navigation system includes:
 - **App Sidebar** (S-Drone prototype) - Fixed left sidebar with branding and navigation tabs
-- **App Header** - Sticky header with page title, metadata, and actions
+- **App Header** - Sticky header with 4 variants:
+  - `default` — Page title, "Start New" dropdown, "Report Incident" button, and SOS
+  - `form` — Back button, form title, step progress, cancel/submit actions
+  - `innerPage` — Back button, title, breadcrumbs, optional export action
+  - `docs` — Design System branding with theme toggle and prototype link
 
 </Section>
 
@@ -40,9 +44,79 @@ The navigation system includes:
 
 <PropsTable data={[
   {
-    prop: 'className',
+    prop: 'variant',
+    type: "'default' | 'form' | 'innerPage' | 'docs'",
+    default: "'default'",
+    description: 'Header layout variant'
+  },
+  {
+    prop: 'formTitle',
     type: 'string',
-    description: 'Override class for styling'
+    description: 'Title shown in form variant'
+  },
+  {
+    prop: 'currentStep',
+    type: 'number',
+    description: 'Current step number (form variant)'
+  },
+  {
+    prop: 'totalSteps',
+    type: 'number',
+    description: 'Total number of steps (form variant)'
+  },
+  {
+    prop: 'onFormBack',
+    type: '() => void',
+    description: 'Back button handler (form variant)'
+  },
+  {
+    prop: 'onFormCancel',
+    type: '() => void',
+    description: 'Cancel button handler (form variant)'
+  },
+  {
+    prop: 'onFormSubmit',
+    type: '() => void',
+    description: 'Submit button handler (form variant)'
+  },
+  {
+    prop: 'isEntryStep',
+    type: 'boolean',
+    default: 'false',
+    description: 'Simplifies form header to only show back + title'
+  },
+  {
+    prop: 'isReviewStep',
+    type: 'boolean',
+    default: 'false',
+    description: 'Enables the submit button (form variant)'
+  },
+  {
+    prop: 'submitLabel',
+    type: 'string',
+    default: "'Submit Report'",
+    description: 'Label for the submit button (form variant)'
+  },
+  {
+    prop: 'innerPageTitle',
+    type: 'string',
+    description: 'Title shown in innerPage variant'
+  },
+  {
+    prop: 'breadcrumbs',
+    type: 'BreadcrumbItem[]',
+    default: '[]',
+    description: 'Breadcrumb items (innerPage variant)'
+  },
+  {
+    prop: 'onBack',
+    type: '() => void',
+    description: 'Back button handler (innerPage variant)'
+  },
+  {
+    prop: 'onExportPdf',
+    type: '() => void',
+    description: 'Shows an Export as PDF button when provided (innerPage variant)'
   }
 ]} />
 
@@ -56,7 +130,7 @@ The navigation system includes:
 
 <Specification data={[
   { property: 'Width', value: '240px (--sidebar-width)' },
-  { property: 'Padding', value: '16px (--space-4)' },
+  { property: 'Padding', value: '8px 16px (--space-2 --space-4)' },
   { property: 'Logo Left Padding', value: '24px (--space-6)' },
   { property: 'Background', value: '--bg-subtle' },
   { property: 'Border', value: '1px solid var(--border-subtle)' }
@@ -77,8 +151,8 @@ The navigation system includes:
 | State | Background | Text Color | Icon Color |
 |-------|------------|------------|------------|
 | Default | transparent | `--fg-subtle` | `--fg-subtle` |
-| Hover | `--bg-strong` | `--fg-neutral` | `--fg-neutral` |
-| Active | `--bg-accent-subtle` | `--fg-accent-light` | `--fg-accent` |
+| Hover | `--bg-emphasis` | `--fg-default` | `--fg-default` |
+| Active | `--bg-accent-soft` | `--fg-accent-emphasis` | `--fg-accent` |
 
 ### App Header
 

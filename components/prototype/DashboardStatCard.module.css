@@ -1,0 +1,90 @@
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--space-3);
+    cursor: default;
+    transition: border-color 0.15s ease;
+}
+
+button.card {
+    cursor: pointer;
+    text-align: left;
+    appearance: none;
+    font: inherit;
+    color: inherit;
+}
+
+button.card:hover {
+    border-color: var(--border-default);
+}
+
+button.card:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: 2px;
+}
+
+/* ── Icon Wrapper ── */
+
+.iconWrapper {
+    width: var(--space-10);
+    height: var(--space-10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--space-2);
+    flex-shrink: 0;
+}
+
+/* ── Accent Variants ── */
+
+.accent--default {
+    background-color: var(--bg-accent-soft);
+    /* border: 1px solid var(--border-subtle); */
+    color: var(--fg-accent-soft);
+}
+
+.accent--negative {
+    background-color: var(--bg-negative-soft);
+    /* border: 1px solid var(--fg-negative-soft); */
+    color: var(--fg-negative-soft);
+}
+
+.accent--positive {
+    background-color: var(--bg-positive-soft);
+    /* border: 1px solid var(--fg-positive-soft); */
+    color: var(--fg-positive-soft);
+}
+
+.accent--notice {
+    background-color: var(--bg-notice-soft);
+    /* border: 1px solid var(--fg-notice-soft); */
+    color: var(--fg-notice-soft);
+}
+
+.accent--information {
+    background-color: var(--bg-information-soft);
+    /* border: 1px solid var(--fg-information-soft); */
+    color: var(--fg-information-soft);
+}
+
+/* ── Text Container ── */
+
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.value {
+    color: var(--fg-default);
+    letter-spacing: -0.4px;
+}
+
+.label {
+    color: var(--fg-subtle);
+}
