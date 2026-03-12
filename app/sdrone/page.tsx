@@ -2,14 +2,15 @@
 
 import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+
 import type { IconName } from '@/components/ui/Icon';
 import Badge from '@/components/ui/Badge';
-import Select from '@/components/ui/Select';
+import Dropdown from '@/components/ui/Dropdown';
 import DashboardStatCard from '@/components/prototype/DashboardStatCard';
-import DashboardAlertCard from '@/components/prototype/DashboardAlertCard';
+import TaskCard from '@/components/prototype/TaskCard';
 import DashboardCategoryCard from '@/components/prototype/DashboardCategoryCard';
 import DashboardActivityLogItem from '@/components/prototype/DashboardActivityLogItem';
+import Button from '@/components/ui/Button';
 import { MOCK_TASKS, MOCK_HISTORY_RECORDS } from '@/data/mock-data';
 import { CATEGORY_ICONS, STATUS_BADGE_COLORS } from '@/types/history';
 import type { RecordCategory } from '@/types/history';
@@ -58,6 +59,8 @@ export default function DashboardPage() {
                 location: t.location,
                 reporterName: t.reportedBy,
                 reportedAt: t.reportedOn,
+                status: t.status,
+                badgeColor: t.badgeColor,
                 href: '/sdrone/inbox',
             }));
 
@@ -71,6 +74,8 @@ export default function DashboardPage() {
                 location: r.location.name,
                 reporterName: r.reportedBy.name,
                 reportedAt: getShortDate(r.updatedAt),
+                status: r.status,
+                badgeColor: STATUS_BADGE_COLORS[r.status],
                 href: `/sdrone/history/${r.id}`,
             }));
 
@@ -114,7 +119,7 @@ export default function DashboardPage() {
             {/* Greeting Section */}
             <section className={styles.greeting}>
                 <div>
-                    <h2 className="text-heading">{getGreeting()}, John</h2>
+                    <h2 className={`${styles.greetingHeading} text-heading`}>{getGreeting()}, John</h2>
                     <p className={`${styles.greetingSubtext} text-body`}>
                         Here&apos;s your safety overview
                     </p>
@@ -148,7 +153,7 @@ export default function DashboardPage() {
                 />
                 <DashboardStatCard
                     icon="checkbox-circle"
-                    label="Resolved"
+                    label="Resolved Tasks"
                     value={stats.resolved}
                     accentColor="positive"
                     onClick={() => router.push('/sdrone/history')}
@@ -160,35 +165,41 @@ export default function DashboardPage() {
                 {/* Attention Required */}
                 <div className={styles.contentSection}>
                     <div className={styles.sectionHeader}>
-                        <span className="text-body-strong">Attention Required</span>
-                        <Badge color="negative" size="small">{urgentItems.length}</Badge>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                            <span className="text-body-strong">Attention Required</span>
+                            <Badge color="negative" size="small">{urgentItems.length}</Badge>
+                        </div>
+                        <Button href="/sdrone/inbox" variant="ghost" size="sm">
+                            View Inbox
+                        </Button>
                     </div>
                     <div className={styles.alertList}>
                         {urgentItems.map(item => (
-                            <DashboardAlertCard
+                            <TaskCard
                                 key={item.id}
-                                icon={item.icon}
+                                id={item.id}
+                                iconName={item.icon}
                                 title={item.title}
-                                reportType={item.reportType}
+                                subtitle={item.reportType}
                                 location={item.location}
-                                reporterName={item.reporterName}
-                                reportedAt={item.reportedAt}
+                                reportedBy={item.reporterName}
+                                reportedOn={item.reportedAt}
+                                status={item.status}
+                                badgeColor={item.badgeColor}
                                 onClick={() => router.push(item.href)}
                             />
                         ))}
                     </div>
-                    <Link href="/sdrone/inbox" className={`${styles.seeAllLink} text-caption-strong`}>
-                        View all pending items
-                    </Link>
+
                 </div>
 
                 {/* Recent Activity */}
                 <div className={styles.contentSection}>
                     <div className={styles.sectionHeader}>
                         <span className="text-body-strong">Recent Activity</span>
-                        <Link href="/sdrone/history" className={`${styles.seeAllLink} text-caption-strong`}>
+                        <Button href="/sdrone/history" variant="ghost" size="sm">
                             See all
-                        </Link>
+                        </Button>
                     </div>
                     <div className={styles.activityList}>
                         {activityLogItems.map(item => (
@@ -207,12 +218,14 @@ export default function DashboardPage() {
             <section className={styles.categorySection}>
                 <div className={styles.sectionHeader}>
                     <span className="text-body-strong">Records by Category</span>
-                    <Select
+                    <Dropdown
+                        label="Period"
                         options={PERIOD_OPTIONS}
                         value={categoryPeriod}
-                        onChange={(e) => setCategoryPeriod(e.target.value)}
-                        size="sm"
-                        fullWidth={false}
+                        onChange={(value) => setCategoryPeriod(value || 'all')}
+                        hideClearButton={true}
+                        hideLabel={true}
+                        neutralValue={true}
                     />
                 </div>
                 <div className={styles.categoryGrid}>

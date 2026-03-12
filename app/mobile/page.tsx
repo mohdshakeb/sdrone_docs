@@ -1,17 +1,18 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { IconName } from '@/components/ui/Icon';
 import Badge from '@/components/ui/Badge';
-import Select from '@/components/ui/Select';
+import Button from '@/components/ui/Button';
+import FilterChip from '@/components/ui/FilterChip';
+import SelectBottomSheet from '@/components/ui/SelectBottomSheet';
 import DashboardStatCard from '@/components/prototype/DashboardStatCard';
-import DashboardAlertCard from '@/components/prototype/DashboardAlertCard';
+import TaskCard from '@/components/prototype/TaskCard';
 import DashboardActivityLogItem from '@/components/prototype/DashboardActivityLogItem';
 import DashboardCategoryCard from '@/components/prototype/DashboardCategoryCard';
 import { MOCK_TASKS, MOCK_HISTORY_RECORDS } from '@/data/mock-data';
-import { CATEGORY_ICONS } from '@/types/history';
+import { CATEGORY_ICONS, STATUS_BADGE_COLORS } from '@/types/history';
 import type { RecordCategory } from '@/types/history';
 import { getGreeting, getShortDate } from '@/utils/formatters';
 import styles from './page.module.css';
@@ -36,6 +37,7 @@ const PERIOD_OPTIONS = [
 export default function MobileHomePage() {
     const router = useRouter();
     const [categoryPeriod, setCategoryPeriod] = useState('all');
+    const [isPeriodSheetOpen, setIsPeriodSheetOpen] = useState(false);
 
     // Compute stats from mock data (matching web)
     const stats = useMemo(() => ({
@@ -57,6 +59,8 @@ export default function MobileHomePage() {
                 location: t.location,
                 reporterName: t.reportedBy,
                 reportedAt: t.reportedOn,
+                status: t.status,
+                badgeColor: t.badgeColor,
                 href: '/mobile/inbox',
             }));
 
@@ -70,6 +74,8 @@ export default function MobileHomePage() {
                 location: r.location.name,
                 reporterName: r.reportedBy.name,
                 reportedAt: getShortDate(r.updatedAt),
+                status: r.status,
+                badgeColor: STATUS_BADGE_COLORS[r.status],
                 href: `/mobile/history/${r.id}`,
             }));
 
@@ -139,7 +145,7 @@ export default function MobileHomePage() {
                 />
                 <DashboardStatCard
                     icon="checkbox-circle"
-                    label="Resolved"
+                    label="Resolved Tasks"
                     value={stats.resolved}
                     accentColor="positive"
                     onClick={() => router.push('/mobile/history')}
@@ -150,26 +156,33 @@ export default function MobileHomePage() {
             {urgentItems.length > 0 && (
                 <section className={styles.section}>
                     <div className={styles.sectionHeader}>
-                        <span className="text-body-strong">Attention Required</span>
-                        <Badge color="negative" size="small">{urgentItems.length}</Badge>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+                            <span className="text-body-strong">Attention Required</span>
+                            <Badge color="negative" size="small">{urgentItems.length}</Badge>
+                        </div>
+                        <Button href="/mobile/inbox" variant="ghost" size="sm">
+                            View Inbox
+                        </Button>
                     </div>
                     <div className={styles.alertList}>
                         {urgentItems.map(item => (
-                            <DashboardAlertCard
+                            <TaskCard
                                 key={item.id}
-                                icon={item.icon}
+                                id={item.id}
+                                iconName={item.icon}
                                 title={item.title}
-                                reportType={item.reportType}
+                                subtitle={item.reportType}
                                 location={item.location}
-                                reporterName={item.reporterName}
-                                reportedAt={item.reportedAt}
+                                reportedBy={item.reporterName}
+                                reportedOn={item.reportedAt}
+                                status={item.status}
+                                badgeColor={item.badgeColor}
+                                hideStatus={true}
                                 onClick={() => router.push(item.href)}
+                                compact
                             />
                         ))}
                     </div>
-                    <Link href="/mobile/inbox" className={`${styles.seeAllLink} text-caption-strong`}>
-                        View all pending items
-                    </Link>
                 </section>
             )}
 
@@ -177,9 +190,9 @@ export default function MobileHomePage() {
             <section className={styles.section}>
                 <div className={styles.sectionHeader}>
                     <span className="text-body-strong">Recent Activity</span>
-                    <Link href="/mobile/history" className={`${styles.seeAllLink} text-caption-strong`}>
+                    <Button href="/mobile/history" variant="ghost" size="sm">
                         See all
-                    </Link>
+                    </Button>
                 </div>
                 <div className={styles.activityList}>
                     {activityLogItems.map(item => (
@@ -197,13 +210,17 @@ export default function MobileHomePage() {
             <section className={styles.section}>
                 <div className={styles.sectionHeader}>
                     <span className="text-body-strong">Records by Category</span>
-                    <Select
-                        options={PERIOD_OPTIONS}
-                        value={categoryPeriod}
-                        onChange={(e) => setCategoryPeriod(e.target.value)}
-                        size="sm"
-                        fullWidth={false}
-                    />
+                    <FilterChip
+                        selected={true}
+                        value={PERIOD_OPTIONS.find(opt => opt.value === categoryPeriod)?.label}
+                        isOpen={isPeriodSheetOpen}
+                        onClick={() => setIsPeriodSheetOpen(true)}
+                        hideClearButton={true}
+                        hideLabel={true}
+                        neutralValue={true}
+                    >
+                        Period
+                    </FilterChip>
                 </div>
                 <div className={styles.categoryGrid}>
                     {categoryBreakdown.map(cat => (
@@ -219,6 +236,15 @@ export default function MobileHomePage() {
                     ))}
                 </div>
             </section>
+
+            <SelectBottomSheet
+                isOpen={isPeriodSheetOpen}
+                onClose={() => setIsPeriodSheetOpen(false)}
+                title="Period"
+                options={PERIOD_OPTIONS}
+                selectedValue={categoryPeriod}
+                onSelect={(value) => setCategoryPeriod(value)}
+            />
         </div>
     );
 }

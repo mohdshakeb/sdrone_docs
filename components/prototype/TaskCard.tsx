@@ -17,6 +17,8 @@ interface TaskCardProps {
     badgeColor?: BadgeColor;
     onClick?: (id: string) => void;
     isSelected?: boolean;
+    hideStatus?: boolean;
+    compact?: boolean;
 }
 
 export default function TaskCard({
@@ -30,7 +32,9 @@ export default function TaskCard({
     iconName = 'fire',
     badgeColor = 'neutral',
     onClick,
-    isSelected = false
+    isSelected = false,
+    hideStatus = false,
+    compact = false
 }: TaskCardProps) {
     const handleClick = () => {
         onClick?.(id);
@@ -52,7 +56,7 @@ export default function TaskCard({
             onKeyDown={handleKeyDown}
         >
             {/* Header Section */}
-            <div className={styles.header}>
+            <div className={`${styles.header} ${compact ? styles.headerCompact : ''}`}>
                 <div className={styles.leftSection}>
                     <div className={styles.iconContainer}>
                         <Icon name={iconName} size={20} />
@@ -63,23 +67,27 @@ export default function TaskCard({
                     </div>
                 </div>
 
-                <Badge color={badgeColor} size="small" emphasis="subtle">
-                    {status}
-                </Badge>
+                {!hideStatus && (
+                    <span className={styles.badge}>
+                        <Badge color={badgeColor} size="small" emphasis="subtle">
+                            {status}
+                        </Badge>
+                    </span>
+                )}
             </div>
 
             {/* Footer Section */}
             <div className={`${styles.footer} text-caption`}>
                 <div className={styles.footerItem}>
-                    <span>Reported by:</span>
+                    <Icon name="user" size={14} className={styles.footerIcon} />
                     <span className={`${styles.footerValue} text-caption`}>{reportedBy}</span>
                 </div>
                 <div className={styles.footerItem}>
-                    <span>Reported on:</span>
+                    <Icon name="time" size={14} className={styles.footerIcon} />
                     <span className={`${styles.footerValue} text-caption`}>{reportedOn}</span>
                 </div>
                 <div className={styles.footerItem}>
-                    <span>Location:</span>
+                    <Icon name="pin" size={14} className={styles.footerIcon} />
                     <span className={`${styles.footerValue} text-caption`}>{location}</span>
                 </div>
             </div>

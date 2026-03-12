@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import FilterChip from '@/components/ui/FilterChip';
 import DropdownMenu, { type DropdownOption, type DropdownItem } from '@/components/ui/DropdownMenu';
+import SelectBottomSheet from '@/components/ui/SelectBottomSheet';
 import CalendarPanel, { formatDate } from '@/components/ui/CalendarPanel';
 import { useDropdownState } from '@/components/ui/hooks/useDropdownState';
 import { useClickOutside } from '@/components/ui/hooks/useClickOutside';
@@ -38,6 +39,14 @@ interface DropdownListProps {
     count?: number;
     onChange?: (value: string | null) => void;
     disabled?: boolean;
+    /** Hide the clear button (for non-filter use cases like view selectors) */
+    hideClearButton?: boolean;
+    /** Hide the label, show only the value (for compact selectors) */
+    hideLabel?: boolean;
+    /** Use neutral color for value instead of accent color */
+    neutralValue?: boolean;
+    /** Force bottom sheet on mobile (default: true) */
+    useBottomSheetOnMobile?: boolean;
 }
 
 interface DropdownDateProps {
@@ -48,6 +57,8 @@ interface DropdownDateProps {
     disabled?: boolean;
     minDate?: Date;
     maxDate?: Date;
+    /** Hide the clear button (for non-filter use cases like view selectors) */
+    hideClearButton?: boolean;
 }
 
 type DropdownProps = DropdownListProps | DropdownDateProps;
@@ -56,6 +67,17 @@ export default function Dropdown(props: DropdownProps) {
     const wrapperRef = useRef<HTMLDivElement>(null);
     const { isOpen, close, toggle } = useDropdownState();
     useClickOutside<HTMLDivElement>(wrapperRef, close, isOpen);
+
+    // Mobile detection
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Date variant
     if (props.variant === 'date') {
@@ -78,6 +100,7 @@ export default function Dropdown(props: DropdownProps) {
                     disabled={props.disabled}
                     onClick={toggle}
                     onClear={handleClear}
+                    hideClearButton={props.hideClearButton}
                 >
                     {props.label}
                 </FilterChip>
@@ -116,29 +139,49 @@ export default function Dropdown(props: DropdownProps) {
         props.onChange?.(null);
     };
 
+    // Determine if we should use bottom sheet
+    const useBottomSheet = isMobile && (props.useBottomSheetOnMobile !== false);
+
     return (
-        <div ref={wrapperRef} className={styles.wrapper}>
-            <FilterChip
-                selected={hasDisplayValue}
-                value={displayedValue}
-                count={props.count}
-                isOpen={isOpen}
-                disabled={props.disabled}
-                onClick={toggle}
-                onClear={handleClear}
-            >
-                {props.label}
-            </FilterChip>
-            <DropdownMenu
-                options={props.options}
-                items={props.items}
-                selectedValue={props.value ?? undefined}
-                selectedValues={props.selectedValues}
-                onSelect={handleSelect}
-                isOpen={isOpen}
-                onClose={close}
-            />
-        </div>
+        <>
+            <div ref={wrapperRef} className={styles.wrapper}>
+                <FilterChip
+                    selected={hasDisplayValue}
+                    value={displayedValue}
+                    count={props.count}
+                    isOpen={isOpen}
+                    disabled={props.disabled}
+                    onClick={toggle}
+                    onClear={handleClear}
+                    hideClearButton={props.hideClearButton}
+                    hideLabel={props.hideLabel}
+                    neutralValue={props.neutralValue}
+                >
+                    {props.label}
+                </FilterChip>
+                {!useBottomSheet && (
+                    <DropdownMenu
+                        options={props.options}
+                        items={props.items}
+                        selectedValue={props.value ?? undefined}
+                        selectedValues={props.selectedValues}
+                        onSelect={handleSelect}
+                        isOpen={isOpen}
+                        onClose={close}
+                    />
+                )}
+            </div>
+            {useBottomSheet && props.options && (
+                <SelectBottomSheet
+                    isOpen={isOpen}
+                    onClose={close}
+                    title={props.label}
+                    options={props.options}
+                    selectedValue={props.value ?? undefined}
+                    onSelect={handleSelect}
+                />
+            )}
+        </>
     );
 }
 

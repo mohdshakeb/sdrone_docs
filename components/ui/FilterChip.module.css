@@ -56,6 +56,10 @@
     font-weight: var(--font-weight-medium);
 }
 
+.valueNeutral {
+    color: var(--fg-default);
+}
+
 .countIndicator {
     display: inline-flex;
     align-items: center;

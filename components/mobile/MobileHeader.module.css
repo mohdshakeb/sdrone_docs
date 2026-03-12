@@ -39,7 +39,7 @@
 .rightGroup {
     display: flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: var(--space-3);
     flex-shrink: 0;
 }
 
@@ -71,13 +71,19 @@
 }
 
 .sosButton {
-    background-color: var(--bg-negative-soft);
-    color: var(--fg-negative-soft);
+    background-color: var(--bg-negative-solid);
+    color: var(--color-white);
+    border-radius: 50%;
 }
 
 .sosButton:hover {
-    background-color: var(--bg-negative-soft);
-    opacity: 0.85;
+    background-color: var(--bg-negative-solid);
+    filter: brightness(110%);
+}
+
+.sosButton:active {
+    background-color: var(--bg-negative-solid);
+    filter: brightness(90%);
 }
 
 /* ── Logo (home screen) ── */

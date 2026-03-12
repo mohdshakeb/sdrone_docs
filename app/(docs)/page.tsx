@@ -29,14 +29,14 @@ export default function Home() {
 
         <div className={styles.ctas}>
           <Link
-            href="/sdrone"
+            href="/login"
             className={styles.primary}
             target="_blank"
           >
             Web
           </Link>
           <Link
-            href="/mobile"
+            href="/mobile-login"
             className={styles.primary}
             target="_blank"
           >

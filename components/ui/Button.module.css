@@ -190,19 +190,55 @@
     filter: brightness(90%);
 }
 
+
+.link {
+    background-color: transparent;
+    color: var(--fg-accent);
+    border: none;
+    padding: 0;
+    height: auto;
+    width: auto;
+    border-radius: 0;
+}
+
+.link:hover:not(:disabled) {
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+
 /* Common States */
 .button:focus-visible {
     outline: 2px solid var(--bg-accent);
     outline-offset: 2px;
 }
 
-/* Icon Styles */
-.icon {
+.fullWidth {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
 }
 
-/* Adjust icon sizes based on button size if needed? 
-   Usually icons are 16px or 20px. 
-*/
+.isLoading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

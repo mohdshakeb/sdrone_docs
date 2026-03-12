@@ -7,6 +7,7 @@ import styles from './AppSidebar.module.css';
 import { Icon } from '@/components/ui/Icon';
 import type { IconName } from '@/components/ui/Icon';
 import { useTheme } from '@/components/ui/ThemeProvider';
+import UserMenu from './UserMenu';
 
 interface NavItem {
     label: string;
@@ -25,7 +26,6 @@ const NAV_ITEMS: NavItem[] = [
 
 export default function AppSidebar({ className = '' }: { className?: string }) {
     const pathname = usePathname();
-    const { theme, toggleTheme } = useTheme();
     const [mounted, setMounted] = React.useState(false);
 
     React.useEffect(() => {
@@ -70,25 +70,7 @@ export default function AppSidebar({ className = '' }: { className?: string }) {
             </div>
 
             <div className={styles.themeToggleContainer}>
-                <button
-                    onClick={toggleTheme}
-                    aria-label={theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme'}
-                    className={`${styles.themeToggleButton} text-caption-strong`}
-                >
-                    {!mounted ? (
-                        <div className={styles.placeholderIcon} />
-                    ) : theme === 'light' ? (
-                        <>
-                            <Icon name="moon" size={20} />
-                            <span>Switch to Dark</span>
-                        </>
-                    ) : (
-                        <>
-                            <Icon name="sun" size={20} />
-                            <span>Switch to Light</span>
-                        </>
-                    )}
-                </button>
+                <UserMenu />
             </div>
         </nav >
     );

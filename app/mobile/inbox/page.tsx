@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import MobileTaskCard from '@/components/mobile/MobileTaskCard';
+import TaskCard from '@/components/prototype/TaskCard';
 import MobileTaskDetail from '@/components/mobile/MobileTaskDetail';
 import FilterBottomSheet from '@/components/mobile/FilterBottomSheet';
 import FilterChip from '@/components/ui/FilterChip';
@@ -119,7 +119,7 @@ export default function MobileInboxPage() {
                     />
                 ) : (
                     filteredTasks.map((task) => (
-                        <MobileTaskCard
+                        <TaskCard
                             key={task.id}
                             id={task.id}
                             title={task.title}
@@ -132,6 +132,7 @@ export default function MobileInboxPage() {
                             badgeColor={task.badgeColor}
                             onClick={handleTaskClick}
                             isSelected={selectedTask?.id === task.id}
+                            compact
                         />
                     ))
                 )}

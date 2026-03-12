@@ -11,9 +11,10 @@ import {
     RiSunFill,
     RiMoonFill,
     RiHistoryFill,
+    RiArrowRightSLine,
     RiFireFill,
     RiCloseLine,
-    RiUser3Line,
+    RiUser3Fill,
     RiSurveyFill,
     RiFirstAidKitFill,
     RiMenuLine,
@@ -38,6 +39,9 @@ import {
     RiSpeakFill,
     RiCheckboxCircleFill,
     RiHome5Fill,
+    RiLogoutCircleRLine,
+    RiMapPin2Fill,
+    RiTimeFill,
 } from 'react-icons/ri';
 
 export type IconName =
@@ -79,7 +83,12 @@ export type IconName =
     | 'task'
     | 'pass-valid'
     | 'speak'
-    | 'checkbox-circle';
+    | 'checkbox-circle'
+    | 'logout'
+    | 'chevron-right'
+    | 'chevron-up'
+    | 'pin'
+    | 'time';
 
 export type IconSize = 14 | 16 | 20 | 24 | 32;
 
@@ -117,13 +126,14 @@ const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; c
     'add': RiAddFill,
     'arrow-down': RiArrowDownSLine,
     'arrow-up': RiArrowUpSLine,
-    'chevron-down': RiArrowDownLine,
+    'chevron-up': RiArrowUpSLine,
+    'chevron-down': RiArrowDownSLine,
     'sun': RiSunFill,
     'moon': RiMoonFill,
     'history': RiHistoryFill,
     'fire': RiFireFill,
     'close': RiCloseLine,
-    'user': RiUser3Line,
+    'user': RiUser3Fill,
     'survey': RiSurveyFill,
     'first-aid': RiFirstAidKitFill,
     'menu': RiMenuLine,
@@ -147,7 +157,10 @@ const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; c
     'pass-valid': RiPassValidFill,
     'speak': RiSpeakFill,
     'checkbox-circle': RiCheckboxCircleFill,
-
+    'logout': RiLogoutCircleRLine,
+    'chevron-right': RiArrowRightSLine,
+    'pin': RiMapPin2Fill,
+    'time': RiTimeFill,
 };
 
 export const Icon: React.FC<IconProps> = ({ name, size = 20, className = '', ...props }) => {

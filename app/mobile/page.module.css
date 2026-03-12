@@ -3,9 +3,9 @@
 .container {
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: var(--space-10);
     padding: var(--space-5);
-    padding-top: var(--space-4);
+    padding-top: var(--space-3);
     height: 100%;
     overflow-y: auto;
     scrollbar-width: none;
@@ -23,7 +23,12 @@
     gap: var(--space-1);
 }
 
+.greeting h2 {
+    margin: 0;
+}
+
 .greetingSubtext {
+    margin: 0;
     color: var(--fg-secondary);
 }
 
@@ -40,22 +45,13 @@
 .section {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-2);
 }
 
 .sectionHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.seeAllLink {
-    color: var(--fg-accent);
-    text-decoration: none;
-}
-
-.seeAllLink:hover {
-    text-decoration: underline;
 }
 
 /* ── Attention Required ── */

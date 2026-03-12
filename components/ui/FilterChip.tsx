@@ -27,6 +27,18 @@ export interface FilterChipProps {
     onClick?: () => void;
     /** Callback when the clear button is clicked */
     onClear?: (e: React.MouseEvent) => void;
+    /** Hide the clear button (for non-filter use cases like view selectors)
+     * @default false
+     */
+    hideClearButton?: boolean;
+    /** Hide the label, show only the value (for compact selectors)
+     * @default false
+     */
+    hideLabel?: boolean;
+    /** Use neutral color for value instead of accent color
+     * @default false
+     */
+    neutralValue?: boolean;
     /** Additional CSS class name */
     className?: string;
 }
@@ -40,6 +52,9 @@ export default function FilterChip({
     isOpen = false,
     onClick,
     onClear,
+    hideClearButton = false,
+    hideLabel = false,
+    neutralValue = false,
     className = '',
 }: FilterChipProps) {
     const hasMultiple = count !== undefined && count > 0;
@@ -66,16 +81,16 @@ export default function FilterChip({
                 onClick={onClick}
                 disabled={disabled}
             >
-                <span className={styles.label}>{children}{isActive ? ':' : ''}</span>
+                {!hideLabel && <span className={styles.label}>{children}{isActive ? ':' : ''}</span>}
                 {hasMultiple ? (
                     <span className={styles.countIndicator}>{count}</span>
                 ) : selected && value ? (
-                    <span className={styles.value}>{value}</span>
+                    <span className={`${styles.value} ${neutralValue ? styles.valueNeutral : ''}`}>{value}</span>
                 ) : null}
                 <Icon name="arrow-down" size={16} className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`} />
             </button>
 
-            {isActive && !disabled && (
+            {isActive && !disabled && !hideClearButton && (
                 <>
                     <div className={styles.divider} />
                     <button

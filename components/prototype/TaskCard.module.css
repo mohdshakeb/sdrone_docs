@@ -11,6 +11,7 @@
     font-family: var(--font-base);
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     max-width: 100%;
+    flex-shrink: 0;
     cursor: pointer;
     transition: transform 200ms ease, border-color 200ms ease;
 }
@@ -42,9 +43,21 @@
     gap: var(--space-4);
 }
 
+.headerCompact {
+    flex-wrap: wrap;
+}
+
+.headerCompact .leftSection {
+    flex: 1 1 100%;
+}
+
+.headerCompact .badge {
+    margin-left: calc(var(--space-10) + var(--space-4));
+}
+
 .leftSection {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-4);
 }
 
@@ -68,33 +81,76 @@
 
 .title {
     color: var(--fg-default);
-    /* Typography via utility class */
+    /* Allow wrapping on mobile where space is limited */
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .subtitle {
     color: var(--fg-subtle);
-    /* Typography via utility class */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
-
 
 .footer {
     background-color: var(--bg-base);
-    padding: var(--space-3) var(--space-6) var(--space-3) 72px;
+    padding: var(--space-3) var(--space-4);
     display: flex;
+    flex-wrap: nowrap;
+    /* Force single line on mobile */
     align-items: center;
-    gap: var(--space-8);
+    gap: var(--space-4);
+    /* Reduced gap to fit */
     border-top: 1px solid var(--border-subtle);
-    /* Typography via utility class */
+    overflow-x: auto;
+    /* Allow horizontal scroll if absolutely necessary, but try to fit */
+    scrollbar-width: none;
+    /* Hide scrollbar for cleaner look */
+}
+
+.footer::-webkit-scrollbar {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .footer {
+        padding: var(--space-3) var(--space-4) var(--space-3);
+        gap: var(--space-4);
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: var(--space-3) var(--space-4);
+        gap: var(--space-3);
+    }
+
+    .iconContainer {
+        width: 36px;
+        height: 36px;
+    }
 }
 
 .footerItem {
     display: flex;
+    align-items: center;
+    flex-shrink: 0;
     gap: var(--space-1);
     color: var(--fg-subtle);
+    min-width: 0;
+}
+
+.footerIcon {
+    color: inherit;
 }
 
 .footerValue {
     color: var(--fg-secondary);
-    /* Typography via utility class */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

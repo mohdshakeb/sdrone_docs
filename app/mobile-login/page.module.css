@@ -1,0 +1,123 @@
+.loginPage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20vh;
+    z-index: 0;
+}
+
+.illustration {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.loginContainer {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    padding-bottom: max(var(--space-8), env(safe-area-inset-bottom));
+}
+
+.logoWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-6);
+}
+
+.logo {
+    height: 32px;
+    width: auto;
+}
+
+.loginFormContainer {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    background-color: var(--bg-subtle);
+    padding: var(--space-6);
+    border-radius: var(--space-4);
+    border: 1px solid var(--border-subtle);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.title {
+    color: var(--fg-default);
+    margin: 0;
+}
+
+.subtitle {
+    color: var(--fg-subtle);
+    margin: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    text-align: center;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    color: var(--fg-muted);
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--border-subtle);
+}
+
+.helpText {
+    color: var(--fg-subtle);
+}
+
+/* Mobile optimizations */
+@media (max-width: 375px) {
+    .loginContainer {
+        padding: var(--space-5);
+        gap: var(--space-6);
+    }
+
+    .loginFormContainer {
+        padding: var(--space-5);
+        gap: var(--space-6);
+    }
+
+    .form {
+        gap: var(--space-5);
+    }
+}

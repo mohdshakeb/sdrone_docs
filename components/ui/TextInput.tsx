@@ -34,7 +34,6 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         return (
             <input
                 ref={ref}
-                type="text"
                 className={combinedClassName}
                 {...props}
             />
