@@ -6,7 +6,7 @@ import styles from '@/components/ui/CalendarPanel.module.css';
 interface CalendarPanelProps {
     isOpen: boolean;
     value: Date | null;
-    onChange: (date: Date) => void;
+    onChange: (date: Date | null) => void;
     minDate?: Date;
     maxDate?: Date;
 }
@@ -121,7 +121,7 @@ export default function CalendarPanel({
     };
 
     const handleClearDate = () => {
-        onChange(null as any); // Will be handled by parent
+        onChange(null);
     };
 
     const panelClassNames = [

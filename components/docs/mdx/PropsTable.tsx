@@ -37,10 +37,10 @@ export function PropsTable({ component, data, title }: PropsTableProps) {
   let propsData: PropRow[] = data || [];
 
   if (component && !data) {
-    const componentData = (componentPropsData as any)[component];
+    const componentData = (componentPropsData as Record<string, { props?: { name: string; type: string; defaultValue?: string; required: boolean; description: string }[] }>)[component];
 
     if (componentData && componentData.props) {
-      propsData = componentData.props.map((prop: any) => ({
+      propsData = componentData.props.map((prop: { name: string; type: string; defaultValue?: string; required: boolean; description: string }) => ({
         prop: prop.name,
         type: prop.type,
         default: prop.defaultValue,

@@ -81,7 +81,7 @@ export default function Dropdown(props: DropdownProps) {
 
     // Date variant
     if (props.variant === 'date') {
-        const handleDateChange = (date: Date) => {
+        const handleDateChange = (date: Date | null) => {
             props.onChange(date);
             close();
         };

@@ -6,6 +6,7 @@ import Dropdown from '@/components/ui/Dropdown';
 import TextInput from '@/components/ui/TextInput';
 import Button from '@/components/ui/Button';
 import { PERSON_OPTIONS, SEVERITY_OPTIONS, SLA_OPTIONS } from '@/data/mock-data';
+import { AdvancedFilterVisibility } from '@/utils/role-filters';
 import styles from './AdvancedFiltersModal.module.css';
 
 export interface AdvancedFilterValues {
@@ -26,6 +27,8 @@ export interface AdvancedFiltersModalProps {
     values: AdvancedFilterValues;
     /** Callback when filters are applied */
     onApply: (values: AdvancedFilterValues) => void;
+    /** Which filter fields are visible based on role */
+    visibility?: AdvancedFilterVisibility;
 }
 
 const DEFAULT_VALUES: AdvancedFilterValues = {
@@ -46,6 +49,7 @@ export const AdvancedFiltersModal: React.FC<AdvancedFiltersModalProps> = ({
     onClose,
     values,
     onApply,
+    visibility,
 }) => {
     const [localValues, setLocalValues] = useState<AdvancedFilterValues>(values);
 
@@ -105,82 +109,94 @@ export const AdvancedFiltersModal: React.FC<AdvancedFiltersModalProps> = ({
             footer={footer}
         >
             <div className={styles.content}>
-                <div className={styles.filterGroup}>
-                    <label className={`${styles.label} text-caption-strong`}>
-                        Reported By
-                    </label>
-                    <Dropdown
-                        label="Select person"
-                        options={PERSON_OPTIONS}
-                        value={localValues.reportedBy}
-                        onChange={(value) => handleChange('reportedBy', value)}
-                    />
-                </div>
+                {(!visibility || visibility.reportedBy) && (
+                    <div className={styles.filterGroup}>
+                        <label className={`${styles.label} text-caption-strong`}>
+                            Reported By
+                        </label>
+                        <Dropdown
+                            label="Select person"
+                            options={PERSON_OPTIONS}
+                            value={localValues.reportedBy}
+                            onChange={(value) => handleChange('reportedBy', value)}
+                        />
+                    </div>
+                )}
 
-                <div className={styles.filterGroup}>
-                    <label className={`${styles.label} text-caption-strong`}>
-                        Owner
-                    </label>
-                    <Dropdown
-                        label="Select person"
-                        options={PERSON_OPTIONS}
-                        value={localValues.owner}
-                        onChange={(value) => handleChange('owner', value)}
-                    />
-                </div>
+                {(!visibility || visibility.owner) && (
+                    <div className={styles.filterGroup}>
+                        <label className={`${styles.label} text-caption-strong`}>
+                            Owner
+                        </label>
+                        <Dropdown
+                            label="Select person"
+                            options={PERSON_OPTIONS}
+                            value={localValues.owner}
+                            onChange={(value) => handleChange('owner', value)}
+                        />
+                    </div>
+                )}
 
-                <div className={styles.filterGroup}>
-                    <label className={`${styles.label} text-caption-strong`}>
-                        Closed By
-                    </label>
-                    <Dropdown
-                        label="Select person"
-                        options={PERSON_OPTIONS}
-                        value={localValues.closedBy}
-                        onChange={(value) => handleChange('closedBy', value)}
-                    />
-                </div>
+                {(!visibility || visibility.closedBy) && (
+                    <div className={styles.filterGroup}>
+                        <label className={`${styles.label} text-caption-strong`}>
+                            Closed By
+                        </label>
+                        <Dropdown
+                            label="Select person"
+                            options={PERSON_OPTIONS}
+                            value={localValues.closedBy}
+                            onChange={(value) => handleChange('closedBy', value)}
+                        />
+                    </div>
+                )}
 
-                <div className={styles.filterGroup}>
-                    <label className={`${styles.label} text-caption-strong`}>
-                        Severity
-                    </label>
-                    <Dropdown
-                        label="Select severity"
-                        options={SEVERITY_OPTIONS}
-                        value={localValues.severity}
-                        onChange={(value) => handleChange('severity', value)}
-                    />
-                </div>
+                {(!visibility || visibility.severity) && (
+                    <div className={styles.filterGroup}>
+                        <label className={`${styles.label} text-caption-strong`}>
+                            Severity
+                        </label>
+                        <Dropdown
+                            label="Select severity"
+                            options={SEVERITY_OPTIONS}
+                            value={localValues.severity}
+                            onChange={(value) => handleChange('severity', value)}
+                        />
+                    </div>
+                )}
 
-                <div className={styles.filterGroup}>
-                    <label className={`${styles.label} text-caption-strong`}>
-                        SLA Breached
-                    </label>
-                    <Dropdown
-                        label="Select"
-                        options={SLA_OPTIONS}
-                        value={
-                            localValues.slaBreached === null
-                                ? null
-                                : localValues.slaBreached.toString()
-                        }
-                        onChange={(value) =>
-                            handleChange('slaBreached', value === null ? null : value === 'true')
-                        }
-                    />
-                </div>
+                {(!visibility || visibility.slaBreached) && (
+                    <div className={styles.filterGroup}>
+                        <label className={`${styles.label} text-caption-strong`}>
+                            SLA Breached
+                        </label>
+                        <Dropdown
+                            label="Select"
+                            options={SLA_OPTIONS}
+                            value={
+                                localValues.slaBreached === null
+                                    ? null
+                                    : localValues.slaBreached.toString()
+                            }
+                            onChange={(value) =>
+                                handleChange('slaBreached', value === null ? null : value === 'true')
+                            }
+                        />
+                    </div>
+                )}
 
-                <div className={styles.filterGroup}>
-                    <label className={`${styles.label} text-caption-strong`}>
-                        Record ID
-                    </label>
-                    <TextInput
-                        placeholder="Enter record ID (exact match)"
-                        value={localValues.recordId}
-                        onChange={(e) => handleChange('recordId', e.target.value)}
-                    />
-                </div>
+                {(!visibility || visibility.recordId) && (
+                    <div className={styles.filterGroup}>
+                        <label className={`${styles.label} text-caption-strong`}>
+                            Record ID
+                        </label>
+                        <TextInput
+                            placeholder="Enter record ID (exact match)"
+                            value={localValues.recordId}
+                            onChange={(e) => handleChange('recordId', e.target.value)}
+                        />
+                    </div>
+                )}
             </div>
         </BaseModal>
     );

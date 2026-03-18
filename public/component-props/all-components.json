@@ -96,6 +96,49 @@
     ],
     "filePath": "components/ui/TextInput.tsx"
   },
+  "SelectBottomSheet": {
+    "componentName": "SelectBottomSheet",
+    "description": "",
+    "props": [
+      {
+        "name": "isOpen",
+        "type": "boolean",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "onClose",
+        "type": "() => void",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "DropdownOption[]",
+        "required": true,
+        "description": ""
+      },
+      {
+        "name": "selectedValue",
+        "type": "string",
+        "required": false,
+        "description": ""
+      },
+      {
+        "name": "onSelect",
+        "type": "(value: string) => void",
+        "required": true,
+        "description": ""
+      }
+    ],
+    "filePath": "components/ui/SelectBottomSheet.tsx"
+  },
   "Select": {
     "componentName": "Select",
     "description": "",
@@ -135,6 +178,20 @@
       }
     ],
     "filePath": "components/ui/Select.tsx"
+  },
+  "ScrollArea": {
+    "componentName": "ScrollArea",
+    "description": "",
+    "props": [
+      {
+        "name": "className",
+        "type": "string",
+        "required": false,
+        "description": "",
+        "defaultValue": ""
+      }
+    ],
+    "filePath": "components/ui/ScrollArea.tsx"
   },
   "RadioGroup": {
     "componentName": "RadioGroup",
@@ -298,7 +355,7 @@
     "props": [
       {
         "name": "name",
-        "type": "\"home\" | \"inbox\" | \"archive\" | \"alert\" | \"chart\" | \"settings\" | \"add\" | \"arrow-down\" | \"arrow-up\" | \"chevron-down\" | \"sun\" | \"moon\" | \"history\" | \"fire\" | \"close\" | \"user\" | \"survey\" | \"first-aid\" | \"menu\" | \"sos\" | \"upload\" | \"file\" | \"image\" | \"check\" | \"arrow-left\" | \"arrow-right\" | \"delete\" | \"search\" | \"filter\" | \"barricade\" | \"todo\" | \"shield\" | \"file-text\" | \"group\" | \"dossier\" | \"task\" | \"pass-valid\" | \"speak\" | \"checkbox-circle\"",
+        "type": "\"home\" | \"inbox\" | \"archive\" | \"alert\" | \"chart\" | \"settings\" | \"add\" | \"arrow-down\" | \"arrow-up\" | \"chevron-down\" | \"sun\" | \"moon\" | \"history\" | \"fire\" | \"close\" | \"user\" | \"survey\" | \"first-aid\" | \"menu\" | \"sos\" | \"upload\" | \"file\" | \"image\" | \"check\" | \"arrow-left\" | \"arrow-right\" | \"delete\" | \"search\" | \"filter\" | \"barricade\" | \"todo\" | \"shield\" | \"file-text\" | \"group\" | \"dossier\" | \"task\" | \"pass-valid\" | \"speak\" | \"checkbox-circle\" | \"logout\" | \"chevron-right\" | \"chevron-up\" | \"pin\" | \"time\" | \"user-line\" | \"time-line\" | \"pin-line\" | \"fire-line\" | \"first-aid-line\" | \"survey-line\" | \"barricade-line\" | \"task-line\" | \"dossier-line\" | \"pass-valid-line\" | \"speak-line\" | \"todo-line\" | \"file-text-line\" | \"group-line\"",
         "required": true,
         "description": "Icon identifier from the available icon set"
       },
@@ -485,6 +542,27 @@
         "type": "(e: MouseEvent<Element, MouseEvent>) => void",
         "required": false,
         "description": "Callback when the clear button is clicked"
+      },
+      {
+        "name": "hideClearButton",
+        "type": "boolean",
+        "required": false,
+        "description": "Hide the clear button (for non-filter use cases like view selectors)",
+        "defaultValue": "false"
+      },
+      {
+        "name": "hideLabel",
+        "type": "boolean",
+        "required": false,
+        "description": "Hide the label, show only the value (for compact selectors)",
+        "defaultValue": "false"
+      },
+      {
+        "name": "neutralValue",
+        "type": "boolean",
+        "required": false,
+        "description": "Use neutral color for value instead of accent color",
+        "defaultValue": "false"
       },
       {
         "name": "className",
@@ -696,6 +774,30 @@
         "description": ""
       },
       {
+        "name": "hideClearButton",
+        "type": "boolean",
+        "required": false,
+        "description": "Hide the clear button (for non-filter use cases like view selectors)"
+      },
+      {
+        "name": "hideLabel",
+        "type": "boolean",
+        "required": false,
+        "description": "Hide the label, show only the value (for compact selectors)"
+      },
+      {
+        "name": "neutralValue",
+        "type": "boolean",
+        "required": false,
+        "description": "Use neutral color for value instead of accent color"
+      },
+      {
+        "name": "useBottomSheetOnMobile",
+        "type": "boolean",
+        "required": false,
+        "description": "Force bottom sheet on mobile (default: true)"
+      },
+      {
         "name": "minDate",
         "type": "Date",
         "required": false,
@@ -765,7 +867,7 @@
     "props": [
       {
         "name": "variant",
-        "type": "\"primary\" | \"secondary\" | \"negative\" | \"notice\" | \"positive\" | \"ghost\"",
+        "type": "\"primary\" | \"secondary\" | \"negative\" | \"notice\" | \"positive\" | \"ghost\" | \"link\"",
         "required": false,
         "description": "Visual style variant of the button",
         "defaultValue": "primary"
@@ -815,10 +917,18 @@
         "description": "Rel attribute for security (e.g., 'noopener noreferrer')"
       },
       {
-        "name": "children",
-        "type": "ReactNode",
+        "name": "fullWidth",
+        "type": "boolean",
         "required": false,
-        "description": "Button label content"
+        "description": "Whether the button should take up the full width of its container",
+        "defaultValue": "false"
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "required": false,
+        "description": "Whether the button is in a loading state",
+        "defaultValue": "false"
       }
     ],
     "filePath": "components/ui/Button.tsx"
