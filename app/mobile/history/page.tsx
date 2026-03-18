@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { useRole } from '@/components/prototype/RoleProvider';
 import EmptyState from '@/components/prototype/EmptyState';
 import SegmentedTabs from '@/components/prototype/SegmentedTabs';
 import MobileHistoryList from '@/components/mobile/MobileHistoryList';
@@ -10,11 +11,16 @@ import {
     HISTORY_TABS,
     type HistoryRecord,
 } from '@/types/history';
+import { getVisibleRecords, getVisibleHistoryTabs } from '@/utils/role-filters';
 import styles from './page.module.css';
 
 export default function MobileHistoryPage() {
     const router = useRouter();
+    const { role } = useRole();
     const [activeTab, setActiveTab] = useState('all');
+
+    // Get role-aware tabs
+    const visibleTabs = useMemo(() => getVisibleHistoryTabs(role.level), [role.level]);
 
     const handleTabChange = (tabId: string) => {
         setActiveTab(tabId);
@@ -25,9 +31,10 @@ export default function MobileHistoryPage() {
     };
 
     const filteredRecords = useMemo(() => {
-        let records = [...MOCK_HISTORY_RECORDS];
+        // Apply role-based filtering first
+        let records = getVisibleRecords(MOCK_HISTORY_RECORDS, role);
 
-        const tab = HISTORY_TABS.find((t) => t.id === activeTab);
+        const tab = visibleTabs.find((t) => t.id === activeTab);
         if (tab?.category) {
             records = records.filter((r) => r.category === tab.category);
         }
@@ -38,13 +45,13 @@ export default function MobileHistoryPage() {
         );
 
         return records;
-    }, [activeTab]);
+    }, [activeTab, role, visibleTabs]);
 
     return (
         <div className={styles.container}>
             <div className={styles.tabsContainer}>
                 <SegmentedTabs
-                    tabs={HISTORY_TABS}
+                    tabs={visibleTabs}
                     activeTab={activeTab}
                     onChange={handleTabChange}
                 />

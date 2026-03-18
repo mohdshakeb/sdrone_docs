@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { useRole } from '@/components/prototype/RoleProvider';
 import TaskCard from '@/components/prototype/TaskCard';
 import MobileTaskDetail from '@/components/mobile/MobileTaskDetail';
 import FilterBottomSheet from '@/components/mobile/FilterBottomSheet';
 import FilterChip from '@/components/ui/FilterChip';
 import EmptyState from '@/components/prototype/EmptyState';
-import { MOCK_TASKS, REPORT_TYPE_ITEMS_ALL_TAB, STATUS_OPTIONS, Task } from '@/data/mock-data';
+import { MOCK_TASKS, REPORT_TYPE_ITEMS_ALL_TAB, Task } from '@/data/mock-data';
+import { getInboxStatusOptions, getInboxStatusLabel, getDisplayLabel } from '@/types/status';
+import { getVisibleTasks, getVisibleReportTypeItems } from '@/utils/role-filters';
 import styles from './page.module.css';
 
 // Helper to find label from structured items
@@ -20,6 +23,7 @@ function getItemLabel(value: string | null): string | undefined {
 }
 
 export default function MobileInboxPage() {
+    const { role } = useRole();
     const [filters, setFilters] = useState<{ reportType: string | null; status: string | null }>({
         reportType: null,
         status: null,
@@ -27,8 +31,16 @@ export default function MobileInboxPage() {
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const [openFilter, setOpenFilter] = useState<'reportType' | 'status' | null>(null);
 
+    // Get role-aware filter options
+    const reportTypeItems = useMemo(
+        () => getVisibleReportTypeItems(REPORT_TYPE_ITEMS_ALL_TAB, role.level),
+        [role.level]
+    );
+    const statusOptions = useMemo(() => getInboxStatusOptions(role.level), [role.level]);
+
     const filteredTasks = useMemo(() => {
-        let tasks = [...MOCK_TASKS];
+        // Apply role-based filtering first
+        let tasks = getVisibleTasks(MOCK_TASKS, role);
 
         if (filters.reportType) {
             tasks = tasks.filter((task) => {
@@ -57,14 +69,17 @@ export default function MobileInboxPage() {
         }
 
         if (filters.status) {
-            const statusOption = STATUS_OPTIONS.find((opt) => opt.value === filters.status);
+            const statusOption = statusOptions.find((opt) => opt.value === filters.status);
             if (statusOption) {
-                tasks = tasks.filter((task) => task.status === statusOption.label);
+                tasks = tasks.filter((task) => {
+                    const displayLabel = getInboxStatusLabel(task.status, role.level);
+                    return displayLabel === statusOption.label;
+                });
             }
         }
 
         return tasks;
-    }, [filters.reportType, filters.status]);
+    }, [filters.reportType, filters.status, role, statusOptions]);
 
     const handleTaskClick = (taskId: string) => {
         const task = MOCK_TASKS.find(t => t.id === taskId);
@@ -77,7 +92,7 @@ export default function MobileInboxPage() {
 
     const reportTypeLabel = getItemLabel(filters.reportType);
     const statusLabel = filters.status
-        ? STATUS_OPTIONS.find((opt) => opt.value === filters.status)?.label
+        ? statusOptions.find((opt) => opt.value === filters.status)?.label
         : undefined;
 
     return (
@@ -118,23 +133,26 @@ export default function MobileInboxPage() {
                         description="Try adjusting your filters to see more results."
                     />
                 ) : (
-                    filteredTasks.map((task) => (
-                        <TaskCard
-                            key={task.id}
-                            id={task.id}
-                            title={task.title}
-                            subtitle={task.subtitle}
-                            status={task.status}
-                            reportedBy={task.reportedBy}
-                            reportedOn={task.reportedOn}
-                            location={task.location}
-                            iconName={task.iconName}
-                            badgeColor={task.badgeColor}
-                            onClick={handleTaskClick}
-                            isSelected={selectedTask?.id === task.id}
-                            compact
-                        />
-                    ))
+                    filteredTasks.map((task) => {
+                        const display = getDisplayLabel(task.status, { isReviewer: role.level >= 2 && task.status === 'Under Review' });
+                        return (
+                            <TaskCard
+                                key={task.id}
+                                id={task.id}
+                                title={task.title}
+                                subtitle={task.subtitle}
+                                status={display.label}
+                                reportedBy={task.reportedBy}
+                                reportedOn={task.reportedOn}
+                                location={task.location}
+                                iconName={task.iconName}
+                                badgeColor={display.color}
+                                onClick={handleTaskClick}
+                                isSelected={selectedTask?.id === task.id}
+                                compact
+                            />
+                        );
+                    })
                 )}
             </div>
 
@@ -148,7 +166,7 @@ export default function MobileInboxPage() {
                 isOpen={openFilter === 'reportType'}
                 onClose={() => setOpenFilter(null)}
                 title="Report Type"
-                items={REPORT_TYPE_ITEMS_ALL_TAB}
+                items={reportTypeItems}
                 selectedValue={filters.reportType}
                 onSelect={(value) => setFilters(prev => ({ ...prev, reportType: value }))}
             />
@@ -157,7 +175,7 @@ export default function MobileInboxPage() {
                 isOpen={openFilter === 'status'}
                 onClose={() => setOpenFilter(null)}
                 title="Status"
-                options={STATUS_OPTIONS}
+                options={statusOptions}
                 selectedValue={filters.status}
                 onSelect={(value) => setFilters(prev => ({ ...prev, status: value }))}
             />

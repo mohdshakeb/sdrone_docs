@@ -21,32 +21,29 @@ export const RECORD_SUBTYPES: Record<RecordCategory, string[]> = {
 // All subtypes flattened
 export const ALL_SUBTYPES = Object.values(RECORD_SUBTYPES).flat();
 
-// Record status values
+// Record status values (5 canonical statuses)
 export type RecordStatus =
-    | 'Draft'
-    | 'Submitted'
+    | 'Pending'
     | 'Under Review'
-    | 'Action Required'
-    | 'Closed'
-    | 'Escalated';
+    | 'On Hold'
+    | 'Escalated'
+    | 'Closed';
 
 export const RECORD_STATUSES: RecordStatus[] = [
-    'Draft',
-    'Submitted',
+    'Pending',
     'Under Review',
-    'Action Required',
-    'Closed',
+    'On Hold',
     'Escalated',
+    'Closed',
 ];
 
 // Map status to badge color
 export const STATUS_BADGE_COLORS: Record<RecordStatus, BadgeColor> = {
-    Draft: 'neutral',
-    Submitted: 'information',
+    Pending: 'neutral',
     'Under Review': 'notice',
-    'Action Required': 'negative',
-    Closed: 'positive',
+    'On Hold': 'negative',
     Escalated: 'negative',
+    Closed: 'positive',
 };
 
 // Map category to icon
@@ -93,6 +90,34 @@ export interface HistoryRecord {
     createdAt: string; // ISO date string
     updatedAt: string; // ISO date string
     auditTrail: AuditTrailEntry[];
+}
+
+// Review comment (added by L2/L3 reviewers in detail panel)
+export interface ReviewComment {
+    id: string;
+    author: PersonRef;
+    text: string;
+    timestamp: string; // ISO date string
+}
+
+// Detailed incident data (what the submitter filled in via the progressive form)
+export interface IncidentDetail {
+    description: string;
+    immediateAction: string;
+    dateOccurred: string;
+    timeOccurred: string;
+    site: string;
+    area: string;
+    asset?: string;
+    wasInjured: boolean;
+    injuredEmployee?: string;
+    bodyPart?: string;
+    treatment?: string;
+    contributingFactor?: string;
+    contributingNotes?: string;
+    photoCount: number;
+    attachmentCount: number;
+    correctiveAction?: string;
 }
 
 // Filter state for History page

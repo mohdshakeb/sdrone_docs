@@ -12,15 +12,18 @@ import DashboardCategoryCard from '@/components/prototype/DashboardCategoryCard'
 import DashboardActivityLogItem from '@/components/prototype/DashboardActivityLogItem';
 import Button from '@/components/ui/Button';
 import { MOCK_TASKS, MOCK_HISTORY_RECORDS } from '@/data/mock-data';
-import { CATEGORY_ICONS, STATUS_BADGE_COLORS } from '@/types/history';
+import { CATEGORY_ICONS } from '@/types/history';
 import type { RecordCategory } from '@/types/history';
+import { useRole } from '@/components/prototype/RoleProvider';
+import { getVisibleRecords, getVisibleCategories } from '@/utils/role-filters';
+import { getDisplayLabel } from '@/types/status';
 import { getGreeting, getFormattedDate, getShortDate } from '@/utils/formatters';
 import styles from './page.module.css';
 
 type AccentColor = 'default' | 'negative' | 'positive' | 'notice' | 'information';
 
 // Category display config
-const CATEGORIES: { key: RecordCategory; icon: IconName; accent: AccentColor }[] = [
+const ALL_CATEGORIES: { key: RecordCategory; icon: IconName; accent: AccentColor }[] = [
     { key: 'Incident', icon: 'barricade', accent: 'negative' },
     { key: 'Audit', icon: 'task', accent: 'information' },
     { key: 'Compliance', icon: 'dossier', accent: 'notice' },
@@ -37,52 +40,127 @@ const PERIOD_OPTIONS = [
 
 export default function DashboardPage() {
     const router = useRouter();
+    const { role } = useRole();
     const [categoryPeriod, setCategoryPeriod] = useState('all');
 
-    // Compute dashboard stats
-    const stats = useMemo(() => ({
-        pending: MOCK_TASKS.filter(t => t.status !== 'Completed').length,
-        critical: MOCK_TASKS.filter(t => t.status === 'Critical').length,
-        underReview: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Under Review').length,
-        resolved: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Closed').length,
-    }), []);
+    const isLevel1 = role.level === 1;
+    const isLevel3 = role.level === 3;
 
-    // Urgent items: Critical tasks + Action Required/Escalated records
+    // Get records visible to this role
+    const visibleRecords = useMemo(() => getVisibleRecords(MOCK_HISTORY_RECORDS, role), [role]);
+
+    // Compute dashboard stats (role-aware)
+    const stats = useMemo(() => {
+        if (isLevel1) {
+            // Level 1: personalized counts from their own records
+            return {
+                pending: visibleRecords.filter(r => r.status !== 'Closed').length,
+                critical: visibleRecords.filter(r => r.status === 'On Hold').length,
+                underReview: visibleRecords.filter(r => r.status === 'Under Review').length,
+                resolved: visibleRecords.filter(r => r.status === 'Closed').length,
+            };
+        }
+        if (isLevel3) {
+            // Level 3: system-wide with Escalated instead of Critical
+            return {
+                pending: MOCK_TASKS.filter(t => t.status !== 'Closed').length,
+                critical: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Escalated').length,
+                underReview: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Under Review').length,
+                resolved: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Closed').length,
+            };
+        }
+        // Level 2: system-wide counts
+        return {
+            pending: MOCK_TASKS.filter(t => t.status !== 'Closed').length,
+            critical: MOCK_HISTORY_RECORDS.filter(r => r.status === 'On Hold' || r.status === 'Escalated').length,
+            underReview: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Under Review').length,
+            resolved: MOCK_HISTORY_RECORDS.filter(r => r.status === 'Closed').length,
+        };
+    }, [isLevel1, isLevel3, visibleRecords]);
+
+    // Helper to compute display label context for a record
+    const getRecordDisplayContext = (r: { status: string; owner?: { name: string }; createdAt: string; updatedAt: string }) => ({
+        isAssignee: r.status === 'Pending' && r.owner?.name === role.userName,
+        isReviewer: role.level >= 2 && r.status === 'Under Review',
+        recordAgeDays: (Date.now() - new Date(r.createdAt).getTime()) / 86400000,
+        isUpdated: r.createdAt !== r.updatedAt && r.status !== 'Closed',
+    });
+
+    // Urgent items (role-aware)
     const urgentItems = useMemo(() => {
+        if (isLevel1) {
+            // Level 1: Only their Pending + On Hold records
+            return visibleRecords
+                .filter(r => r.status === 'Pending' || r.status === 'On Hold')
+                .map(r => {
+                    const display = getDisplayLabel(r.status, getRecordDisplayContext(r));
+                    return {
+                        id: r.id,
+                        icon: CATEGORY_ICONS[r.category],
+                        title: r.title,
+                        reportType: r.type,
+                        location: r.location.name,
+                        reporterName: r.reportedBy.name,
+                        reportedAt: getShortDate(r.updatedAt),
+                        status: display.label,
+                        badgeColor: display.color,
+                        href: `/sdrone/history/${r.id}`,
+                    };
+                })
+                .slice(0, 4);
+        }
+
+        // Level 2 & 3: On Hold tasks + On Hold/Escalated records
         const criticalTasks = MOCK_TASKS
-            .filter(t => t.status === 'Critical')
-            .map(t => ({
-                id: t.id,
-                icon: t.iconName,
-                title: t.title,
-                reportType: t.subtitle,
-                location: t.location,
-                reporterName: t.reportedBy,
-                reportedAt: t.reportedOn,
-                status: t.status,
-                badgeColor: t.badgeColor,
-                href: '/sdrone/inbox',
-            }));
+            .filter(t => t.status === 'On Hold')
+            .map(t => {
+                const display = getDisplayLabel(t.status, { isReviewer: true });
+                return {
+                    id: t.id,
+                    icon: t.iconName,
+                    title: t.title,
+                    reportType: t.subtitle,
+                    location: t.location,
+                    reporterName: t.reportedBy,
+                    reportedAt: t.reportedOn,
+                    status: display.label,
+                    badgeColor: display.color,
+                    href: '/sdrone/inbox',
+                };
+            });
 
         const urgentRecords = MOCK_HISTORY_RECORDS
-            .filter(r => r.status === 'Action Required' || r.status === 'Escalated')
-            .map(r => ({
-                id: r.id,
-                icon: CATEGORY_ICONS[r.category],
-                title: r.title,
-                reportType: r.type,
-                location: r.location.name,
-                reporterName: r.reportedBy.name,
-                reportedAt: getShortDate(r.updatedAt),
-                status: r.status,
-                badgeColor: STATUS_BADGE_COLORS[r.status],
-                href: `/sdrone/history/${r.id}`,
-            }));
+            .filter(r => {
+                if (isLevel3) {
+                    return r.status === 'Escalated' || r.status === 'On Hold';
+                }
+                return r.status === 'On Hold' || r.status === 'Escalated';
+            })
+            .map(r => {
+                const display = getDisplayLabel(r.status, getRecordDisplayContext(r));
+                return {
+                    id: r.id,
+                    icon: CATEGORY_ICONS[r.category],
+                    title: r.title,
+                    reportType: r.type,
+                    location: r.location.name,
+                    reporterName: r.reportedBy.name,
+                    reportedAt: getShortDate(r.updatedAt),
+                    status: display.label,
+                    badgeColor: display.color,
+                    href: `/sdrone/history/${r.id}`,
+                };
+            });
 
-        return [...criticalTasks, ...urgentRecords].slice(0, 4);
-    }, []);
+        // Level 3: sort escalated items first
+        const combined = isLevel3
+            ? [...urgentRecords.filter(r => r.status === 'Escalated'), ...criticalTasks, ...urgentRecords.filter(r => r.status !== 'Escalated')]
+            : [...criticalTasks, ...urgentRecords];
 
-    // Activity log: Mock 6 items for the new section
+        return combined.slice(0, 4);
+    }, [isLevel1, isLevel3, visibleRecords, role.level]);
+
+    // Activity log: Mock 6 items
     const activityLogItems = useMemo(() => [
         { id: 'al-1', name: 'Ajay Nair', activity: 'created a Tool Audit', timestamp: '2 mins ago' },
         { id: 'al-2', name: 'Sara Khan', activity: 'closed a General Work Permit', timestamp: '1 hour ago' },
@@ -92,7 +170,18 @@ export default function DashboardPage() {
         { id: 'al-6', name: 'Priya Rao', activity: 'scheduled a Toolbox Talk', timestamp: '2 days ago' },
     ], []);
 
-    // Category breakdown (filtered by period)
+    // Recent Reports for Level 1
+    const myRecentReports = useMemo(() => {
+        if (!isLevel1) return [];
+        return visibleRecords
+            .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            .slice(0, 5);
+    }, [isLevel1, visibleRecords]);
+
+    // Category breakdown (filtered by period) - Level 2 & 3 only
+    const visibleCats = getVisibleCategories(role.level);
+    const categories = ALL_CATEGORIES.filter(c => visibleCats.includes(c.key));
+
     const categoryBreakdown = useMemo(() => {
         const now = new Date();
         const cutoff = categoryPeriod === 'today'
@@ -107,19 +196,28 @@ export default function DashboardPage() {
             ? MOCK_HISTORY_RECORDS.filter(r => new Date(r.createdAt) >= cutoff)
             : MOCK_HISTORY_RECORDS;
 
-        return CATEGORIES.map(({ key, icon, accent }) => {
+        return categories.map(({ key, icon, accent }) => {
             const records = filteredRecords.filter(r => r.category === key);
             const openCount = records.filter(r => r.status !== 'Closed').length;
             return { category: key, icon, accent, total: records.length, open: openCount };
         });
-    }, [categoryPeriod]);
+    }, [categoryPeriod, categories]);
+
+    // Stat card labels per role
+    const statLabels = isLevel1
+        ? { pending: 'Assigned to Me', critical: 'On Hold', underReview: 'Under Review', resolved: 'Closed' }
+        : isLevel3
+            ? { pending: 'Awaiting Review', critical: 'Escalated', underReview: 'Under Review', resolved: 'Closed' }
+            : { pending: 'Awaiting Review', critical: 'On Hold', underReview: 'Under Review', resolved: 'Closed' };
+
+    const attentionLabel = isLevel1 ? 'Items Needing Action' : 'Attention Required';
 
     return (
         <div className={styles.dashboard}>
             {/* Greeting Section */}
             <section className={styles.greeting}>
                 <div>
-                    <h2 className={`${styles.greetingHeading} text-heading`}>{getGreeting()}, John</h2>
+                    <h2 className={`${styles.greetingHeading} text-heading`}>{getGreeting()}, {role.userName.split(' ')[0]}</h2>
                     <p className={`${styles.greetingSubtext} text-body`}>
                         Here&apos;s your safety overview
                     </p>
@@ -133,27 +231,27 @@ export default function DashboardPage() {
             <section className={styles.statsGrid}>
                 <DashboardStatCard
                     icon="inbox"
-                    label="Pending Tasks"
+                    label={statLabels.pending}
                     value={stats.pending}
-                    onClick={() => router.push('/sdrone/inbox')}
+                    onClick={() => router.push(isLevel1 ? '/sdrone/history' : '/sdrone/inbox')}
                 />
                 <DashboardStatCard
-                    icon="alert"
-                    label="Critical Items"
+                    icon={isLevel3 ? 'arrow-up' : 'alert'}
+                    label={statLabels.critical}
                     value={stats.critical}
                     accentColor="negative"
-                    onClick={() => router.push('/sdrone/inbox')}
+                    onClick={() => router.push(isLevel1 ? '/sdrone/history' : '/sdrone/inbox')}
                 />
                 <DashboardStatCard
                     icon="archive"
-                    label="Under Review"
+                    label={statLabels.underReview}
                     value={stats.underReview}
                     accentColor="notice"
                     onClick={() => router.push('/sdrone/history')}
                 />
                 <DashboardStatCard
                     icon="checkbox-circle"
-                    label="Resolved Tasks"
+                    label={statLabels.resolved}
                     value={stats.resolved}
                     accentColor="positive"
                     onClick={() => router.push('/sdrone/history')}
@@ -161,87 +259,123 @@ export default function DashboardPage() {
             </section>
 
             {/* Two-Column Content */}
-            <section className={styles.contentGrid}>
-                {/* Attention Required */}
+            <section className={isLevel1 ? styles.contentSection : styles.contentGrid}>
+                {/* Attention Required / Items Needing Action */}
                 <div className={styles.contentSection}>
                     <div className={styles.sectionHeader}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-                            <span className="text-body-strong">Attention Required</span>
+                            <span className="text-body-strong">{attentionLabel}</span>
                             <Badge color="negative" size="small">{urgentItems.length}</Badge>
                         </div>
-                        <Button href="/sdrone/inbox" variant="ghost" size="sm">
-                            View Inbox
+                        <Button href={isLevel1 ? '/sdrone/history' : '/sdrone/inbox'} variant="ghost" size="sm">
+                            {isLevel1 ? 'View History' : 'View Inbox'}
                         </Button>
                     </div>
                     <div className={styles.alertList}>
-                        {urgentItems.map(item => (
-                            <TaskCard
-                                key={item.id}
-                                id={item.id}
-                                iconName={item.icon}
-                                title={item.title}
-                                subtitle={item.reportType}
-                                location={item.location}
-                                reportedBy={item.reporterName}
-                                reportedOn={item.reportedAt}
-                                status={item.status}
-                                badgeColor={item.badgeColor}
-                                onClick={() => router.push(item.href)}
-                            />
-                        ))}
+                        {urgentItems.length === 0 ? (
+                            <p className={`text-body ${styles.emptyText}`}>No items need your attention right now.</p>
+                        ) : (
+                            urgentItems.map(item => (
+                                <TaskCard
+                                    key={item.id}
+                                    id={item.id}
+                                    iconName={item.icon}
+                                    title={item.title}
+                                    subtitle={item.reportType}
+                                    location={item.location}
+                                    reportedBy={item.reporterName}
+                                    reportedOn={item.reportedAt}
+                                    status={item.status}
+                                    badgeColor={item.badgeColor}
+                                    onClick={() => router.push(item.href)}
+                                />
+                            ))
+                        )}
                     </div>
-
                 </div>
 
-                {/* Recent Activity */}
-                <div className={styles.contentSection}>
+                {/* Recent Activity - Level 2 & 3 only */}
+                {!isLevel1 && (
+                    <div className={styles.contentSection}>
+                        <div className={styles.sectionHeader}>
+                            <span className="text-body-strong">Recent Activity</span>
+                            <Button href="/sdrone/history" variant="ghost" size="sm">
+                                See all
+                            </Button>
+                        </div>
+                        <div className={styles.activityList}>
+                            {activityLogItems.map(item => (
+                                <DashboardActivityLogItem
+                                    key={item.id}
+                                    name={item.name}
+                                    activity={item.activity}
+                                    timestamp={item.timestamp}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </section>
+
+            {/* Level 1: Recent Reports / Level 2 & 3: Category Breakdown */}
+            {isLevel1 ? (
+                <section className={styles.contentSection}>
                     <div className={styles.sectionHeader}>
-                        <span className="text-body-strong">Recent Activity</span>
+                        <span className="text-body-strong">Recent Reports</span>
                         <Button href="/sdrone/history" variant="ghost" size="sm">
-                            See all
+                            View all
                         </Button>
                     </div>
-                    <div className={styles.activityList}>
-                        {activityLogItems.map(item => (
-                            <DashboardActivityLogItem
-                                key={item.id}
-                                name={item.name}
-                                activity={item.activity}
-                                timestamp={item.timestamp}
+                    <div className={styles.recentReportsList}>
+                        {myRecentReports.map(record => {
+                            const display = getDisplayLabel(record.status, getRecordDisplayContext(record));
+                            return (
+                                <TaskCard
+                                    key={record.id}
+                                    id={record.id}
+                                    iconName={CATEGORY_ICONS[record.category]}
+                                    title={record.title}
+                                    subtitle={record.type}
+                                    location={record.location.name}
+                                    reportedBy={record.reportedBy.name}
+                                    reportedOn={getShortDate(record.createdAt)}
+                                    status={display.label}
+                                    badgeColor={display.color}
+                                    onClick={() => router.push(`/sdrone/history/${record.id}`)}
+                                />
+                            );
+                        })}
+                    </div>
+                </section>
+            ) : (
+                <section className={styles.categorySection}>
+                    <div className={styles.sectionHeader}>
+                        <span className="text-body-strong">Records by Category</span>
+                        <Dropdown
+                            label="Period"
+                            options={PERIOD_OPTIONS}
+                            value={categoryPeriod}
+                            onChange={(value) => setCategoryPeriod(value || 'all')}
+                            hideClearButton={true}
+                            hideLabel={true}
+                            neutralValue={true}
+                        />
+                    </div>
+                    <div className={styles.categoryGrid}>
+                        {categoryBreakdown.map(cat => (
+                            <DashboardCategoryCard
+                                key={cat.category}
+                                icon={cat.icon}
+                                label={cat.category}
+                                total={cat.total}
+                                open={cat.open}
+                                accentColor={cat.accent}
+                                onClick={() => router.push('/sdrone/history')}
                             />
                         ))}
                     </div>
-                </div>
-            </section>
-
-            {/* Category Breakdown */}
-            <section className={styles.categorySection}>
-                <div className={styles.sectionHeader}>
-                    <span className="text-body-strong">Records by Category</span>
-                    <Dropdown
-                        label="Period"
-                        options={PERIOD_OPTIONS}
-                        value={categoryPeriod}
-                        onChange={(value) => setCategoryPeriod(value || 'all')}
-                        hideClearButton={true}
-                        hideLabel={true}
-                        neutralValue={true}
-                    />
-                </div>
-                <div className={styles.categoryGrid}>
-                    {categoryBreakdown.map(cat => (
-                        <DashboardCategoryCard
-                            key={cat.category}
-                            icon={cat.icon}
-                            label={cat.category}
-                            total={cat.total}
-                            open={cat.open}
-                            accentColor={cat.accent}
-                            onClick={() => router.push('/sdrone/history')}
-                        />
-                    ))}
-                </div>
-            </section>
+                </section>
+            )}
         </div>
     );
 }

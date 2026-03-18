@@ -6,23 +6,26 @@ import ComposableFilterBar from '@/components/prototype/ComposableFilterBar';
 import type { FilterConfig, FilterValues } from '@/components/prototype/ComposableFilterBar';
 import TaskDetailPanel from '@/components/prototype/TaskDetailPanel';
 import EmptyState from '@/components/prototype/EmptyState';
-import { MOCK_TASKS, REPORT_TYPE_ITEMS_ALL_TAB, STATUS_OPTIONS, Task } from '@/data/mock-data';
+import { MOCK_TASKS, REPORT_TYPE_ITEMS_ALL_TAB } from '@/data/mock-data';
+import { useRole } from '@/components/prototype/RoleProvider';
+import { getVisibleTasks, getVisibleReportTypeItems } from '@/utils/role-filters';
+import { getInboxStatusOptions, getInboxStatusLabel, getDisplayLabel } from '@/types/status';
 import styles from './page.module.css';
 
-/**
- * Inbox Page - S-Drone task list with filtering
- *
- * Refactored for better separation of concerns:
- * - Data moved to data/mock-data.ts
- * - Uses ComposableFilterBar for consistent filtering UX
- * - Page focused on layout and state management
- */
 export default function InboxPage() {
+  const { role } = useRole();
   const [filters, setFilters] = useState<{ reportType: string | null; status: string | null }>({
     reportType: null,
     status: null,
   });
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+
+  // Role-aware options
+  const reportTypeItems = useMemo(
+    () => getVisibleReportTypeItems(REPORT_TYPE_ITEMS_ALL_TAB, role.level),
+    [role.level]
+  );
+  const statusOptions = useMemo(() => getInboxStatusOptions(role.level), [role.level]);
 
   // Handle filter changes
   const handleFilterChange = (filterId: string, value: unknown) => {
@@ -38,15 +41,15 @@ export default function InboxPage() {
       id: 'reportType',
       type: 'dropdown',
       label: 'Report Type',
-      items: REPORT_TYPE_ITEMS_ALL_TAB,
+      items: reportTypeItems,
     },
     {
       id: 'status',
       type: 'dropdown',
       label: 'Status',
-      options: STATUS_OPTIONS,
+      options: statusOptions,
     },
-  ], []);
+  ], [reportTypeItems, statusOptions]);
 
   // Filter values for ComposableFilterBar
   const filterValues: FilterValues = {
@@ -54,14 +57,15 @@ export default function InboxPage() {
     status: filters.status,
   };
 
-  // Filter tasks based on selected filters
+  // Filter tasks based on role + selected filters
   const filteredTasks = useMemo(() => {
-    let tasks = [...MOCK_TASKS];
+    // Start with role-filtered tasks
+    let tasks = getVisibleTasks(MOCK_TASKS, role);
 
     // Filter by report type
     if (filters.reportType) {
       tasks = tasks.filter((task) => {
-        // Special handling for collapsed "Permit to Work" - match any permit subtype
+        // Special handling for collapsed "Permit to Work"
         if (filters.reportType === 'permit-to-work') {
           const permitSubtypes = ['general work', 'cold work', 'hot work', 'height work', 'permit to work'];
           return permitSubtypes.some(subtype =>
@@ -71,15 +75,14 @@ export default function InboxPage() {
         }
 
         // Find the report type item to get its label
-        const item = REPORT_TYPE_ITEMS_ALL_TAB.find(
-          (item) =>
-            item.type !== 'divider' &&
-            item.type !== 'header' &&
-            item.value === filters.reportType
+        const item = reportTypeItems.find(
+          (i) =>
+            i.type !== 'divider' &&
+            i.type !== 'header' &&
+            i.value === filters.reportType
         );
         if (!item || item.type === 'divider' || item.type === 'header') return true;
 
-        // Match the task subtitle with the item label
         const itemLabel = item.type === 'icon' || item.type === 'text' ? item.label : '';
         return (
           task.subtitle.toLowerCase().includes(itemLabel.toLowerCase()) ||
@@ -88,28 +91,29 @@ export default function InboxPage() {
       });
     }
 
-    // Filter by status
+    // Filter by status (map display label back to raw status)
     if (filters.status) {
-      // Find the status option to get its label
-      const statusOption = STATUS_OPTIONS.find((opt) => opt.value === filters.status);
+      const statusOption = statusOptions.find((opt) => opt.value === filters.status);
       if (statusOption) {
-        tasks = tasks.filter((task) => task.status === statusOption.label);
+        tasks = tasks.filter((task) => {
+          const displayLabel = getInboxStatusLabel(task.status, role.level);
+          return displayLabel === statusOption.label;
+        });
       }
     }
 
     return tasks;
-  }, [filters.reportType, filters.status]);
+  }, [filters.reportType, filters.status, role, reportTypeItems, statusOptions]);
 
   const handleTaskClick = (taskId: string) => {
-    const task = MOCK_TASKS.find(t => t.id === taskId);
-    setSelectedTask(task || null);
+    setSelectedTaskId(taskId);
   };
 
   const handlePanelClose = () => {
-    setSelectedTask(null);
+    setSelectedTaskId(null);
   };
 
-  const isPanelOpen = selectedTask !== null;
+  const isPanelOpen = selectedTaskId !== null;
 
   return (
     <div className={`${styles.pageContainer} ${isPanelOpen ? styles.pageContainerWithPanel : ''}`}>
@@ -131,27 +135,30 @@ export default function InboxPage() {
             description="Try adjusting your filters to see more results."
           />
         ) : (
-          filteredTasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              id={task.id}
-              title={task.title}
-              subtitle={task.subtitle}
-              status={task.status}
-              reportedBy={task.reportedBy}
-              reportedOn={task.reportedOn}
-              location={task.location}
-              iconName={task.iconName}
-              badgeColor={task.badgeColor}
-              onClick={handleTaskClick}
-              isSelected={selectedTask?.id === task.id}
-            />
-          ))
+          filteredTasks.map((task) => {
+            const display = getDisplayLabel(task.status, { isReviewer: role.level >= 2 && task.status === 'Under Review' });
+            return (
+              <TaskCard
+                key={task.id}
+                id={task.id}
+                title={task.title}
+                subtitle={task.subtitle}
+                status={display.label}
+                reportedBy={task.reportedBy}
+                reportedOn={task.reportedOn}
+                location={task.location}
+                iconName={task.iconName}
+                badgeColor={display.color}
+                onClick={handleTaskClick}
+                isSelected={selectedTaskId === task.id}
+              />
+            );
+          })
         )}
       </div>
 
       <TaskDetailPanel
-        task={selectedTask}
+        taskId={selectedTaskId}
         isOpen={isPanelOpen}
         onClose={handlePanelClose}
       />

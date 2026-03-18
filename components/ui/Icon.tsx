@@ -42,6 +42,19 @@ import {
     RiLogoutCircleRLine,
     RiMapPin2Fill,
     RiTimeFill,
+    RiUser3Line,
+    RiTimeLine,
+    RiMapPin2Line,
+    RiFireLine,
+    RiFirstAidKitLine,
+    RiSurveyLine,
+    RiBarricadeLine,
+    RiTaskLine,
+    RiDossierLine,
+    RiPassValidLine,
+    RiSpeakLine,
+    RiTodoLine,
+    RiGroupLine,
 } from 'react-icons/ri';
 
 export type IconName =
@@ -88,7 +101,21 @@ export type IconName =
     | 'chevron-right'
     | 'chevron-up'
     | 'pin'
-    | 'time';
+    | 'time'
+    | 'user-line'
+    | 'time-line'
+    | 'pin-line'
+    | 'fire-line'
+    | 'first-aid-line'
+    | 'survey-line'
+    | 'barricade-line'
+    | 'task-line'
+    | 'dossier-line'
+    | 'pass-valid-line'
+    | 'speak-line'
+    | 'todo-line'
+    | 'file-text-line'
+    | 'group-line';
 
 export type IconSize = 14 | 16 | 20 | 24 | 32;
 
@@ -161,6 +188,20 @@ const ICON_MAP: Record<IconName, React.ComponentType<{ size?: number | string; c
     'chevron-right': RiArrowRightSLine,
     'pin': RiMapPin2Fill,
     'time': RiTimeFill,
+    'user-line': RiUser3Line,
+    'time-line': RiTimeLine,
+    'pin-line': RiMapPin2Line,
+    'fire-line': RiFireLine,
+    'first-aid-line': RiFirstAidKitLine,
+    'survey-line': RiSurveyLine,
+    'barricade-line': RiBarricadeLine,
+    'task-line': RiTaskLine,
+    'dossier-line': RiDossierLine,
+    'pass-valid-line': RiPassValidLine,
+    'speak-line': RiSpeakLine,
+    'todo-line': RiTodoLine,
+    'file-text-line': RiFileTextLine,
+    'group-line': RiGroupLine,
 };
 
 export const Icon: React.FC<IconProps> = ({ name, size = 20, className = '', ...props }) => {

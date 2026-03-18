@@ -5,14 +5,17 @@ import { useRouter, useParams } from 'next/navigation';
 import { notFound } from 'next/navigation';
 import AppHeader from '@/components/prototype/AppHeader';
 import NextStepBanner from '@/components/prototype/NextStepBanner';
+import RecordActions from '@/components/prototype/RecordActions';
 import RecordDetailContent from '@/components/prototype/RecordDetailContent';
 import AuditTrail from '@/components/prototype/AuditTrail';
+import { useRole } from '@/components/prototype/RoleProvider';
 import { MOCK_HISTORY_RECORDS } from '@/data/mock-data';
 import styles from './page.module.css';
 
 export default function HistoryDetailPage() {
     const router = useRouter();
     const params = useParams();
+    const { role } = useRole();
     const id = params.id as string;
 
     // Find the record
@@ -30,7 +33,6 @@ export default function HistoryDetailPage() {
 
     // Handle export PDF (mock action)
     const handleExportPdf = () => {
-        // In a real app, this would trigger PDF generation
         alert('Export as PDF functionality would be implemented here.');
     };
 
@@ -44,9 +46,6 @@ export default function HistoryDetailPage() {
         { label: 'History', href: '/sdrone/history' },
         { label: record.type },
     ];
-
-    // Mock user role for demonstration
-    const userRole = 'Safety Officer';
 
     return (
         <div className={styles.page}>
@@ -64,10 +63,13 @@ export default function HistoryDetailPage() {
                 {record.status !== 'Closed' && (
                     <NextStepBanner
                         record={record}
-                        userRole={userRole}
+                        userRole={role.title}
                         onAction={handleNextStepAction}
                     />
                 )}
+
+                {/* Role-gated action buttons */}
+                <RecordActions record={record} />
 
                 {/* Record Details */}
                 <RecordDetailContent record={record} />

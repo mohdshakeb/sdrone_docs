@@ -5,13 +5,14 @@ import styles from './Steps.module.css';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import RadioGroup, { RadioOption } from '@/components/ui/RadioGroup';
+import { useRole } from '@/components/prototype/RoleProvider';
 
-const incidentTypeOptions: RadioOption[] = [
+const BASE_INCIDENT_OPTIONS: RadioOption[] = [
     { value: 'unsure', label: 'Just report an Incident', description: 'We\'ll help determine the type based on your answers' },
     { value: 'near-miss', label: 'Near Miss / Hazard', description: 'An event that could have caused injury or damage' },
     { value: 'first-aid', label: 'First Aid', description: 'Minor injury requiring basic first aid' },
-    { value: 'fir', label: 'First Incident Report (FIR)', description: 'Injury requiring medical treatment', disabled: true },
-    { value: 'adr', label: 'Accident/Dangerous Occurrence (ADR)', description: 'Serious incident requiring hospital treatment', disabled: true },
+    { value: 'fir', label: 'First Incident Report (FIR)', description: 'Injury requiring medical treatment' },
+    { value: 'adr', label: 'Accident/Dangerous Occurrence (ADR)', description: 'Serious incident requiring hospital treatment' },
 ];
 
 export interface StepEntryProps {
@@ -21,6 +22,16 @@ export interface StepEntryProps {
 }
 
 export const StepEntry: React.FC<StepEntryProps> = ({ onStart, selectedType, onTypeChange }) => {
+    const { role } = useRole();
+    const canSubmitAll = role.permissions.canSubmitAllIncidents;
+
+    const incidentTypeOptions: RadioOption[] = BASE_INCIDENT_OPTIONS.map(option => {
+        if ((option.value === 'fir' || option.value === 'adr') && !canSubmitAll) {
+            return { ...option, disabled: true };
+        }
+        return option;
+    });
+
     return (
         <div className={styles.entryContainer}>
             <div className={styles.entryIconWrapper}>

@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import AppSidebar from '@/components/prototype/AppSidebar';
 import AppHeader from '@/components/prototype/AppHeader';
+import { RoleProvider } from '@/components/prototype/RoleProvider';
 
 export default function SDroneLayout({
     children,
@@ -15,18 +16,20 @@ export default function SDroneLayout({
 
     // Full-screen form pages use layout without sidebar
     if (isFullScreenForm) {
-        return <>{children}</>;
+        return <RoleProvider>{children}</RoleProvider>;
     }
 
     return (
-        <div className="app-shell">
-            <AppSidebar />
-            <main className="main-content">
-                <AppHeader />
-                <div>
-                    {children}
-                </div>
-            </main>
-        </div>
+        <RoleProvider>
+            <div className="app-shell">
+                <AppSidebar />
+                <main className="main-content">
+                    <AppHeader />
+                    <div>
+                        {children}
+                    </div>
+                </main>
+            </div>
+        </RoleProvider>
     );
 }

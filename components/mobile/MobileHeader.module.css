@@ -29,6 +29,23 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.avatar:hover {
+    background-color: var(--bg-accent);
+}
+
+.avatar:active {
+    transform: scale(0.95);
+}
+
+.avatar:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: 2px;
 }
 
 .avatarText {

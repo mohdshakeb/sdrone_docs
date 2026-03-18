@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { useOptionalRole } from '@/components/prototype/RoleProvider';
 import styles from './MobileHeader.module.css';
 import { Icon } from '@/components/ui/Icon';
 
@@ -10,11 +11,20 @@ interface MobileHeaderProps {
     variant?: 'default' | 'detail';
     showLogo?: boolean;
     onPlusPress?: () => void;
+    onAvatarPress?: () => void;
     rightAction?: React.ReactNode;
 }
 
-export default function MobileHeader({ title, variant = 'default', showLogo = false, onPlusPress, rightAction }: MobileHeaderProps) {
+export default function MobileHeader({ title, variant = 'default', showLogo = false, onPlusPress, onAvatarPress, rightAction }: MobileHeaderProps) {
     const router = useRouter();
+    const roleContext = useOptionalRole();
+
+    // Calculate user initials from role context
+    const userInitials = roleContext?.role.userName
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase() ?? 'JD';
 
     if (variant === 'detail') {
         return (
@@ -37,9 +47,13 @@ export default function MobileHeader({ title, variant = 'default', showLogo = fa
     return (
         <header className={styles.header}>
             <div className={styles.leftGroup}>
-                <div className={styles.avatar} aria-hidden="true">
-                    <span className={`${styles.avatarText} text-caption-strong`}>JD</span>
-                </div>
+                <button
+                    className={styles.avatar}
+                    onClick={onAvatarPress}
+                    aria-label="Open profile"
+                >
+                    <span className={`${styles.avatarText} text-caption-strong`}>{userInitials}</span>
+                </button>
                 {showLogo ? (
                     <div className={styles.logoWrapper}>
                         <img src="/logo_light.png" alt="S-Drone" className={styles.logoLight} />

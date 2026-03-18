@@ -4,7 +4,9 @@ import React from 'react';
 import Badge from '@/components/ui/Badge';
 import { Icon } from '@/components/ui/Icon';
 import type { HistoryRecord, SortColumn, SortDirection } from '@/types/history';
-import { STATUS_BADGE_COLORS } from '@/types/history';
+import type { RoleLevel } from '@/types/roles';
+import { getHistoryStatusLabel, getStatusBadgeColor } from '@/types/status';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- used by other imports from this module path
 import styles from './HistoryTable.module.css';
 
 export interface HistoryTableProps {
@@ -18,6 +20,10 @@ export interface HistoryTableProps {
     onSort: (column: SortColumn) => void;
     /** Callback when row is clicked */
     onRowClick: (record: HistoryRecord) => void;
+    /** Hide the Owner column (Level 1 users) */
+    hideOwnerColumn?: boolean;
+    /** Current role level for status label mapping */
+    roleLevel?: RoleLevel;
 }
 
 // Helper to format relative time
@@ -69,7 +75,13 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
     sortDirection,
     onSort,
     onRowClick,
+    hideOwnerColumn = false,
+    roleLevel = 2,
 }) => {
+    // Filter columns based on role
+    const visibleColumns = hideOwnerColumn
+        ? COLUMNS.filter((col) => col.key !== 'owner')
+        : COLUMNS;
     const handleRowKeyDown = (e: React.KeyboardEvent, record: HistoryRecord) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -112,7 +124,7 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
             <table className={styles.table}>
                 <thead className={styles.thead}>
                     <tr>
-                        {COLUMNS.map((col) => (
+                        {visibleColumns.map((col) => (
                             <th
                                 key={col.key}
                                 className={`${styles.th} ${col.sortable ? styles.sortable : ''} text-caption-small`}
@@ -154,10 +166,10 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
                             </td>
                             <td className={styles.td}>
                                 <Badge
-                                    color={STATUS_BADGE_COLORS[record.status]}
+                                    color={getStatusBadgeColor(record.status)}
                                     size="small"
                                 >
-                                    {record.status}
+                                    {getHistoryStatusLabel(record.status, roleLevel)}
                                 </Badge>
                             </td>
                             <td className={`${styles.td} text-caption`}>
@@ -170,12 +182,14 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({
                                     )}
                                 </span>
                             </td>
-                            <td
-                                className={`${styles.td} text-caption`}
-                                title={getOwnerTooltip(record)}
-                            >
-                                {getOwnerOrClosedBy(record)}
-                            </td>
+                            {!hideOwnerColumn && (
+                                <td
+                                    className={`${styles.td} text-caption`}
+                                    title={getOwnerTooltip(record)}
+                                >
+                                    {getOwnerOrClosedBy(record)}
+                                </td>
+                            )}
                             <td
                                 className={`${styles.td} text-caption`}
                                 title={formatAbsoluteDate(record.updatedAt)}

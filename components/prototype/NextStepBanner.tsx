@@ -26,12 +26,12 @@ const getNextStepInfo = (
     responsiblePerson?: string;
 } | null => {
     switch (record.status) {
-        case 'Submitted':
+        case 'Pending':
             return {
-                message: 'Awaiting initial review',
-                actionLabel: 'Start Review',
-                showAction: userRole === 'Safety Officer' || userRole === 'HSE Manager',
-                responsiblePerson: 'Safety Officer',
+                message: `Assigned — awaiting submission from ${record.owner?.name || 'assigned owner'}`,
+                actionLabel: 'Submit Record',
+                showAction: record.owner?.role === userRole,
+                responsiblePerson: record.owner?.name,
             };
 
         case 'Under Review':
@@ -43,29 +43,21 @@ const getNextStepInfo = (
                 responsiblePerson: record.owner?.name,
             };
 
-        case 'Action Required':
-            const isActionOwner = record.owner?.role === userRole;
+        case 'On Hold':
+            const isHoldOwner = record.owner?.role === userRole;
             return {
-                message: `Action required from ${record.owner?.name || 'assigned owner'}`,
+                message: `On hold — awaiting response from ${record.owner?.name || 'assigned owner'}`,
                 actionLabel: 'Take Action',
-                showAction: isActionOwner,
+                showAction: isHoldOwner,
                 responsiblePerson: record.owner?.name,
             };
 
         case 'Escalated':
             return {
-                message: 'This record has been escalated for management attention',
+                message: 'Escalated for management attention',
                 actionLabel: 'Review Escalation',
                 showAction: userRole === 'HSE Manager' || userRole === 'Management',
                 responsiblePerson: 'HSE Manager',
-            };
-
-        case 'Draft':
-            return {
-                message: 'This record is a draft and has not been submitted',
-                actionLabel: 'Submit Record',
-                showAction: record.reportedBy.role === userRole,
-                responsiblePerson: record.reportedBy.name,
             };
 
         case 'Closed':

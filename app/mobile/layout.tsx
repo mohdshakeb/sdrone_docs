@@ -9,6 +9,8 @@ import MobileHeader from '@/components/mobile/MobileHeader';
 import BottomTabBar from '@/components/mobile/BottomTabBar';
 import BottomSheet from '@/components/mobile/BottomSheet';
 import type { BottomSheetAction } from '@/components/mobile/BottomSheet';
+import { RoleProvider } from '@/components/prototype/RoleProvider';
+import MobileUserProfile from '@/components/mobile/MobileUserProfile';
 import styles from './layout.module.css';
 
 const PAGE_TITLES: Record<string, string> = {
@@ -25,6 +27,7 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
     const pathname = usePathname();
     const router = useRouter();
     const [sheetOpen, setSheetOpen] = useState(false);
+    const [profileOpen, setProfileOpen] = useState(false);
 
     // Determine page title
     const title = PAGE_TITLES[pathname ?? ''] ?? 'S-Drone';
@@ -53,24 +56,31 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
     const isHome = pathname === '/mobile';
 
     return (
-        <MobileShell>
-            <StatusBar />
-            <MobileHeader
-                title={isDetailPage ? 'Record Detail' : title}
-                variant={headerVariant}
-                showLogo={isHome}
-                onPlusPress={() => setSheetOpen(true)}
-            />
-            <div className={styles.content}>
-                {children}
-            </div>
-            {showTabs && <BottomTabBar />}
-            <BottomSheet
-                isOpen={sheetOpen}
-                onClose={() => setSheetOpen(false)}
-                title="Quick Actions"
-                actions={sheetActions}
-            />
-        </MobileShell>
+        <RoleProvider>
+            <MobileShell>
+                <StatusBar />
+                <MobileHeader
+                    title={isDetailPage ? 'Record Detail' : title}
+                    variant={headerVariant}
+                    showLogo={isHome}
+                    onPlusPress={() => setSheetOpen(true)}
+                    onAvatarPress={() => setProfileOpen(true)}
+                />
+                <div className={styles.content}>
+                    {children}
+                </div>
+                {showTabs && <BottomTabBar />}
+                <BottomSheet
+                    isOpen={sheetOpen}
+                    onClose={() => setSheetOpen(false)}
+                    title="Quick Actions"
+                    actions={sheetActions}
+                />
+                <MobileUserProfile
+                    isOpen={profileOpen}
+                    onClose={() => setProfileOpen(false)}
+                />
+            </MobileShell>
+        </RoleProvider>
     );
 }

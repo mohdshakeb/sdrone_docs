@@ -9,6 +9,9 @@ import DropdownMenu from '@/components/ui/DropdownMenu';
 import type { DropdownItem } from '@/components/ui/DropdownMenu';
 import Link from 'next/link';
 import { useTheme } from '@/components/ui/ThemeProvider';
+import { useOptionalRole } from '@/components/prototype/RoleProvider';
+import type { RolePermissions } from '@/types/roles';
+import { ROLE_DEFINITIONS, DEFAULT_ROLE_LEVEL } from '@/types/roles';
 
 // Breadcrumb item for innerPage variant
 export interface BreadcrumbItem {
@@ -38,6 +41,29 @@ export interface AppHeaderProps {
     onExportPdf?: () => void;
 }
 
+/** Build Start New dropdown items based on role permissions */
+function getStartNewItems(perms: RolePermissions): DropdownItem[] {
+    return [
+        { type: 'header', label: 'Audits' },
+        { type: 'icon', value: 'safety-audit', label: 'Safety Audit', icon: 'survey', disabled: !perms.canSubmitAudit },
+        { type: 'icon', value: 'tool-audit', label: 'Tool Audit', icon: 'todo', disabled: !perms.canSubmitAudit },
+        { type: 'divider' },
+        { type: 'header', label: 'Compliance' },
+        { type: 'icon', value: 'meetings', label: 'Meetings', icon: 'group', disabled: !perms.canSubmitCompliance },
+        { type: 'icon', value: 'health-check', label: 'Health Check', icon: 'dossier', disabled: !perms.canSubmitCompliance },
+        { type: 'icon', value: 'audit', label: 'Audit', icon: 'task', disabled: !perms.canSubmitCompliance },
+        { type: 'divider' },
+        { type: 'header', label: 'Permit to Work' },
+        { type: 'icon', value: 'general-work', label: 'General Work', icon: 'pass-valid', disabled: !perms.canSubmitPermit },
+        { type: 'icon', value: 'cold-work', label: 'Cold Work', icon: 'pass-valid', disabled: !perms.canSubmitPermit },
+        { type: 'icon', value: 'hot-work', label: 'Hot Work', icon: 'pass-valid', disabled: !perms.canSubmitPermit },
+        { type: 'icon', value: 'height-work', label: 'Height Work', icon: 'pass-valid', disabled: !perms.canSubmitPermit },
+        { type: 'divider' },
+        { type: 'header', label: 'Toolbox Talk' },
+        { type: 'icon', value: 'toolbox-talk', label: 'Toolbox Talk', icon: 'speak', disabled: !perms.canSubmitToolboxTalk },
+    ];
+}
+
 export default function AppHeader({
     variant = 'default',
     formTitle,
@@ -58,6 +84,7 @@ export default function AppHeader({
     const pathname = usePathname();
 
     const { theme, toggleTheme } = useTheme();
+    const roleContext = useOptionalRole();
     const [mounted, setMounted] = React.useState(false);
 
     // Start New dropdown state (for default variant)
@@ -283,26 +310,9 @@ export default function AppHeader({
         );
     }
 
-    // Start New dropdown items - matches REPORT_TYPE_ITEMS but excludes Incidents section
-    const startNewItems: DropdownItem[] = [
-        { type: 'header', label: 'Audits' },
-        { type: 'icon', value: 'safety-audit', label: 'Safety Audit', icon: 'survey', disabled: true },
-        { type: 'icon', value: 'tool-audit', label: 'Tool Audit', icon: 'todo' },
-        { type: 'divider' },
-        { type: 'header', label: 'Compliance' },
-        { type: 'icon', value: 'meetings', label: 'Meetings', icon: 'group', disabled: true },
-        { type: 'icon', value: 'health-check', label: 'Health Check', icon: 'dossier', disabled: true },
-        { type: 'icon', value: 'audit', label: 'Audit', icon: 'task', disabled: true },
-        { type: 'divider' },
-        { type: 'header', label: 'Permit to Work' },
-        { type: 'icon', value: 'general-work', label: 'General Work', icon: 'pass-valid', disabled: true },
-        { type: 'icon', value: 'cold-work', label: 'Cold Work', icon: 'pass-valid', disabled: true },
-        { type: 'icon', value: 'hot-work', label: 'Hot Work', icon: 'pass-valid', disabled: true },
-        { type: 'icon', value: 'height-work', label: 'Height Work', icon: 'pass-valid', disabled: true },
-        { type: 'divider' },
-        { type: 'header', label: 'Toolbox Talk' },
-        { type: 'icon', value: 'toolbox-talk', label: 'Toolbox Talk', icon: 'speak', disabled: true },
-    ];
+    // Start New dropdown items - gated by role permissions
+    const perms = roleContext?.role.permissions ?? ROLE_DEFINITIONS[DEFAULT_ROLE_LEVEL].permissions;
+    const startNewItems: DropdownItem[] = getStartNewItems(perms);
 
     const handleStartNewSelect = (value: string) => {
         setStartNewOpen(false);

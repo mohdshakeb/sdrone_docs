@@ -15,6 +15,8 @@ interface TaskCardProps {
     location: string;
     iconName?: IconName;
     badgeColor?: BadgeColor;
+    attentionLabel?: string;
+    attentionLabelColor?: BadgeColor;
     onClick?: (id: string) => void;
     isSelected?: boolean;
     hideStatus?: boolean;
@@ -31,6 +33,8 @@ export default function TaskCard({
     location,
     iconName = 'fire',
     badgeColor = 'neutral',
+    attentionLabel,
+    attentionLabelColor,
     onClick,
     isSelected = false,
     hideStatus = false,
@@ -59,7 +63,7 @@ export default function TaskCard({
             <div className={`${styles.header} ${compact ? styles.headerCompact : ''}`}>
                 <div className={styles.leftSection}>
                     <div className={styles.iconContainer}>
-                        <Icon name={iconName} size={20} />
+                        <Icon name={(iconName.endsWith('-line') ? iconName : `${iconName}-line`) as IconName} size={20} />
                     </div>
                     <div className={styles.textContainer}>
                         <div className={`${styles.title} text-body-strong`}>{title}</div>
@@ -67,11 +71,18 @@ export default function TaskCard({
                     </div>
                 </div>
 
-                {!hideStatus && (
-                    <span className={styles.badge}>
-                        <Badge color={badgeColor} size="small" emphasis="subtle">
-                            {status}
-                        </Badge>
+                {(!hideStatus || attentionLabel) && (
+                    <span className={styles.badges}>
+                        {attentionLabel && (
+                            <Badge color={attentionLabelColor ?? 'neutral'} size="xsmall" emphasis="subtle">
+                                {attentionLabel}
+                            </Badge>
+                        )}
+                        {!hideStatus && (
+                            <Badge color={badgeColor} size="small" emphasis="subtle">
+                                {status}
+                            </Badge>
+                        )}
                     </span>
                 )}
             </div>
@@ -79,15 +90,15 @@ export default function TaskCard({
             {/* Footer Section */}
             <div className={`${styles.footer} text-caption`}>
                 <div className={styles.footerItem}>
-                    <Icon name="user" size={14} className={styles.footerIcon} />
+                    <Icon name="user-line" size={14} className={styles.footerIcon} />
                     <span className={`${styles.footerValue} text-caption`}>{reportedBy}</span>
                 </div>
                 <div className={styles.footerItem}>
-                    <Icon name="time" size={14} className={styles.footerIcon} />
+                    <Icon name="time-line" size={14} className={styles.footerIcon} />
                     <span className={`${styles.footerValue} text-caption`}>{reportedOn}</span>
                 </div>
                 <div className={styles.footerItem}>
-                    <Icon name="pin" size={14} className={styles.footerIcon} />
+                    <Icon name="pin-line" size={14} className={styles.footerIcon} />
                     <span className={`${styles.footerValue} text-caption`}>{location}</span>
                 </div>
             </div>

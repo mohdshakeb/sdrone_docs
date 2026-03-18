@@ -1,0 +1,206 @@
+/* MobileUserProfile — Full-screen user profile modal sliding from right */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
+    transition: background-color 0.25s ease;
+}
+
+.overlay[data-open="true"] {
+    background-color: rgba(0, 0, 0, 0.4);
+    pointer-events: auto;
+}
+
+.modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 375px;
+    background-color: var(--bg-canvas);
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.modal[data-open="true"] {
+    transform: translateX(0);
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--border-subtle);
+    background-color: var(--bg-canvas);
+}
+
+.headerTitle {
+    color: var(--fg-default);
+}
+
+.closeButton {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-secondary);
+    border-radius: var(--space-2);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.closeButton:hover {
+    background-color: var(--bg-hover);
+    color: var(--fg-default);
+}
+
+.closeButton:active {
+    background-color: var(--bg-subtle);
+}
+
+.closeButton:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
+}
+
+/* User Details Section */
+.userSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-8) var(--space-5);
+    gap: var(--space-3);
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--bg-accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-2);
+}
+
+.avatarText {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--fg-accent-emphasis);
+    line-height: 1;
+}
+
+.userName {
+    color: var(--fg-default);
+    margin: 0;
+}
+
+.userEmail {
+    color: var(--fg-secondary);
+    margin: 0;
+}
+
+/* Menu Section */
+.menuSection {
+    flex: 1;
+    padding: var(--space-5) 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--fg-default);
+    text-align: left;
+    width: 100%;
+    min-height: 56px;
+    transition: background-color 0.15s ease;
+}
+
+.menuItem:hover {
+    background-color: var(--bg-hover);
+}
+
+.menuItem:active {
+    background-color: var(--bg-subtle);
+}
+
+.menuItem:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: -2px;
+}
+
+.menuItemIcon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-subtle);
+    border-radius: var(--space-2);
+    color: var(--fg-secondary);
+    flex-shrink: 0;
+}
+
+.menuItemChevron {
+    margin-left: auto;
+    color: var(--fg-subtle);
+}
+
+/* Footer / Logout Section */
+.footer {
+    padding: var(--space-5);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    width: 100%;
+    min-height: 48px;
+    padding: var(--space-3) var(--space-4);
+    background: none;
+    border: 1px solid var(--border-default);
+    border-radius: var(--space-2);
+    cursor: pointer;
+    color: var(--fg-negative);
+    text-align: center;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.logoutButton:hover {
+    background-color: var(--bg-negative-soft);
+    border-color: var(--fg-negative-soft);
+}
+
+.logoutButton:active {
+    background-color: var(--bg-subtle);
+}
+
+.logoutButton:focus-visible {
+    outline: 2px solid var(--fg-accent);
+    outline-offset: 2px;
+}

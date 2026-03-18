@@ -8,6 +8,7 @@ import FormField from '@/components/ui/FormField';
 import TextInput from '@/components/ui/TextInput';
 import Button from '@/components/ui/Button';
 import { useTheme } from '@/components/ui/ThemeProvider';
+import { EMAIL_TO_ROLE, DEFAULT_ROLE_LEVEL } from '@/types/roles';
 import styles from './page.module.css';
 
 export default function MobileLoginPage() {
@@ -25,6 +26,10 @@ export default function MobileLoginPage() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
+
+        // Look up role by email, default to Level 2
+        const roleLevel = EMAIL_TO_ROLE[email.toLowerCase().trim()] ?? DEFAULT_ROLE_LEVEL;
+        localStorage.setItem('sdrone-role', String(roleLevel));
 
         // Mock login delay
         setTimeout(() => {

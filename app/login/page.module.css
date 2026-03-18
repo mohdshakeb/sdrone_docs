@@ -107,6 +107,62 @@
     background-color: var(--border-subtle);
 }
 
+/* Demo Accounts Section */
+.demoAccounts {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.demoLabel {
+    color: var(--fg-subtle);
+    text-align: center;
+}
+
+.demoCards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+}
+
+.demoCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-3);
+    background-color: var(--bg-subtle);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--space-3);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+    text-align: center;
+}
+
+.demoCard:hover {
+    border-color: var(--border-emphasis);
+    background-color: var(--bg-surface);
+}
+
+.demoCardLevel {
+    color: var(--fg-accent-emphasis);
+}
+
+.demoCardName {
+    color: var(--fg-default);
+}
+
+.demoCardTitle {
+    color: var(--fg-secondary);
+}
+
+.demoCardEmail {
+    color: var(--fg-muted);
+    word-break: break-all;
+}
+
 @media (max-width: 768px) {
     .loginPage {
         flex-direction: column;
@@ -119,5 +175,9 @@
 
     .rightPanel {
         padding: var(--space-6);
+    }
+
+    .demoCards {
+        grid-template-columns: 1fr;
     }
 }

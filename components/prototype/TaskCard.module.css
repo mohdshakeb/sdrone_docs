@@ -51,8 +51,15 @@
     flex: 1 1 100%;
 }
 
-.headerCompact .badge {
+.headerCompact .badges {
     margin-left: calc(var(--space-10) + var(--space-4));
+}
+
+.badges {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-shrink: 0;
 }
 
 .leftSection {

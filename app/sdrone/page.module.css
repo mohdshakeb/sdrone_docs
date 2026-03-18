@@ -80,6 +80,20 @@
     padding: 0 var(--space-4);
 }
 
+/* ── My Recent Reports (Level 1) ── */
+
+.recentReportsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.emptyText {
+    color: var(--fg-subtle);
+    padding: var(--space-6) 0;
+    text-align: center;
+}
+
 /* ── Category Breakdown ── */
 
 .categorySection {

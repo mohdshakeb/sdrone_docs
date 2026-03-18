@@ -11,13 +11,15 @@ import { MOCK_HISTORY_RECORDS, LOCATION_OPTIONS, REPORT_TYPE_ITEMS, REPORT_TYPE_
 import {
     HISTORY_TABS,
     RECORD_SUBTYPES,
-    RECORD_STATUSES,
     DEFAULT_FILTER_STATE,
     type HistoryRecord,
     type SortColumn,
     type SortDirection,
     type HistoryFilterState,
 } from '@/types/history';
+import { useRole } from '@/components/prototype/RoleProvider';
+import { getVisibleRecords, getVisibleReportTypeItems, getVisibleHistoryTabs, getAdvancedFilterVisibility } from '@/utils/role-filters';
+import { getHistoryStatusOptions, getHistoryStatusLabel, getStatusBadgeColor } from '@/types/status';
 import type { AdvancedFilterValues } from '@/components/prototype/AdvancedFiltersModal';
 import type { FilterConfig, FilterValues } from '@/components/prototype/ComposableFilterBar';
 import type { DropdownItem } from '@/components/ui/Dropdown';
@@ -78,6 +80,7 @@ const getTypeItemsForTab = (activeTab: string): DropdownItem[] => {
 
 export default function HistoryPage() {
     const router = useRouter();
+    const { role } = useRole();
 
     // State
     const [activeTab, setActiveTab] = useState('all');
@@ -85,6 +88,12 @@ export default function HistoryPage() {
     const [sortColumn, setSortColumn] = useState<SortColumn>('updatedAt');
     const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
     const [advancedFiltersOpen, setAdvancedFiltersOpen] = useState(false);
+
+    // Role-aware data
+    const visibleTabs = useMemo(() => getVisibleHistoryTabs(role.level), [role.level]);
+    const statusOptions = useMemo(() => getHistoryStatusOptions(role.level), [role.level]);
+    const advancedFilterVisibility = useMemo(() => getAdvancedFilterVisibility(role.level), [role.level]);
+    const hideOwnerColumn = role.level === 1;
 
     // Handle tab change
     const handleTabChange = (tabId: string) => {
@@ -136,6 +145,10 @@ export default function HistoryPage() {
     const filterConfigs: FilterConfig[] = useMemo(() => {
         const showTypeFilter = shouldShowTypeFilter(activeTab);
 
+        // Get type items, then filter by role
+        const tabTypeItems = getTypeItemsForTab(activeTab);
+        const roleTypeItems = getVisibleReportTypeItems(tabTypeItems, role.level);
+
         return [
             {
                 id: 'search',
@@ -147,14 +160,14 @@ export default function HistoryPage() {
                 id: 'types',
                 type: 'multiselect',
                 label: 'Type',
-                items: getTypeItemsForTab(activeTab),
+                items: roleTypeItems,
                 visible: showTypeFilter,
             },
             {
                 id: 'statuses',
                 type: 'multiselect',
                 label: 'Status',
-                options: RECORD_STATUSES.map((s) => ({ value: s, label: s })),
+                options: statusOptions.map((s) => ({ value: s.value, label: s.label })),
             },
             {
                 id: 'location',
@@ -168,7 +181,7 @@ export default function HistoryPage() {
                 label: 'Date',
             },
         ];
-    }, [activeTab]);
+    }, [activeTab, role.level, statusOptions]);
 
     // Convert filters to FilterValues for ComposableFilterBar
     const filterValues: FilterValues = {
@@ -179,21 +192,22 @@ export default function HistoryPage() {
         dateRange: filters.dateRange,
     };
 
-    // Count active advanced filters
+    // Count active advanced filters (only count visible ones)
     const advancedFilterCount = useMemo(() => {
         let count = 0;
-        if (filters.reportedBy) count++;
-        if (filters.owner) count++;
-        if (filters.closedBy) count++;
-        if (filters.severity) count++;
-        if (filters.slaBreached !== null) count++;
-        if (filters.recordId) count++;
+        if (advancedFilterVisibility.reportedBy && filters.reportedBy) count++;
+        if (advancedFilterVisibility.owner && filters.owner) count++;
+        if (advancedFilterVisibility.closedBy && filters.closedBy) count++;
+        if (advancedFilterVisibility.severity && filters.severity) count++;
+        if (advancedFilterVisibility.slaBreached && filters.slaBreached !== null) count++;
+        if (advancedFilterVisibility.recordId && filters.recordId) count++;
         return count;
-    }, [filters]);
+    }, [filters, advancedFilterVisibility]);
 
     // Filter and sort records
     const filteredRecords = useMemo(() => {
-        let records = [...MOCK_HISTORY_RECORDS];
+        // Start with role-filtered records
+        let records = getVisibleRecords(MOCK_HISTORY_RECORDS, role);
 
         // Filter by tab (category)
         const tab = HISTORY_TABS.find((t) => t.id === activeTab);
@@ -239,9 +253,12 @@ export default function HistoryPage() {
             });
         }
 
-        // Filter by statuses
+        // Filter by statuses (map display label back to canonical status)
         if (filters.statuses && filters.statuses.length > 0) {
-            records = records.filter((r) => filters.statuses.includes(r.status));
+            records = records.filter((r) => {
+                // Check if the record's canonical status matches any selected value
+                return filters.statuses.includes(r.status);
+            });
         }
 
         // Filter by location
@@ -288,7 +305,7 @@ export default function HistoryPage() {
         });
 
         return records;
-    }, [activeTab, filters, sortColumn, sortDirection]);
+    }, [activeTab, filters, sortColumn, sortDirection, role]);
 
     // Show empty state if no records
     const showEmptyState = filteredRecords.length === 0;
@@ -298,7 +315,7 @@ export default function HistoryPage() {
             {/* Segmented Tabs */}
             <div className={styles.tabsContainer}>
                 <SegmentedTabs
-                    tabs={HISTORY_TABS}
+                    tabs={visibleTabs}
                     activeTab={activeTab}
                     onChange={handleTabChange}
                 />
@@ -331,6 +348,8 @@ export default function HistoryPage() {
                         sortDirection={sortDirection}
                         onSort={handleSort}
                         onRowClick={handleRowClick}
+                        hideOwnerColumn={hideOwnerColumn}
+                        roleLevel={role.level}
                     />
                 )}
             </div>
@@ -348,6 +367,7 @@ export default function HistoryPage() {
                     recordId: filters.recordId,
                 }}
                 onApply={handleAdvancedApply}
+                visibility={advancedFilterVisibility}
             />
         </div>
     );

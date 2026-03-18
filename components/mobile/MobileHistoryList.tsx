@@ -3,7 +3,7 @@
 import React from 'react';
 import Badge from '@/components/ui/Badge';
 import type { HistoryRecord } from '@/types/history';
-import { STATUS_BADGE_COLORS } from '@/types/history';
+import { getStatusBadgeColor } from '@/types/status';
 import styles from './MobileHistoryList.module.css';
 
 interface MobileHistoryListProps {
@@ -50,7 +50,7 @@ export default function MobileHistoryList({ records, onRecordClick }: MobileHist
                             <span className={`${styles.type} text-caption`}>{record.type}</span>
                         </div>
                         <Badge
-                            color={STATUS_BADGE_COLORS[record.status]}
+                            color={getStatusBadgeColor(record.status)}
                             size="small"
                             emphasis="subtle"
                         >

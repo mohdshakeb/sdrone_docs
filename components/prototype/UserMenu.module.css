@@ -65,6 +65,13 @@
     text-overflow: ellipsis;
 }
 
+.role {
+    color: var(--fg-accent-emphasis);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .chevron {
     color: var(--fg-subtle);
     transition: transform 0.2s ease;
@@ -98,6 +105,21 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.menuHeader {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+}
+
+.menuHeaderName {
+    color: var(--fg-default);
+}
+
+.menuHeaderEmail {
+    color: var(--fg-subtle);
 }
 
 .menuItem {
