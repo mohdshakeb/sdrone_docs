@@ -130,7 +130,7 @@
     margin-bottom: var(--space-3);
 }
 
-.statusRow > span {
+.statusRow>span {
     color: var(--fg-subtle);
 }
 
@@ -290,7 +290,7 @@
     flex-shrink: 0;
 }
 
-.footer > * {
+.footer>* {
     flex: 1;
 }
 
