@@ -1,3 +1,6 @@
+> **OUTDATED — Implemented 2026-06-11.**
+> This PRD has been fully implemented. The source of truth is `Planning/IMPLEMENTATION.md`.
+
 # Product Requirements Document (PRD)
 
 ## Safety Management SaaS — History Page (v1)

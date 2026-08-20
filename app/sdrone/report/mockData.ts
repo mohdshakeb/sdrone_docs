@@ -1,15 +1,37 @@
 /**
- * Mock data for incident report form dropdowns
+ * Mock data for incident report form
  */
 
-import type { SiteOption, BodyPartOption } from './types';
+import type { SiteOption, BodyPartOption, InjuredEmployee, Witness } from './types';
+
+export interface WorkstationOption {
+    value: string;
+    label: string;
+}
+
+export const workstationOptions: WorkstationOption[] = [
+    { value: 'conveyor-section', label: 'Conveyor Section' },
+    { value: 'pallet-storage', label: 'Pallet Storage' },
+    { value: 'loading-bay', label: 'Loading Bay' },
+    { value: 'packaging-station', label: 'Packaging Station' },
+    { value: 'dock-entrance', label: 'Dock Entrance' },
+    { value: 'lab-bench', label: 'Lab Bench' },
+    { value: 'chemical-storage', label: 'Chemical Storage' },
+    { value: 'transfer-station', label: 'Transfer Station' },
+    { value: 'generator-bay', label: 'Generator Bay' },
+    { value: 'fuel-transfer-station', label: 'Fuel Transfer Station' },
+    { value: 'office-workstation', label: 'Office Workstation' },
+    { value: 'other', label: 'Other' },
+];
 
 export const siteOptions: SiteOption[] = [
-    { value: 'site-a', label: 'Site A - Main Facility' },
-    { value: 'site-b', label: 'Site B - Warehouse' },
-    { value: 'site-c', label: 'Site C - Office Complex' },
-    { value: 'site-d', label: 'Site D - Manufacturing Plant' },
-    { value: 'site-e', label: 'Site E - Distribution Center' },
+    { value: 'warehouse-a', label: 'Warehouse A' },
+    { value: 'warehouse-b', label: 'Warehouse B' },
+    { value: 'loading-dock', label: 'Loading Dock' },
+    { value: 'lab-3', label: 'Lab 3' },
+    { value: 'fueling-station', label: 'Fueling Station' },
+    { value: 'generator-room', label: 'Generator Room' },
+    { value: 'main-office', label: 'Main Office' },
 ];
 
 export const bodyPartOptions: BodyPartOption[] = [
@@ -58,35 +80,14 @@ export const contributingFactorOptions = [
     },
 ];
 
-export const treatmentOptions = [
-    {
-        value: 'first-aid' as const,
-        label: 'First Aid',
-        description: 'Minor treatment administered on-site',
-    },
-    {
-        value: 'medical' as const,
-        label: 'Medical Treatment',
-        description: 'Treatment by a medical professional',
-    },
-    {
-        value: 'hospital' as const,
-        label: 'Hospital Treatment',
-        description: 'Treatment requiring hospital visit',
-    },
+export const injuryOptions = [
+    { value: 'yes', label: 'Yes', description: 'Someone was injured' },
+    { value: 'no',  label: 'No',  description: 'No injuries occurred' },
 ];
 
-export const injuryOptions = [
-    {
-        value: 'yes',
-        label: 'Yes',
-        description: 'Someone was injured',
-    },
-    {
-        value: 'no',
-        label: 'No',
-        description: 'No injuries occurred',
-    },
+export const treatmentLocationOptions = [
+    { value: 'on-site', label: 'On-site', description: 'Treated on-site by first aider' },
+    { value: 'hospital', label: 'Hospital / doctor', description: 'Taken to a doctor or hospital' },
 ];
 
 // Incident type labels for display
@@ -104,3 +105,78 @@ export const incidentTypeBadgeColors: Record<string, 'notice' | 'positive' | 'ne
     'fir': 'negative',
     'adr': 'negative',
 };
+
+// FIR records available for ADR pre-fill
+export interface FIRReference {
+    id: string;
+    title: string;
+    date: string;
+    location: string;
+    description: string;
+    exactPlace: string;
+    injuredEmployees: InjuredEmployee[];
+    witnesses: Witness[];
+    machineryInvolved: boolean;
+    machineName: string;
+    machineMoving: boolean;
+    propertyLoss: string;
+}
+
+export const MOCK_FIR_REFERENCES: FIRReference[] = [
+    {
+        id: 'fir-001',
+        title: 'Equipment malfunction — Conveyor Section, Warehouse A',
+        date: '2026-03-10',
+        location: 'Warehouse A',
+        description: 'Conveyor belt malfunction resulted in worker injury. Emergency stop activated. Worker transported to hospital.',
+        exactPlace: 'Conveyor Section, Bay 2',
+        injuredEmployees: [{
+            id: 'ie-1',
+            employeeId: 'emp-003',
+            hourWorkStarted: '07:00',
+            activityAtTime: 'Operating conveyor belt',
+            injuryDescription: 'Laceration to right hand from moving belt',
+            bodyPart: 'hand',
+            bodyPartOther: '',
+            treatment: '',
+            usedFirstAidBox: '',
+            medicineDetails: '',
+            doctorHospital: 'City General Hospital',
+            lossTime: true,
+            lossTimeDays: 5,
+        }],
+        witnesses: [{ id: 'w-1', type: 'employee', employeeId: 'emp-001' }],
+        machineryInvolved: true,
+        machineName: 'Conveyor Belt CB-04',
+        machineMoving: true,
+        propertyLoss: 'Belt drive mechanism damaged — estimated repair cost ₹45,000',
+    },
+    {
+        id: 'fir-002',
+        title: 'Chemical spill — Lab 3',
+        date: '2026-01-12',
+        location: 'Lab 3',
+        description: 'Mild acidic solution spilled during container transfer. Area decontaminated. No injuries.',
+        exactPlace: 'Chemical Storage Transfer Station',
+        injuredEmployees: [],
+        witnesses: [{ id: 'w-2', type: 'employee', employeeId: 'emp-008' }],
+        machineryInvolved: false,
+        machineName: '',
+        machineMoving: false,
+        propertyLoss: 'Flooring tiles in transfer area corroded — replacement required',
+    },
+    {
+        id: 'fir-003',
+        title: 'Oil spill — Fueling Station',
+        date: '2026-01-16',
+        location: 'Fueling Station',
+        description: 'Hydraulic oil leak from cracked transfer pump line. Approximately 5 litres spilled on concrete pad.',
+        exactPlace: 'Tank Farm, Pump Station 2',
+        injuredEmployees: [],
+        witnesses: [],
+        machineryInvolved: true,
+        machineName: 'Fuel Transfer Pump FTP-02',
+        machineMoving: true,
+        propertyLoss: 'Hydraulic line and pump seal replacement — estimated ₹12,000',
+    },
+];

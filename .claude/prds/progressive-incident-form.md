@@ -1,3 +1,6 @@
+> **OUTDATED — Implemented 2026-06-11.**
+> This PRD has been fully implemented. Note: implementation adds a "First Aid Specifics" step not described here (see `forms.md`). The source of truth is `Planning/IMPLEMENTATION.md`.
+
 # Feature: Progressive Incident Reporting Form
 
 ## Overview

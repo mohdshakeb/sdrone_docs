@@ -4,30 +4,100 @@ import React, { Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import { useToolAuditForm } from './useToolAuditForm';
+import type { StepId } from './types';
 
-// Components
 import AppHeader from '@/components/prototype/AppHeader';
-import ProgressBar from '@/components/prototype/form/ProgressBar';
 import StepContainer from '@/components/prototype/form/StepContainer';
 import ConfirmationScreen from './components/ConfirmationScreen';
+import Icon from '@/components/ui/Icon';
 
-// Steps
 import StepEntry from './components/steps/StepEntry';
 import StepAuditDetails from './components/steps/StepAuditDetails';
 import StepToolsChecklist from './components/steps/StepToolsChecklist';
-import StepObservationsActions from './components/steps/StepObservationsActions';
-import StepAttachments from './components/steps/StepAttachments';
+import StepConclusion from './components/steps/StepConclusion';
 import StepReview from './components/steps/StepReview';
+
+// ── Sidebar ───────────────────────────────────────────────────────────────────
+
+interface StepSidebarProps {
+    steps: { id: StepId; title: string }[];
+    currentStep: StepId;
+    stepStatuses: Record<StepId, 'complete' | 'incomplete'>;
+    isFormValid: boolean;
+    onStepClick: (id: StepId) => void;
+}
+
+function StepSidebar({ steps, currentStep, stepStatuses, isFormValid, onStepClick }: StepSidebarProps) {
+    const sidebarSteps = steps.filter(s => s.id !== 'entry');
+    const formSteps = sidebarSteps.filter(s => s.id !== 'review');
+    const reviewStep = sidebarSteps.find(s => s.id === 'review');
+
+    return (
+        <nav className={styles.sidebar} aria-label="Form steps">
+            <ol className={styles.stepList}>
+                {formSteps.map((step, index) => {
+                    const isCurrent = step.id === currentStep;
+                    const isComplete = stepStatuses[step.id] === 'complete';
+                    return (
+                        <li key={step.id}>
+                            <button
+                                className={[
+                                    styles.stepItem,
+                                    isCurrent ? styles.stepItemCurrent : '',
+                                ].filter(Boolean).join(' ')}
+                                onClick={() => onStepClick(step.id)}
+                                aria-current={isCurrent ? 'step' : undefined}
+                            >
+                                <span className={[
+                                    styles.stepBullet,
+                                    isComplete && !isCurrent ? styles.stepBulletComplete : '',
+                                ].filter(Boolean).join(' ')} aria-hidden="true">
+                                    {isComplete && !isCurrent
+                                        ? <Icon name="check" size={14} />
+                                        : index + 1}
+                                </span>
+                                <span className={styles.stepName}>{step.title}</span>
+                            </button>
+                        </li>
+                    );
+                })}
+
+                {reviewStep && (
+                    <>
+                        <li className={styles.stepDivider} aria-hidden="true" />
+                        <li key="review">
+                            <button
+                                className={[
+                                    styles.stepItem,
+                                    currentStep === 'review' ? styles.stepItemCurrent : '',
+                                    !isFormValid && currentStep !== 'review' ? styles.stepItemDisabled : '',
+                                ].filter(Boolean).join(' ')}
+                                onClick={() => isFormValid ? onStepClick('review') : undefined}
+                                disabled={!isFormValid && currentStep !== 'review'}
+                                aria-current={currentStep === 'review' ? 'step' : undefined}
+                            >
+                                <span className={[
+                                    styles.stepBullet,
+                                    stepStatuses['review'] === 'complete' && currentStep !== 'review' ? styles.stepBulletComplete : '',
+                                ].filter(Boolean).join(' ')} aria-hidden="true">
+                                    <Icon name="survey-line" size={14} />
+                                </span>
+                                <span className={styles.stepName}>{reviewStep.title}</span>
+                            </button>
+                        </li>
+                    </>
+                )}
+            </ol>
+        </nav>
+    );
+}
+
+// ── Loading skeleton ──────────────────────────────────────────────────────────
 
 function ToolAuditPageLoading() {
     return (
         <div className={styles.page}>
-            <AppHeader
-                variant="form"
-                formTitle="Tool Audit"
-                currentStep={1}
-                totalSteps={6}
-            />
+            <AppHeader variant="form" formTitle="Tool Audit" />
             <div className={styles.loadingContainer}>
                 <p className="text-body">Loading...</p>
             </div>
@@ -35,36 +105,42 @@ function ToolAuditPageLoading() {
     );
 }
 
+// ── Main content ──────────────────────────────────────────────────────────────
+
 function ToolAuditPageContent() {
     const router = useRouter();
     const form = useToolAuditForm();
 
-    const handleViewInbox = () => {
-        router.push('/sdrone');
+    const handleViewInbox = () => router.push('/sdrone');
+    const handleCreateAnother = () => form.reset();
+    const handleCancel = () => router.push('/sdrone');
+
+    const isReviewStep = form.currentStep === 'review';
+
+    const handlePrimaryAction = () => {
+        if (isReviewStep) {
+            form.submit();
+        } else if (form.isFormValid) {
+            form.goToStep('review');
+        } else if (form.canGoNext) {
+            if (!form.goNext()) {
+                form.goToFirstError();
+            }
+        } else {
+            form.goToFirstError();
+        }
     };
 
-    const handleCreateAnother = () => {
-        form.reset();
-    };
+    const primaryLabel = isReviewStep
+        ? 'Submit Audit'
+        : form.isFormValid
+            ? 'Review'
+            : 'Continue';
 
-    const handleSubmit = () => {
-        form.submit();
-    };
-
-    const handleCancel = () => {
-        router.push('/sdrone');
-    };
-
-    // Show confirmation screen after submission
     if (form.isSubmitted) {
         return (
             <div className={styles.page}>
-                <AppHeader
-                    variant="form"
-                    formTitle="Tool Audit"
-                    currentStep={form.totalSteps}
-                    totalSteps={form.totalSteps}
-                />
+                <AppHeader variant="form" formTitle="Tool Audit" />
                 <ConfirmationScreen
                     auditType={form.data.auditType}
                     onViewInbox={handleViewInbox}
@@ -74,22 +150,13 @@ function ToolAuditPageContent() {
         );
     }
 
-    // Render current step content
     const renderStepContent = () => {
         switch (form.currentStep) {
-            case 0:
-                return (
-                    <StepEntry onStart={() => form.goNext()} />
-                );
-            case 1:
-                return (
-                    <StepAuditDetails
-                        data={form.data}
-                        errors={form.errors}
-                        onUpdate={form.updateField}
-                    />
-                );
-            case 2:
+            case 'entry':
+                return <StepEntry onSelect={form.selectTypeAndAdvance} />;
+            case 'audit-details':
+                return <StepAuditDetails data={form.data} errors={form.errors} onUpdate={form.updateField} />;
+            case 'tools-checklist':
                 return (
                     <StepToolsChecklist
                         data={form.data}
@@ -99,74 +166,70 @@ function ToolAuditPageContent() {
                         onImagesChange={form.updateToolImages}
                     />
                 );
-            case 3:
-                return (
-                    <StepObservationsActions
-                        data={form.data}
-                        errors={form.errors}
-                        onUpdate={form.updateField}
-                        onAddAction={form.addAction}
-                        onRemoveAction={form.removeAction}
-                        onUpdateAction={form.updateAction}
-                    />
-                );
-            case 4:
-                return (
-                    <StepAttachments
-                        data={form.data}
-                        errors={form.errors}
-                        onUpdate={form.updateField}
-                    />
-                );
-            case 5:
-                return (
-                    <StepReview data={form.data} />
-                );
+            case 'conclusion':
+                return <StepConclusion data={form.data} errors={form.errors} onUpdate={form.updateField} />;
+            case 'review':
+                return <StepReview data={form.data} onGoToStep={form.goToStep} />;
             default:
                 return null;
         }
     };
+
+    // Entry step: full-width, no sidebar
+    if (form.isFirstStep) {
+        return (
+            <div className={styles.page}>
+                <AppHeader
+                    variant="form"
+                    formTitle="Tool Audit"
+                    onFormBack={() => router.push('/sdrone')}
+                    onFormCancel={handleCancel}
+                    isEntryStep
+                />
+                <main className={styles.entryMain}>
+                    <div className={styles.containerWide}>
+                        {renderStepContent()}
+                    </div>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.page}>
             <AppHeader
                 variant="form"
                 formTitle="Tool Audit"
-                currentStep={form.currentStepIndex}
-                totalSteps={form.totalSteps}
                 onFormBack={form.canGoBack ? form.goBack : () => router.push('/sdrone')}
                 onFormCancel={handleCancel}
-                onFormSubmit={handleSubmit}
-                isEntryStep={form.isFirstStep}
-                isReviewStep={form.isReviewStep}
-                submitLabel="Submit Audit"
+                onFormSubmit={handlePrimaryAction}
+                submitLabel={primaryLabel}
+                canSubmit={isReviewStep ? form.isFormValid : true}
             />
 
-            {/* Hide progress bar on entry step */}
-            {!form.isFirstStep && (
-                <ProgressBar
-                    currentStep={form.currentStepIndex}
-                    totalSteps={form.totalSteps}
-                />
-            )}
+            <main className={styles.formMain}>
+                <div className={styles.formWrapper}>
+                    <div className={styles.formCard}>
+                        <StepSidebar
+                            steps={form.activeSteps}
+                            currentStep={form.currentStep}
+                            stepStatuses={form.stepStatuses}
+                            isFormValid={form.isFormValid}
+                            onStepClick={form.goToStep}
+                        />
 
-            <main className={styles.main}>
-                <div className={styles.container}>
-                    {form.isFirstStep ? (
-                        renderStepContent()
-                    ) : (
-                        <StepContainer
-                            title={form.stepConfig.title}
-                            isReviewStep={form.isReviewStep}
-                            showBack={form.canGoBack}
-                            onBack={form.goBack}
-                            onNext={form.goNext}
-                            onSubmit={handleSubmit}
-                            nextLabel={form.isReviewStep ? 'Submit Audit' : form.currentStep === 4 ? 'Review' : undefined}
-                        >
-                            {renderStepContent()}
-                        </StepContainer>
-                    )}
+                        <div className={styles.formContent}>
+                            <StepContainer
+                                title={form.stepConfig.title}
+                                stepNumber={form.currentStepIndex}
+                                noBorder
+                                showBack={false}
+                                showNext={false}
+                            >
+                                {renderStepContent()}
+                            </StepContainer>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>

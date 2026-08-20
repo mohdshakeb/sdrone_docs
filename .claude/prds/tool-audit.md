@@ -1,3 +1,6 @@
+> **OUTDATED — Implemented 2026-06-11.**
+> This PRD has been fully implemented. Note: Observations and Actions Required are combined into one step in the implementation. The source of truth is `Planning/IMPLEMENTATION.md`.
+
 # Tool Audit — Product Requirements Document (PRD)
 
 ## 1. Overview

@@ -4,13 +4,13 @@
     position: fixed;
     inset: 0;
     z-index: 90;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
     pointer-events: none;
     transition: background-color 0.25s ease;
 }
 
 .overlay[data-open="true"] {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--overlay-light);
     pointer-events: auto;
 }
 

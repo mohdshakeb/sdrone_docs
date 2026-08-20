@@ -19,8 +19,7 @@
     background-color: var(--bg-canvas);
     box-shadow:
         0 0 0 2px var(--bg-subtle),
-        0 25px 60px -12px rgba(0, 0, 0, 0.3),
-        0 12px 28px -8px rgba(0, 0, 0, 0.15);
+        var(--shadow-mobile);
 }
 
 .screen {

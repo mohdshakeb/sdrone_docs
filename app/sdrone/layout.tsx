@@ -12,7 +12,9 @@ export default function SDroneLayout({
 }) {
     const pathname = usePathname();
     const isFullScreenForm = pathname?.startsWith('/sdrone/report')
-        || pathname?.startsWith('/sdrone/tool-audit');
+        || pathname?.startsWith('/sdrone/tool-audit')
+        || pathname?.startsWith('/sdrone/sos')
+        || pathname?.startsWith('/sdrone/safety-alert');
 
     // Full-screen form pages use layout without sidebar
     if (isFullScreenForm) {

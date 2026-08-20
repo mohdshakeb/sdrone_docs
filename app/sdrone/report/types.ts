@@ -2,59 +2,129 @@
  * Incident Report Form Types
  */
 
+import type {
+    StepErrors,
+    FormState as BaseFormState,
+    BaseStepConfig,
+} from '@/components/prototype/form/types';
+
+export type { StepErrors };
+
 // Incident categories
 export type IncidentType = 'near-miss' | 'first-aid' | 'fir' | 'adr';
 
-// Form step indices
-export type FormStep = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+// String-keyed step IDs — one per distinct screen in the form
+export type StepId =
+    | 'entry'
+    | 'fir-reference'
+    | 'what-happened'
+    | 'when-where'
+    | 'injury-check'
+    | 'injured-employee'
+    | 'witnesses'
+    | 'reason-and-loss'
+    | 'observations'
+    | 'event-details'
+    | 'corrective-actions'
+    | 'investigation-team'
+    | 'evidence'
+    | 'review';
 
-// Contributing factor types
-export type ContributingFactor = 'UA' | 'UC' | 'both';
+// Repeatable row types
 
-// Treatment levels
-export type TreatmentLevel = 'first-aid' | 'medical' | 'hospital';
+export interface InjuredEmployee {
+    id: string;
+    employeeId: string;
+    hourWorkStarted: string;       // FIR, ADR
+    activityAtTime: string;        // FIR, ADR
+    injuryDescription: string;
+    bodyPart: string;
+    bodyPartOther: string;         // free text when bodyPart === 'other'
+    treatment: string;             // First Aid variant
+    usedFirstAidBox: string;       // First Aid: "Has used medicines from First Aid Box or visited Hospital?"
+    medicineDetails: string;       // First Aid: medicine details
+    doctorHospital: string;        // FIR, ADR
+    lossTime: boolean | null;      // FIR, ADR
+    lossTimeDays: number | null;   // FIR, ADR
+}
 
-// Form data structure
+export interface Witness {
+    id: string;
+    type: 'employee' | 'other';
+    employeeId?: string;
+    name?: string;
+}
+
+export interface CorrectiveAction {
+    id: string;
+    action: string;
+    responsibilityEmployeeId: string;
+    timeline: string;
+}
+
+export interface InvestigationMember {
+    id: string;
+    employeeId: string;
+}
+
+// Full form data
 export interface IncidentFormData {
-    // Step 0: Entry - Selected type
+    // Entry
     selectedType: string | null;
 
-    // Step 1: What Happened
+    // What Happened
     description: string;
     immediateAction: string;
 
-    // Step 2: When & Where
+    // When & Where
     dateOccurred: string;
     timeOccurred: string;
     site: string;
+    workstation: string;            // Near Miss — predefined list
     area: string;
     asset: string;
+    exactPlace: string;             // FIR, ADR
 
-    // Step 3: Injury Check (conditional)
+    // Injury Check (Not Sure flow)
     wasInjured: boolean | null;
+    treatmentLocation: 'on-site' | 'hospital' | null;
 
-    // Step 4: Injury Details (conditional)
-    injuredEmployee: string;
-    bodyPart: string;
-    treatment: TreatmentLevel | null;
+    // FIR Reference (ADR only — optional pre-fill)
+    firReference: string | null;
 
-    // Step 5: First Aid Specifics (conditional)
-    medicineUsed: boolean | null;
-    medicineDetails: string;
+    // Injured Employees
+    injuredEmployees: InjuredEmployee[];
 
-    // Step 6: Contributing Factors
-    contributingFactor: ContributingFactor | null;
-    contributingNotes: string;
+    // Witnesses (FIR, ADR)
+    witnesses: Witness[];
 
-    // Step 7: Evidence
+    // Reason & Loss (FIR, ADR)
+    machineryInvolved: boolean | null;
+    machineName: string;
+    machineMoving: boolean | null;
+    propertyLoss: string;
+
+    // Observations
+    rootCause: string;
+    contributingFactorsText: string;
+    recommendedSolution: string;    // Near Miss, First Aid
+    whyAnalysis: string;            // ADR
+
+    // Event Details (ADR)
+    chronologyOfEvents: string;
+
+    // Corrective Actions
+    correctiveActions: CorrectiveAction[];  // ADR: repeatable
+    correctiveActionText: string;           // First Aid: simple text
+
+    // Investigation Team (ADR)
+    investigationTeam: InvestigationMember[];
+
+    // Evidence
     photos: File[];
     attachments: File[];
-
-    // Step 8: Corrective Action
-    correctiveAction: string;
 }
 
-// Initial form state
 export const initialFormData: IncidentFormData = {
     selectedType: null,
     description: '',
@@ -64,48 +134,45 @@ export const initialFormData: IncidentFormData = {
     site: '',
     area: '',
     asset: '',
+    exactPlace: '',
     wasInjured: null,
-    injuredEmployee: '',
-    bodyPart: '',
-    treatment: null,
-    medicineUsed: null,
-    medicineDetails: '',
-    contributingFactor: null,
-    contributingNotes: '',
+    treatmentLocation: null,
+    firReference: null,
+    workstation: '',
+    injuredEmployees: [],
+    witnesses: [],
+    machineryInvolved: null,
+    machineName: '',
+    machineMoving: null,
+    propertyLoss: '',
+    rootCause: '',
+    contributingFactorsText: '',
+    recommendedSolution: '',
+    whyAnalysis: '',
+    chronologyOfEvents: '',
+    correctiveActions: [],
+    correctiveActionText: '',
+    investigationTeam: [],
     photos: [],
     attachments: [],
-    correctiveAction: '',
 };
 
-// Validation errors per step
-export interface StepErrors {
-    [key: string]: string;
-}
-
-// Form state
-export interface FormState {
-    data: IncidentFormData;
-    currentStep: FormStep;
-    errors: StepErrors;
+// Form state parameterised with string step IDs
+export interface FormState extends BaseFormState<IncidentFormData, StepId> {
     presetType: IncidentType | null;
-    isSubmitted: boolean;
 }
 
-// Step configuration
-export interface StepConfig {
-    id: FormStep;
-    title: string;
+// Step config with string IDs
+export interface StepConfig extends BaseStepConfig<StepId> {
     isConditional?: boolean;
-    condition?: (data: IncidentFormData) => boolean;
 }
 
-// Body part option
+// Option shapes (kept from mockData consumers)
 export interface BodyPartOption {
     value: string;
     label: string;
 }
 
-// Site option
 export interface SiteOption {
     value: string;
     label: string;

@@ -5,22 +5,23 @@ import FormField from '@/components/ui/FormField';
 import TextInput from '@/components/ui/TextInput';
 import TimeInput from '@/components/ui/TimeInput';
 import Select from '@/components/ui/Select';
-import { siteOptions } from '../../mockData';
-import type { IncidentFormData, StepErrors } from '../../types';
+import { siteOptions, workstationOptions } from '../../mockData';
+import type { IncidentFormData, StepErrors, IncidentType } from '../../types';
 import styles from './Steps.module.css';
 
 export interface StepWhenWhereProps {
     data: IncidentFormData;
     errors: StepErrors;
+    inferredType: IncidentType;
     onUpdate: <K extends keyof IncidentFormData>(field: K, value: IncidentFormData[K]) => void;
 }
 
 export const StepWhenWhere: React.FC<StepWhenWhereProps> = ({
     data,
     errors,
+    inferredType,
     onUpdate,
 }) => {
-    // Get today's date in YYYY-MM-DD format for max date
     const today = new Date().toISOString().split('T')[0];
 
     return (
@@ -69,6 +70,34 @@ export const StepWhenWhere: React.FC<StepWhenWhereProps> = ({
                     hasError={!!errors.site}
                 />
             </FormField>
+
+            {inferredType === 'near-miss' && (
+                <FormField
+                    id="workstation"
+                    label="Workstation"
+                >
+                    <Select
+                        options={workstationOptions}
+                        value={data.workstation}
+                        onChange={(e) => onUpdate('workstation', e.target.value)}
+                        placeholder="Select workstation"
+                    />
+                </FormField>
+            )}
+
+            {(inferredType === 'fir' || inferredType === 'adr') && (
+                <FormField
+                    id="exactPlace"
+                    label="Exact place in company"
+                    helpText="Branch, department, specific area"
+                >
+                    <TextInput
+                        value={data.exactPlace}
+                        onChange={(e) => onUpdate('exactPlace', e.target.value)}
+                        placeholder="e.g., Conveyor Section, Bay 2"
+                    />
+                </FormField>
+            )}
 
             <FormField
                 id="area"

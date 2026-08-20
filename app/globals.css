@@ -198,6 +198,24 @@
   --input-ring: var(--bg-emphasis);
   --input-placeholder: var(--fg-muted);
   --input-indicator-filter: none;
+
+  /* Border Radius Tokens */
+  --radius-sm: var(--space-1);
+  --radius-md: var(--space-2);
+  --radius-lg: var(--space-3);
+
+  /* Elevation (Shadow) Tokens */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-panel: -4px 0 16px rgba(0, 0, 0, 0.05);
+  --shadow-menu: 0 4px 20px rgba(0, 0, 0, 0.1);
+  --shadow-mobile: 0 25px 60px -12px rgba(0, 0, 0, 0.3), 0 12px 28px -8px rgba(0, 0, 0, 0.15);
+
+  /* Overlay Tokens */
+  --overlay-default: rgba(0, 0, 0, 0.5);
+  --overlay-light: rgba(0, 0, 0, 0.4);
+  --overlay-hover: rgba(0, 0, 0, 0.05);
 }
 
 /* Typography Utilities */
@@ -342,6 +360,17 @@
 
   /* Input Components - Dark Mode */
   --input-indicator-filter: invert(1);
+
+  /* Elevation Tokens - Dark Mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
+  --shadow-panel: -4px 0 16px rgba(0, 0, 0, 0.2);
+  --shadow-menu: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-mobile: 0 25px 60px -12px rgba(0, 0, 0, 0.5), 0 12px 28px -8px rgba(0, 0, 0, 0.3);
+
+  /* Overlay Tokens - Dark Mode */
+  --overlay-hover: rgba(255, 255, 255, 0.05);
 }
 
 /* System Preference Fallback (only if no theme set) */

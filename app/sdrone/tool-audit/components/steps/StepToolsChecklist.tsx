@@ -41,10 +41,11 @@ export const StepToolsChecklist: React.FC<StepToolsChecklistProps> = ({
             </div>
 
             <div className={styles.checklistContainer}>
-                {data.toolsChecklist.map((tool) => (
+                {data.toolsChecklist.map((tool, i) => (
                     <ToolChecklistItem
                         key={tool.toolId}
                         tool={tool}
+                        index={i}
                         errors={errors}
                         onConditionChange={onConditionChange}
                         onRemarksChange={onRemarksChange}

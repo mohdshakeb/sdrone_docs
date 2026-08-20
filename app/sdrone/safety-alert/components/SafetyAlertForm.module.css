@@ -1,0 +1,123 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-6) var(--space-4);
+}
+
+/* Reporter context strip */
+.contextStrip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background-color: var(--bg-emphasis);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+}
+
+.contextItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--fg-default);
+}
+
+.contextRole {
+    color: var(--fg-subtle);
+    margin-left: var(--space-1);
+}
+
+/* Form fields */
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+/* Target audience multi-select */
+.audienceGroups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.audienceGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.audienceGroupLabel {
+    color: var(--fg-subtle);
+    padding-bottom: var(--space-1);
+}
+
+.audienceOptions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.audienceOption {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2_5) var(--space-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.12s ease;
+}
+
+.audienceOption:hover {
+    background-color: var(--bg-hover);
+}
+
+.audienceOption input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--bg-accent);
+    flex-shrink: 0;
+}
+
+.audienceOptionLabel {
+    color: var(--fg-default);
+}
+
+.audienceOptionLabel.checked {
+    color: var(--fg-default);
+    font-weight: 500;
+}
+
+.selectedSummary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1_5);
+    margin-top: var(--space-2);
+}
+
+.selectedTag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    background-color: var(--bg-accent-soft);
+    color: var(--fg-accent-soft);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-12);
+    font-weight: 500;
+}
+
+/* Send button */
+.sendWrapper {
+    display: flex;
+    justify-content: stretch;
+    padding-top: var(--space-2);
+}
+
+.sendWrapper > * {
+    width: 100%;
+    justify-content: center;
+}

@@ -1159,6 +1159,108 @@ export const MOCK_REVIEW_COMMENTS: Record<string, ReviewComment[]> = {
   ],
 };
 
+// Employee directory — used by employee selector fields across forms
+export interface MockEmployee {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  email: string;
+}
+
+export const MOCK_EMPLOYEES: MockEmployee[] = [
+  { id: 'emp-001', name: 'Sanjay Mehta',    role: 'Warehouse Supervisor',  department: 'Warehouse Operations', email: 'sanjay@sdrone.com'  },
+  { id: 'emp-002', name: 'Anita Desai',     role: 'Team Lead',             department: 'Logistics',            email: 'anita@sdrone.com'   },
+  { id: 'emp-003', name: 'Rahul Sharma',    role: 'Field Worker',          department: 'Warehouse Operations', email: 'rahul@sdrone.com'   },
+  { id: 'emp-004', name: 'Priya Rao',       role: 'Safety Officer',        department: 'HSE',                  email: 'priya@sdrone.com'   },
+  { id: 'emp-005', name: 'Vikram Singh',    role: 'HSE Manager',           department: 'HSE',                  email: 'vikram@sdrone.com'  },
+  { id: 'emp-006', name: 'Karan Johar',     role: 'Equipment Manager',     department: 'Maintenance',          email: 'karan@sdrone.com'   },
+  { id: 'emp-007', name: 'Dr. Meera Patel', role: 'Occupational Health',   department: 'Medical',              email: 'meera@sdrone.com'   },
+  { id: 'emp-008', name: 'Arjun Kumar',     role: 'Maintenance Lead',      department: 'Maintenance',          email: 'arjun@sdrone.com'   },
+];
+
+// SOS records — shown in the Alerts tab
+export interface SOSRecord {
+  id: string;
+  sentBy: { name: string; role: string };
+  location: string;
+  sentAt: string;
+  description?: string;
+  photoCount: number;
+  status: 'Sent' | 'Acknowledged' | 'Resolved';
+  acknowledgedBy?: { name: string; role: string; timestamp: string };
+  resolvedBy?: { name: string; role: string; timestamp: string };
+}
+
+export const MOCK_SOS_RECORDS: SOSRecord[] = [
+  {
+    id: 'sos-001',
+    sentBy: { name: 'Rahul Sharma', role: 'Field Worker' },
+    location: 'Warehouse A',
+    sentAt: '2026-06-10T14:32:00Z',
+    description: 'Worker collapsed near Bay 3 — possible heat exhaustion. Need medical assistance immediately.',
+    photoCount: 0,
+    status: 'Resolved',
+    acknowledgedBy: { name: 'Priya Rao', role: 'Safety Officer', timestamp: '2026-06-10T14:34:00Z' },
+    resolvedBy: { name: 'Priya Rao', role: 'Safety Officer', timestamp: '2026-06-10T15:10:00Z' },
+  },
+  {
+    id: 'sos-002',
+    sentBy: { name: 'Anita Desai', role: 'Team Lead' },
+    location: 'Loading Dock 2',
+    sentAt: '2026-06-12T09:15:00Z',
+    description: 'Fire detected in electrical cabinet near dock entrance. Extinguisher used but smoke still present.',
+    photoCount: 2,
+    status: 'Acknowledged',
+    acknowledgedBy: { name: 'Vikram Singh', role: 'HSE Manager', timestamp: '2026-06-12T09:17:00Z' },
+  },
+  {
+    id: 'sos-003',
+    sentBy: { name: 'Karan Johar', role: 'Equipment Manager' },
+    location: 'Generator Room',
+    sentAt: '2026-06-13T11:50:00Z',
+    photoCount: 1,
+    status: 'Sent',
+  },
+];
+
+// Safety Alert records — shown in the Alerts tab alongside SOS records
+export interface SafetyAlertRecord {
+  id: string;
+  sentBy: { name: string; role: string };
+  sentAt: string;
+  message: string;
+  targetAudience: string[];
+  attachmentCount: number;
+}
+
+export const MOCK_SAFETY_ALERT_RECORDS: SafetyAlertRecord[] = [
+  {
+    id: 'sa-001',
+    sentBy: { name: 'Priya Rao', role: 'Safety Officer' },
+    sentAt: '2026-06-11T08:00:00Z',
+    message: 'MANDATORY: All personnel must wear heat-resistant gloves when operating in the Generator Room and Fueling Station effective immediately. Recent incident has prompted this requirement. PPE available from the safety store.',
+    targetAudience: ['Generator Room', 'Fueling Station', 'All Field Workers'],
+    attachmentCount: 1,
+  },
+  {
+    id: 'sa-002',
+    sentBy: { name: 'Vikram Singh', role: 'HSE Manager' },
+    sentAt: '2026-06-09T07:30:00Z',
+    message: 'Emergency muster drill scheduled for tomorrow 13 June at 10:00 AM. All staff must participate. Report to designated assembly points. This drill is mandatory and will be recorded.',
+    targetAudience: ['All Locations', 'All Staff'],
+    attachmentCount: 0,
+  },
+  {
+    id: 'sa-003',
+    sentBy: { name: 'Priya Rao', role: 'Safety Officer' },
+    sentAt: '2026-06-05T13:15:00Z',
+    message: 'Slip hazard alert: water ingress reported in Warehouse B Aisle 4 and Loading Dock entrance due to drainage issue. Caution tape placed. Avoid area until repair is complete. Report any additional hazards immediately.',
+    targetAudience: ['Warehouse B', 'Loading Dock', 'All Reporting Managers'],
+    attachmentCount: 0,
+  },
+];
+
 // Helper: get enriched task data for the detail panel
 export interface EnrichedTaskData {
   task: Task;

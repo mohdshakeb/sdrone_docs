@@ -1,27 +1,10 @@
-/* ToolChecklistItem component styles */
-.toolCard {
-    border: 1px solid var(--border-subtle);
-    border-radius: 8px;
-    padding: var(--space-4);
-    border-left: 3px solid var(--border-subtle);
-    transition: border-color 0.15s ease;
+.item {
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
-.toolCardOkay {
-    border-left-color: var(--fg-positive-soft);
-}
-
-.toolCardDamaged {
-    border-left-color: var(--fg-negative-soft);
-}
-
-.toolCardPending {
-    border-left-color: var(--border-subtle);
-}
-
-.toolCardError {
-    border-left-color: var(--fg-negative-soft);
-    border-color: var(--fg-negative-soft);
+.item:last-child {
+    border-bottom: none;
 }
 
 .toolHeader {
@@ -29,10 +12,14 @@
     color: var(--fg-default);
 }
 
+.requiredMark {
+    color: var(--fg-negative-soft);
+}
+
 .toolMeta {
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    gap: var(--space-0_5);
     margin-bottom: var(--space-3);
 }
 
@@ -46,37 +33,39 @@
 
 .conditionRow {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-2);
     margin-bottom: var(--space-1);
 }
 
 .conditionButton {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-3);
     border: 1px solid var(--border-default);
-    border-radius: 8px;
+    border-radius: 20px;
     background: transparent;
     color: var(--fg-subtle);
     cursor: pointer;
     font-family: inherit;
-    font-size: var(--text-14);
+    font-size: var(--text-12);
+    line-height: 1.5;
     transition: all 0.15s ease;
 }
 
 .conditionButton:hover {
     background-color: var(--bg-hover);
     color: var(--fg-default);
+    border-color: var(--border-default);
 }
 
-.conditionButtonOkay {
+.conditionButtonGood {
     border-color: var(--fg-positive-soft);
     background-color: var(--bg-positive-soft);
     color: var(--fg-positive-soft);
 }
 
-.conditionButtonOkay:hover {
+.conditionButtonGood:hover {
     background-color: var(--bg-positive-soft);
     color: var(--fg-positive-soft);
 }
@@ -100,8 +89,6 @@
 .damagedFields {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
-    margin-top: var(--space-3);
-    padding-top: var(--space-3);
-    border-top: 1px solid var(--border-subtle);
+    gap: var(--space-4);
+    margin-top: var(--space-4);
 }

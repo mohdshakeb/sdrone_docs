@@ -1,0 +1,58 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: var(--space-6);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 400px;
+    gap: var(--space-4);
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background-color: var(--bg-negative-soft);
+    color: var(--fg-negative);
+    margin-bottom: var(--space-2);
+}
+
+.title {
+    margin: 0;
+    color: var(--fg-default);
+}
+
+.description {
+    margin: 0;
+    color: var(--fg-subtle);
+}
+
+.statusBanner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--bg-notice-soft);
+    color: var(--fg-notice);
+    border-radius: var(--radius-md);
+    width: 100%;
+    justify-content: center;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    width: 100%;
+    margin-top: var(--space-4);
+}

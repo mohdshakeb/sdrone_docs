@@ -2,21 +2,19 @@
  * Tool Audit Form Validation
  */
 
-import type { FormStep, ToolAuditFormData, StepErrors } from './types';
+import type { StepId, ToolAuditFormData, StepErrors } from './types';
 
-export function validateStep(step: FormStep, data: ToolAuditFormData): StepErrors {
+export function validateStep(step: StepId, data: ToolAuditFormData): StepErrors {
     const errors: StepErrors = {};
 
     switch (step) {
-        case 0:
-            // Entry step — no validation
+        case 'entry':
+            if (!data.auditType) {
+                errors.auditType = 'Please select a check sheet type';
+            }
             break;
 
-        case 1:
-            // Audit Details
-            if (!data.auditType) {
-                errors.auditType = 'Audit type is required';
-            }
+        case 'audit-details':
             if (!data.auditDate) {
                 errors.auditDate = 'Audit date is required';
             } else {
@@ -34,12 +32,11 @@ export function validateStep(step: FormStep, data: ToolAuditFormData): StepError
                 errors.auditLocation = 'Location is required';
             }
             if (!data.cseName) {
-                errors.cseName = 'CSE name is required';
+                errors.cseName = 'CSE Name is required';
             }
             break;
 
-        case 2:
-            // Tools Checklist
+        case 'tools-checklist':
             for (const tool of data.toolsChecklist) {
                 if (tool.condition === null) {
                     errors[`tool_${tool.toolId}_condition`] = 'Condition assessment is required';
@@ -55,31 +52,13 @@ export function validateStep(step: FormStep, data: ToolAuditFormData): StepError
             }
             break;
 
-        case 3:
-            // Observations & Actions — observations optional
-            // Validate action items if any exist
-            for (const action of data.actions) {
-                if (!action.description.trim()) {
-                    errors[`action_${action.id}_description`] = 'Action description is required';
-                }
-                if (!action.responsibility.trim()) {
-                    errors[`action_${action.id}_responsibility`] = 'Responsibility is required';
-                }
-                if (!action.targetDate) {
-                    errors[`action_${action.id}_targetDate`] = 'Target date is required';
-                }
+        case 'conclusion':
+            if (!data.targetDate) {
+                errors.targetDate = 'Target date is required';
             }
             break;
 
-        case 4:
-            // Attachments — optional, no validation
-            break;
-
-        case 5:
-            // Review — no additional validation
-            break;
-
-        default:
+        case 'review':
             break;
     }
 
@@ -94,13 +73,26 @@ export function getFieldError(errors: StepErrors, field: string): string | undef
     return errors[field];
 }
 
+export function isStepFullyComplete(stepId: StepId, data: ToolAuditFormData): boolean {
+    if (stepHasErrors(validateStep(stepId, data))) return false;
+
+    switch (stepId) {
+        case 'conclusion':
+            return !!(
+                data.observations.trim() &&
+                data.actionRequired.trim() &&
+                data.responsibility.trim()
+            );
+        default:
+            return true;
+    }
+}
+
 export function validateForm(data: ToolAuditFormData): StepErrors {
     const allErrors: StepErrors = {};
-
-    for (let step = 1; step <= 4; step++) {
-        const stepErrors = validateStep(step as FormStep, data);
-        Object.assign(allErrors, stepErrors);
+    const stepsToValidate: StepId[] = ['entry', 'audit-details', 'tools-checklist', 'conclusion'];
+    for (const step of stepsToValidate) {
+        Object.assign(allErrors, validateStep(step, data));
     }
-
     return allErrors;
 }

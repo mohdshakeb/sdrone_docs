@@ -1,30 +1,193 @@
-/* Report page styles */
+/* Report page — incident form */
+
 .page {
+    height: 100dvh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    min-height: 100dvh;
     background-color: var(--bg-subtle);
 }
 
-.main {
+/* ── Entry step (type selection) ──────────────────── */
+
+.entryMain {
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
+    background-color: var(--bg-subtle);
 }
 
-.container {
+.containerWide {
     flex: 1;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 640px;
+    max-width: 800px;
     margin: 0 auto;
+}
+
+/* ── Form layout (centered card) ─────────────────── */
+
+.formMain {
+    flex: 1;
+    min-height: 0;
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+}
+
+.formWrapper {
+    width: 100%;
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     min-height: 0;
 }
 
-/* Loading container */
+/* The outer card that holds sidebar + form content together */
+.formCard {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    background: var(--bg-subtle);
+    border-radius: 12px;
+    overflow: hidden;
+    flex: 1;
+    min-height: 0;
+}
+
+/* ── Sidebar ─────────────────────────────────────── */
+
+.sidebar {
+    width: 200px;
+    flex-shrink: 0;
+    padding: var(--space-4) var(--space-2);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* Stays in place while formContent scrolls — no position:sticky needed
+       because formContent is the scroll container, not the page */
+}
+
+.stepDivider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: var(--space-2) var(--space-3);
+}
+
+.stepItemDisabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.stepList {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.stepItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    border-radius: var(--radius-md);
+    transition: background-color 0.12s;
+    min-height: 38px;
+    outline: none;
+}
+
+.stepItem:hover {
+    background: var(--bg-emphasis);
+}
+
+.stepItem:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--fg-accent);
+}
+
+/* Active step: subtle brand tint with rounded pill */
+.stepItemCurrent {
+    background: var(--bg-accent-soft);
+}
+
+.stepItemCurrent:hover {
+    background: var(--bg-accent-soft);
+}
+
+/* ── Step bullet ─────────────────────────────────── */
+
+.stepBullet {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    border: 1.5px solid var(--border-default);
+    background: transparent;
+    color: var(--fg-muted);
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+/* Complete (not active): subtle brand tint with brand check icon */
+.stepBulletComplete {
+    background: var(--bg-accent-soft);
+    color: var(--fg-accent);
+    border-color: transparent;
+}
+
+/* Active: filled with brand colour */
+.stepItemCurrent .stepBullet,
+.stepItemCurrent .stepBulletComplete {
+    background: var(--fg-accent);
+    color: var(--fg-on-accent);
+    border-color: transparent;
+}
+
+/* ── Step label ──────────────────────────────────── */
+
+.stepName {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--fg-subtle);
+    text-align: left;
+    word-break: break-word;
+}
+
+.stepItemCurrent .stepName {
+    color: var(--fg-accent);
+    font-weight: 500;
+}
+
+/* ── Form content area (right of sidebar) ─────────── */
+
+.formContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-y: auto;
+}
+
+/* ── Loading state ───────────────────────────────── */
+
 .loadingContainer {
     display: flex;
     align-items: center;
@@ -33,17 +196,49 @@
     color: var(--fg-subtle);
 }
 
-/* On larger screens, add some padding */
-@media (min-width: 768px) {
-    .main {
-        padding: 0 var(--space-6);
+/* ── Mobile: collapse sidebar to top bar ─────────── */
+
+@media (max-width: 767px) {
+    .formMain {
+        padding: var(--space-3);
     }
 
-    .container {
-        background-color: var(--bg-subtle);
-        border-radius: 12px;
-        margin-top: var(--space-6);
-        margin-bottom: var(--space-6);
+    .formCard {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: var(--space-2) var(--space-2);
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .stepList {
+        flex-direction: row;
+        padding: 0 var(--space-3);
+        gap: var(--space-1);
+        flex: none;
+        list-style: none;
+    }
+
+    .stepItem {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-1);
+        padding: var(--space-2) var(--space-3);
+        min-height: auto;
+        min-width: 64px;
+        border-radius: var(--radius-md);
+    }
+
+    .stepName {
+        font-size: 11px;
+        text-align: center;
+        white-space: nowrap;
         overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 72px;
     }
 }

@@ -1,5 +1,10 @@
 // S-Drone Prototype Components
 export { default as AdvancedFiltersModal } from './AdvancedFiltersModal';
+export { default as DashboardActivityItem } from './DashboardActivityItem';
+export { default as DashboardActivityLogItem } from './DashboardActivityLogItem';
+export { default as RecordActions } from './RecordActions';
+export { default as UserMenu } from './UserMenu';
+export { RoleProvider, useRole, useOptionalRole } from './RoleProvider';
 export { default as AppHeader } from './AppHeader';
 export { default as AppSidebar } from './AppSidebar';
 export { default as AuditTrail } from './AuditTrail';

@@ -57,6 +57,113 @@
     max-width: 400px;
 }
 
+/* Check sheet type cards — entry step */
+.cardGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    width: 100%;
+    max-width: 720px;
+    margin-top: var(--space-4);
+}
+
+.typeCard {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: var(--shadow-sm);
+    text-align: left;
+    outline: none;
+}
+
+.typeCard:hover {
+    border-color: var(--border-default);
+    background: var(--bg-emphasis);
+    box-shadow: var(--shadow-md);
+}
+
+.typeCard:focus-visible {
+    border-color: var(--fg-accent);
+    box-shadow: 0 0 0 3px var(--bg-accent-soft);
+}
+
+.typeCardContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+    min-width: 0;
+}
+
+.typeCardLabel {
+    color: var(--fg-default);
+    margin: 0;
+}
+
+.typeCardDescription {
+    color: var(--fg-subtle);
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.typeCardIconBadge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.typeCardIcon--accent {
+    background: var(--bg-accent-soft);
+    color: var(--fg-accent);
+}
+.typeCardIcon--notice {
+    background: var(--bg-notice-soft);
+    color: var(--fg-notice-soft);
+}
+.typeCardIcon--positive {
+    background: var(--bg-positive-soft);
+    color: var(--fg-positive-soft);
+}
+.typeCardIcon--information {
+    background: var(--bg-information-soft);
+    color: var(--fg-information-soft);
+}
+
+.typeCardArrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    align-self: center;
+    color: var(--fg-muted);
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.typeCard:hover .typeCardArrow {
+    color: var(--fg-subtle);
+    transform: translateX(2px);
+}
+
+@media (max-width: 580px) {
+    .cardGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Fields layout */
 .fieldsWrapper {
     display: flex;
@@ -102,11 +209,10 @@
     background-color: var(--fg-muted);
 }
 
-/* Checklist container */
+/* Checklist container — gap handled by item dividers */
 .checklistContainer {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
 }
 
 /* Observations & Actions */
@@ -152,11 +258,41 @@
     padding-bottom: 0;
 }
 
+.reviewSectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+}
+
 .reviewSectionTitle {
-    margin: 0 0 var(--space-3) 0;
+    margin: 0;
     color: var(--fg-subtle);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+.reviewEditBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-0_5) var(--space-2);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--fg-subtle);
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.12s, color 0.12s, border-color 0.12s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.reviewEditBtn:hover {
+    background: var(--bg-emphasis);
+    color: var(--fg-default);
+    border-color: var(--border-default);
 }
 
 .reviewText {
@@ -210,19 +346,27 @@
 .reviewDamagedList {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
     margin-top: var(--space-3);
 }
 
 .reviewDamagedItem {
-    padding: var(--space-3);
-    background-color: var(--bg-emphasis);
-    border-radius: 8px;
-    border-left: 3px solid var(--fg-negative-soft);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.reviewDamagedItem:last-child {
+    border-bottom: none;
+}
+
+.reviewDamagedNameRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
 }
 
 .reviewDamagedName {
-    margin: 0 0 var(--space-1) 0;
+    margin: 0;
     color: var(--fg-default);
 }
 

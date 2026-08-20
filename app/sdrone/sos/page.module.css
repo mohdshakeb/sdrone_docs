@@ -1,0 +1,39 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+    background-color: var(--bg-subtle);
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    min-height: 0;
+}
+
+@media (min-width: 768px) {
+    .main {
+        padding: 0 var(--space-6);
+    }
+
+    .container {
+        background-color: var(--bg-subtle);
+        border-radius: 12px;
+        margin-top: var(--space-6);
+        margin-bottom: var(--space-6);
+        overflow-y: auto;
+    }
+}

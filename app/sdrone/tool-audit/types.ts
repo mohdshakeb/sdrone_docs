@@ -2,11 +2,19 @@
  * Tool Audit Form Types
  */
 
-// Audit type categories
-export type AuditType = 'etb' | 'bcp-gci' | 'workshop' | 'others';
+import type {
+    StepErrors,
+    FormState as BaseFormState,
+    BaseStepConfig,
+} from '@/components/prototype/form/types';
+
+export type { StepErrors };
+
+// Audit type categories (maps to predefined check sheets)
+export type AuditType = 'etb' | 'bcp-gci' | 'workshop' | 'rigging';
 
 // Tool condition assessment
-export type ToolCondition = 'okay' | 'damaged';
+export type ToolCondition = 'good' | 'damaged';
 
 // Single tool in the checklist
 export interface ToolChecklistEntry {
@@ -19,21 +27,20 @@ export interface ToolChecklistEntry {
     images: File[];
 }
 
-// Action item
-export interface ActionItem {
-    id: string;
-    description: string;
-    responsibility: string;
-    targetDate: string;
-}
-
-// Form steps (0-5)
-export type FormStep = 0 | 1 | 2 | 3 | 4 | 5;
+// String-keyed step IDs
+export type StepId =
+    | 'entry'
+    | 'audit-details'
+    | 'tools-checklist'
+    | 'conclusion'
+    | 'review';
 
 // Full form data
 export interface ToolAuditFormData {
-    // Step 1: Audit Details
+    // Entry: Check Sheet type (set before step 1)
     auditType: AuditType | '';
+
+    // Step 1: Audit Details
     auditDate: string;
     auditTime: string;
     auditLocation: string;
@@ -42,15 +49,14 @@ export interface ToolAuditFormData {
     // Step 2: Tools Checklist
     toolsChecklist: ToolChecklistEntry[];
 
-    // Step 3: Observations & Actions
-    overallObservations: string;
-    actions: ActionItem[];
-
-    // Step 4: Attachments
+    // Step 3: Conclusion
+    observations: string;
+    actionRequired: string;
+    responsibility: string;
+    targetDate: string;
     attachments: File[];
 }
 
-// Initial form state
 export const initialFormData: ToolAuditFormData = {
     auditType: '',
     auditDate: '',
@@ -58,26 +64,12 @@ export const initialFormData: ToolAuditFormData = {
     auditLocation: '',
     cseName: '',
     toolsChecklist: [],
-    overallObservations: '',
-    actions: [],
+    observations: '',
+    actionRequired: '',
+    responsibility: '',
+    targetDate: '',
     attachments: [],
 };
 
-// Validation errors
-export interface StepErrors {
-    [key: string]: string;
-}
-
-// Form state
-export interface FormState {
-    data: ToolAuditFormData;
-    currentStep: FormStep;
-    errors: StepErrors;
-    isSubmitted: boolean;
-}
-
-// Step configuration
-export interface StepConfig {
-    id: FormStep;
-    title: string;
-}
+export type FormState = BaseFormState<ToolAuditFormData, StepId>;
+export type StepConfig = BaseStepConfig<StepId>;

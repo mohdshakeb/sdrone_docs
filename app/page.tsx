@@ -21,9 +21,9 @@ export default function Home() {
         </div>
 
         <div className={styles.intro}>
-          <h1>SDRONE Design Documentation</h1>
+          <h1>S-Drone Prototype</h1>
           <p>
-            A comprehensive documentation for design handoff with prototype.
+            Interactive prototype for the S-Drone safety &amp; incident management app.
           </p>
         </div>
 

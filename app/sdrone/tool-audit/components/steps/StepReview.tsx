@@ -3,30 +3,45 @@
 import React from 'react';
 import styles from './Steps.module.css';
 import Badge from '@/components/ui/Badge';
+import Icon from '@/components/ui/Icon';
+import PhotoGrid from './PhotoGrid';
 import { auditTypeLabels, auditTypeBadgeColors, locationOptions, cseNameOptions } from '../../mockData';
-import type { ToolAuditFormData } from '../../types';
+import type { ToolAuditFormData, StepId } from '../../types';
 
 export interface StepReviewProps {
     data: ToolAuditFormData;
+    onGoToStep?: (step: StepId) => void;
 }
 
 function getLabel(options: { value: string; label: string }[], value: string): string {
-    return options.find((o) => o.value === value)?.label ?? value;
+    return options.find(o => o.value === value)?.label ?? value;
 }
 
-export const StepReview: React.FC<StepReviewProps> = ({ data }) => {
+export const StepReview: React.FC<StepReviewProps> = ({ data, onGoToStep }) => {
     const totalTools = data.toolsChecklist.length;
-    const okayCount = data.toolsChecklist.filter((t) => t.condition === 'okay').length;
-    const damagedCount = data.toolsChecklist.filter((t) => t.condition === 'damaged').length;
-    const damagedTools = data.toolsChecklist.filter((t) => t.condition === 'damaged');
+    const goodCount = data.toolsChecklist.filter(t => t.condition === 'good').length;
+    const damagedCount = data.toolsChecklist.filter(t => t.condition === 'damaged').length;
+    const damagedTools = data.toolsChecklist.filter(t => t.condition === 'damaged');
+
+    const EditBtn = ({ step }: { step: StepId }) =>
+        onGoToStep ? (
+            <button className={styles.reviewEditBtn} onClick={() => onGoToStep(step)} aria-label={`Edit ${step}`}>
+                <Icon name="todo-line" size={14} />
+                Edit
+            </button>
+        ) : null;
 
     return (
         <div className={styles.reviewContainer}>
+
             {/* Audit Details */}
             <div className={styles.reviewSection}>
-                <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
-                    Audit Details
-                </h3>
+                <div className={styles.reviewSectionHeader}>
+                    <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
+                        Audit Details
+                    </h3>
+                    <EditBtn step="audit-details" />
+                </div>
                 <div className={styles.reviewGrid}>
                     <div className={styles.reviewItem}>
                         <span className={['text-caption', styles.reviewLabel].join(' ')}>Audit Type</span>
@@ -40,26 +55,22 @@ export const StepReview: React.FC<StepReviewProps> = ({ data }) => {
                     </div>
                     <div className={styles.reviewItem}>
                         <span className={['text-caption', styles.reviewLabel].join(' ')}>Date</span>
-                        <span className={['text-body', styles.reviewValue].join(' ')}>
-                            {data.auditDate || '\u2014'}
-                        </span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>{data.auditDate || '—'}</span>
                     </div>
                     <div className={styles.reviewItem}>
                         <span className={['text-caption', styles.reviewLabel].join(' ')}>Time</span>
-                        <span className={['text-body', styles.reviewValue].join(' ')}>
-                            {data.auditTime || '\u2014'}
-                        </span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>{data.auditTime || '—'}</span>
                     </div>
                     <div className={styles.reviewItem}>
                         <span className={['text-caption', styles.reviewLabel].join(' ')}>Location</span>
                         <span className={['text-body', styles.reviewValue].join(' ')}>
-                            {data.auditLocation ? getLabel(locationOptions, data.auditLocation) : '\u2014'}
+                            {data.auditLocation ? getLabel(locationOptions, data.auditLocation) : '—'}
                         </span>
                     </div>
                     <div className={styles.reviewItem}>
                         <span className={['text-caption', styles.reviewLabel].join(' ')}>CSE Name</span>
                         <span className={['text-body', styles.reviewValue].join(' ')}>
-                            {data.cseName ? getLabel(cseNameOptions, data.cseName) : '\u2014'}
+                            {data.cseName ? getLabel(cseNameOptions, data.cseName) : '—'}
                         </span>
                     </div>
                 </div>
@@ -67,50 +78,48 @@ export const StepReview: React.FC<StepReviewProps> = ({ data }) => {
 
             {/* Tools Summary */}
             <div className={styles.reviewSection}>
-                <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
-                    Tools Summary
-                </h3>
+                <div className={styles.reviewSectionHeader}>
+                    <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
+                        Tools Checklist
+                    </h3>
+                    <EditBtn step="tools-checklist" />
+                </div>
                 <div className={styles.reviewStats}>
                     <div className={styles.reviewStat}>
-                        <span className={['text-body-strong', styles.reviewStatValue].join(' ')}>
-                            {totalTools}
-                        </span>
-                        <span className={['text-caption', styles.reviewStatLabel].join(' ')}>
-                            Total
-                        </span>
+                        <span className={['text-body-strong', styles.reviewStatValue].join(' ')}>{totalTools}</span>
+                        <span className={['text-caption', styles.reviewStatLabel].join(' ')}>Total</span>
                     </div>
                     <div className={styles.reviewStat}>
-                        <span className={['text-body-strong', styles.reviewStatValue].join(' ')}>
-                            {okayCount}
-                        </span>
-                        <span className={['text-caption', styles.reviewStatLabel].join(' ')}>
-                            Okay
-                        </span>
+                        <span className={['text-body-strong', styles.reviewStatValue].join(' ')}>{goodCount}</span>
+                        <span className={['text-caption', styles.reviewStatLabel].join(' ')}>Good</span>
                     </div>
                     <div className={styles.reviewStat}>
-                        <span className={['text-body-strong', styles.reviewStatValue].join(' ')}>
-                            {damagedCount}
-                        </span>
-                        <span className={['text-caption', styles.reviewStatLabel].join(' ')}>
-                            Damaged
-                        </span>
+                        <span className={['text-body-strong', styles.reviewStatValue].join(' ')}>{damagedCount}</span>
+                        <span className={['text-caption', styles.reviewStatLabel].join(' ')}>Damaged</span>
                     </div>
                 </div>
 
                 {damagedTools.length > 0 && (
                     <div className={styles.reviewDamagedList}>
-                        {damagedTools.map((tool) => (
+                        {damagedTools.map(tool => (
                             <div key={tool.toolId} className={styles.reviewDamagedItem}>
-                                <p className={['text-body-strong', styles.reviewDamagedName].join(' ')}>
-                                    {tool.toolName}
-                                </p>
-                                <p className={['text-caption', styles.reviewDamagedRemarks].join(' ')}>
-                                    {tool.remarks}
-                                </p>
-                                {tool.images.length > 0 && (
-                                    <p className={['text-caption', styles.reviewDamagedRemarks].join(' ')}>
-                                        {tool.images.length} image{tool.images.length !== 1 ? 's' : ''} attached
+                                <div className={styles.reviewDamagedNameRow}>
+                                    <p className={['text-body-strong', styles.reviewDamagedName].join(' ')}>
+                                        {tool.toolName}
                                     </p>
+                                    <Badge color="negative" size="xsmall">Damaged</Badge>
+                                </div>
+                                {tool.remarks && (
+                                    <p className={['text-caption', styles.reviewDamagedRemarks].join(' ')}>
+                                        {tool.remarks}
+                                    </p>
+                                )}
+                                {tool.images.length > 0 && (
+                                    <PhotoGrid
+                                        id={`review-images-${tool.toolId}`}
+                                        files={tool.images}
+                                        readOnly
+                                    />
                                 )}
                             </div>
                         ))}
@@ -118,70 +127,48 @@ export const StepReview: React.FC<StepReviewProps> = ({ data }) => {
                 )}
             </div>
 
-            {/* Overall Observations */}
-            {data.overallObservations && (
-                <div className={styles.reviewSection}>
+            {/* Conclusion */}
+            <div className={styles.reviewSection}>
+                <div className={styles.reviewSectionHeader}>
                     <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
-                        Overall Observations
+                        Conclusion
                     </h3>
-                    <p className={['text-body', styles.reviewText].join(' ')}>
-                        {data.overallObservations}
-                    </p>
+                    <EditBtn step="conclusion" />
                 </div>
-            )}
-
-            {/* Actions Required */}
-            {data.actions.length > 0 && (
-                <div className={styles.reviewSection}>
-                    <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
-                        Actions Required ({data.actions.length})
-                    </h3>
-                    <div className={styles.reviewActionList}>
-                        {data.actions.map((action, index) => (
-                            <div key={action.id} className={styles.reviewActionItem}>
-                                <div className={styles.reviewGrid}>
-                                    <div className={styles.reviewItem}>
-                                        <span className={['text-caption', styles.reviewLabel].join(' ')}>
-                                            Action #{index + 1}
-                                        </span>
-                                        <span className={['text-body', styles.reviewValue].join(' ')}>
-                                            {action.description}
-                                        </span>
-                                    </div>
-                                    <div className={styles.reviewItem}>
-                                        <span className={['text-caption', styles.reviewLabel].join(' ')}>
-                                            Responsibility
-                                        </span>
-                                        <span className={['text-body', styles.reviewValue].join(' ')}>
-                                            {action.responsibility}
-                                        </span>
-                                    </div>
-                                    <div className={styles.reviewItem}>
-                                        <span className={['text-caption', styles.reviewLabel].join(' ')}>
-                                            Target Date
-                                        </span>
-                                        <span className={['text-body', styles.reviewValue].join(' ')}>
-                                            {action.targetDate}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                <div className={styles.reviewGrid}>
+                    {data.observations && (
+                        <div className={styles.reviewItem}>
+                            <span className={['text-caption', styles.reviewLabel].join(' ')}>Observations</span>
+                            <span className={['text-body', styles.reviewValue].join(' ')}>{data.observations}</span>
+                        </div>
+                    )}
+                    {data.actionRequired && (
+                        <div className={styles.reviewItem}>
+                            <span className={['text-caption', styles.reviewLabel].join(' ')}>Action Required</span>
+                            <span className={['text-body', styles.reviewValue].join(' ')}>{data.actionRequired}</span>
+                        </div>
+                    )}
+                    {data.responsibility && (
+                        <div className={styles.reviewItem}>
+                            <span className={['text-caption', styles.reviewLabel].join(' ')}>Responsibility</span>
+                            <span className={['text-body', styles.reviewValue].join(' ')}>{data.responsibility}</span>
+                        </div>
+                    )}
+                    <div className={styles.reviewItem}>
+                        <span className={['text-caption', styles.reviewLabel].join(' ')}>Target Date</span>
+                        <span className={['text-body', styles.reviewValue].join(' ')}>{data.targetDate || '—'}</span>
                     </div>
+                    {data.attachments.length > 0 && (
+                        <div className={styles.reviewItem}>
+                            <span className={['text-caption', styles.reviewLabel].join(' ')}>Attachments</span>
+                            <span className={['text-body', styles.reviewValue].join(' ')}>
+                                {data.attachments.length} file{data.attachments.length !== 1 ? 's' : ''} attached
+                            </span>
+                        </div>
+                    )}
                 </div>
-            )}
+            </div>
 
-            {/* Attachments */}
-            {data.attachments.length > 0 && (
-                <div className={styles.reviewSection}>
-                    <h3 className={['text-caption-strong', styles.reviewSectionTitle].join(' ')}>
-                        Attachments
-                    </h3>
-                    <p className={['text-body', styles.reviewText].join(' ')}>
-                        {data.attachments.length} file{data.attachments.length !== 1 ? 's' : ''} attached
-                    </p>
-                </div>
-            )}
         </div>
     );
 };

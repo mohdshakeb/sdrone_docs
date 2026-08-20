@@ -1,5 +1,4 @@
 import './globals.css'
-import Sidebar from '@/components/docs/Sidebar'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
@@ -10,8 +9,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Design System Docs',
-  description: 'Documentation for SaaS Design System',
+  title: 'S-Drone',
+  description: 'S-Drone safety & incident management — interactive prototype',
 }
 
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
@@ -23,9 +22,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <head>
-        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
-      </head>
       <body className={inter.className}>
         <ThemeProvider>
           {children}

@@ -105,7 +105,7 @@
 /* Variants */
 .primary {
     background-color: var(--bg-accent);
-    color: var(--color-white);
+    color: var(--fg-on-accent);
     border-color: transparent;
 }
 
@@ -114,7 +114,8 @@
 }
 
 .primary:active:not(:disabled) {
-    background-color: var(--color-primary-700);
+    background-color: var(--bg-accent-hover);
+    filter: brightness(85%);
 }
 
 .secondary {
@@ -135,7 +136,7 @@
 
 .negative {
     background-color: var(--bg-negative-solid);
-    color: var(--color-white);
+    color: var(--fg-on-accent);
     border-color: transparent;
 }
 
@@ -149,7 +150,7 @@
 
 .notice {
     background-color: var(--bg-notice-solid);
-    color: var(--color-white);
+    color: var(--fg-on-accent);
     border-color: transparent;
 }
 
@@ -178,7 +179,7 @@
 
 .positive {
     background-color: var(--bg-positive-solid);
-    color: var(--color-white);
+    color: var(--fg-on-accent);
     border-color: transparent;
 }
 

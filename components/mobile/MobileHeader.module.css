@@ -89,7 +89,7 @@
 
 .sosButton {
     background-color: var(--bg-negative-solid);
-    color: var(--color-white);
+    color: var(--fg-on-accent);
     border-radius: 50%;
 }
 

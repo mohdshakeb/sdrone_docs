@@ -4,12 +4,13 @@ import React from 'react';
 import styles from './ToolChecklistItem.module.css';
 import FormField from '@/components/ui/FormField';
 import Textarea from '@/components/ui/Textarea';
-import FileInput from '@/components/ui/FileInput';
+import PhotoGrid from './PhotoGrid';
 import Icon from '@/components/ui/Icon';
 import type { ToolChecklistEntry, ToolCondition, StepErrors } from '../../types';
 
 export interface ToolChecklistItemProps {
     tool: ToolChecklistEntry;
+    index: number;
     errors: StepErrors;
     onConditionChange: (toolId: string, condition: ToolCondition) => void;
     onRemarksChange: (toolId: string, remarks: string) => void;
@@ -18,6 +19,7 @@ export interface ToolChecklistItemProps {
 
 export const ToolChecklistItem: React.FC<ToolChecklistItemProps> = ({
     tool,
+    index,
     errors,
     onConditionChange,
     onRemarksChange,
@@ -27,17 +29,9 @@ export const ToolChecklistItem: React.FC<ToolChecklistItemProps> = ({
     const remarksError = errors[`tool_${tool.toolId}_remarks`];
     const imagesError = errors[`tool_${tool.toolId}_images`];
 
-    const cardClass = [
-        styles.toolCard,
-        tool.condition === 'okay' && styles.toolCardOkay,
-        tool.condition === 'damaged' && styles.toolCardDamaged,
-        tool.condition === null && styles.toolCardPending,
-        conditionError && styles.toolCardError,
-    ].filter(Boolean).join(' ');
-
     const okayButtonClass = [
         styles.conditionButton,
-        tool.condition === 'okay' && styles.conditionButtonOkay,
+        tool.condition === 'good' && styles.conditionButtonGood,
     ].filter(Boolean).join(' ');
 
     const damagedButtonClass = [
@@ -46,9 +40,10 @@ export const ToolChecklistItem: React.FC<ToolChecklistItemProps> = ({
     ].filter(Boolean).join(' ');
 
     return (
-        <div className={cardClass}>
+        <div className={styles.item}>
             <h4 className={['text-body-strong', styles.toolHeader].join(' ')}>
-                {tool.toolName}
+                {index + 1}. {tool.toolName}
+                <span className={styles.requiredMark}> *</span>
             </h4>
 
             <div className={styles.toolMeta}>
@@ -66,11 +61,11 @@ export const ToolChecklistItem: React.FC<ToolChecklistItemProps> = ({
                 <button
                     type="button"
                     className={okayButtonClass}
-                    onClick={() => onConditionChange(tool.toolId, 'okay')}
-                    aria-pressed={tool.condition === 'okay'}
+                    onClick={() => onConditionChange(tool.toolId, 'good')}
+                    aria-pressed={tool.condition === 'good'}
                 >
-                    <Icon name="check" size={16} />
-                    Okay
+                    <Icon name="check" size={14} />
+                    Good
                 </button>
                 <button
                     type="button"
@@ -78,7 +73,7 @@ export const ToolChecklistItem: React.FC<ToolChecklistItemProps> = ({
                     onClick={() => onConditionChange(tool.toolId, 'damaged')}
                     aria-pressed={tool.condition === 'damaged'}
                 >
-                    <Icon name="close" size={16} />
+                    <Icon name="close" size={14} />
                     Damaged
                 </button>
             </div>
@@ -91,6 +86,15 @@ export const ToolChecklistItem: React.FC<ToolChecklistItemProps> = ({
 
             {tool.condition === 'damaged' && (
                 <div className={styles.damagedFields}>
+                    <PhotoGrid
+                        id={`images-${tool.toolId}`}
+                        files={tool.images}
+                        onChange={(files) => onImagesChange(tool.toolId, files)}
+                        maxFiles={5}
+                        hasError={!!imagesError}
+                        helpText={imagesError ?? 'At least 1 photo required'}
+                    />
+
                     <FormField
                         id={`remarks-${tool.toolId}`}
                         label="Remarks"
@@ -103,25 +107,6 @@ export const ToolChecklistItem: React.FC<ToolChecklistItemProps> = ({
                             placeholder="Describe the damage or issue..."
                             hasError={!!remarksError}
                             rows={2}
-                        />
-                    </FormField>
-
-                    <FormField
-                        id={`images-${tool.toolId}`}
-                        label="Images"
-                        required
-                        error={imagesError}
-                    >
-                        <FileInput
-                            id={`images-${tool.toolId}`}
-                            accept="image/*"
-                            multiple
-                            maxFiles={5}
-                            maxSize={10 * 1024 * 1024}
-                            files={tool.images}
-                            onChange={(files) => onImagesChange(tool.toolId, files)}
-                            placeholder="Upload photos of the damage"
-                            helpText="At least 1 image required"
                         />
                     </FormField>
                 </div>

@@ -8,8 +8,12 @@ export type RoleLevel = 1 | 2 | 3;
 export interface RolePermissions {
     /** Can submit Near Miss and First Aid incidents */
     canSubmitIncident: boolean;
-    /** Can submit FIR and ADR incidents (requires Level 2+) */
-    canSubmitAllIncidents: boolean;
+    /** Can submit FIR incidents (available to all levels) */
+    canSubmitFIR: boolean;
+    /** Can submit ADR incidents (requires Level 2+) */
+    canSubmitADR: boolean;
+    /** Can send Safety Alerts (requires Level 2+) */
+    canSendSafetyAlert: boolean;
     /** Can submit audits (Safety Audit, Tool Audit) */
     canSubmitAudit: boolean;
     /** Can submit compliance reports (Meetings, Health Check, Audit) */
@@ -50,7 +54,9 @@ export const ROLE_DEFINITIONS: Record<RoleLevel, RoleDefinition> = {
         description: 'Can submit limited report types',
         permissions: {
             canSubmitIncident: true,
-            canSubmitAllIncidents: false,
+            canSubmitFIR: true,
+            canSubmitADR: false,
+            canSendSafetyAlert: false,
             canSubmitAudit: true,
             canSubmitCompliance: false,
             canSubmitPermit: false,
@@ -71,7 +77,9 @@ export const ROLE_DEFINITIONS: Record<RoleLevel, RoleDefinition> = {
         description: 'Can submit, assign, review, close, and escalate reports',
         permissions: {
             canSubmitIncident: true,
-            canSubmitAllIncidents: true,
+            canSubmitFIR: true,
+            canSubmitADR: true,
+            canSendSafetyAlert: true,
             canSubmitAudit: true,
             canSubmitCompliance: true,
             canSubmitPermit: true,
@@ -92,7 +100,9 @@ export const ROLE_DEFINITIONS: Record<RoleLevel, RoleDefinition> = {
         description: 'Can submit, assign, review, and close all reports',
         permissions: {
             canSubmitIncident: true,
-            canSubmitAllIncidents: true,
+            canSubmitFIR: true,
+            canSubmitADR: true,
+            canSendSafetyAlert: true,
             canSubmitAudit: true,
             canSubmitCompliance: true,
             canSubmitPermit: true,

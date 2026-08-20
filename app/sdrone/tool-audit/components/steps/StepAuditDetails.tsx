@@ -5,7 +5,7 @@ import FormField from '@/components/ui/FormField';
 import TextInput from '@/components/ui/TextInput';
 import TimeInput from '@/components/ui/TimeInput';
 import Select from '@/components/ui/Select';
-import { auditTypeOptions, locationOptions, cseNameOptions } from '../../mockData';
+import { locationOptions, cseNameOptions } from '../../mockData';
 import type { ToolAuditFormData, StepErrors } from '../../types';
 import styles from './Steps.module.css';
 
@@ -24,21 +24,6 @@ export const StepAuditDetails: React.FC<StepAuditDetailsProps> = ({
 
     return (
         <div className={styles.fieldsWrapper}>
-            <FormField
-                id="auditType"
-                label="Audit Type"
-                required
-                error={errors.auditType}
-            >
-                <Select
-                    options={auditTypeOptions}
-                    value={data.auditType}
-                    onChange={(e) => onUpdate('auditType', e.target.value as ToolAuditFormData['auditType'])}
-                    placeholder="Select audit type"
-                    hasError={!!errors.auditType}
-                />
-            </FormField>
-
             <div className={styles.fieldRow}>
                 <FormField
                     id="auditDate"
@@ -71,7 +56,7 @@ export const StepAuditDetails: React.FC<StepAuditDetailsProps> = ({
 
             <FormField
                 id="auditLocation"
-                label="Location"
+                label="Audit Location"
                 required
                 error={errors.auditLocation}
             >

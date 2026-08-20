@@ -1,4 +1,5 @@
-
+> **OUTDATED — Implemented 2026-06-11.**
+> This PRD has been fully implemented. The source of truth is `Planning/IMPLEMENTATION.md`.
 
 # Incident Reporting — **Near Miss** (Explicit Selection)
 

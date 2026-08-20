@@ -1,3 +1,6 @@
+> **OUTDATED — Implemented 2026-06-11.**
+> Status labels and stat card names in this document conflict with `status-system.md` (the newer spec). The implementation follows `status-system.md`. The source of truth is `Planning/IMPLEMENTATION.md`.
+
 # Role-Based Content Visibility - Design Decisions
 
 This document captures the finalized decisions for what each role sees on every page of the S-Drone prototype.

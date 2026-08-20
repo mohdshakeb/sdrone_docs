@@ -10,15 +10,21 @@ export interface StepContainerProps {
     title: string;
     /** Step content */
     children: React.ReactNode;
-    /** Whether this is the review step */
+    /** When provided, renders "Step N: Title" heading with a muted prefix */
+    stepNumber?: number;
+    /** Removes the card border and border-radius (use when inside an outer card) */
+    noBorder?: boolean;
+    /** Whether this is the review step (kept for tool-audit backward compat) */
     isReviewStep?: boolean;
     /** Whether back button should be shown */
     showBack?: boolean;
+    /** Whether next/continue button should be shown */
+    showNext?: boolean;
     /** Back button callback */
     onBack?: () => void;
     /** Next button callback */
     onNext?: () => void;
-    /** Submit button callback */
+    /** Submit button callback (used by review step in tool-audit) */
     onSubmit?: () => void;
     /** Custom next button label */
     nextLabel?: string;
@@ -27,8 +33,11 @@ export interface StepContainerProps {
 export const StepContainer: React.FC<StepContainerProps> = ({
     title,
     children,
+    stepNumber,
+    noBorder = false,
     isReviewStep = false,
     showBack = true,
+    showNext = true,
     onBack,
     onNext,
     onSubmit,
@@ -48,36 +57,47 @@ export const StepContainer: React.FC<StepContainerProps> = ({
         }
     };
 
+    const containerClass = [styles.container, noBorder ? styles.containerFlat : ''].filter(Boolean).join(' ');
+
     return (
-        <div className={styles.container}>
+        <div className={containerClass}>
             <div className={styles.content}>
-                <h2 className={[styles.title, 'text-heading'].join(' ')}>{title}</h2>
+                <h2 className={[styles.title, stepNumber !== undefined ? 'text-body-base' : 'text-heading'].join(' ')}>
+                    {stepNumber !== undefined && (
+                        <span className={styles.stepPrefix}>Step {stepNumber}:&nbsp;</span>
+                    )}
+                    {title}
+                </h2>
                 <div className={styles.body}>{children}</div>
             </div>
 
-            <div className={styles.navigation}>
-                {showBack && (
-                    <Button
-                        variant="secondary"
-                        size="md"
-                        onClick={onBack}
-                        leadingIcon={<Icon name="arrow-left" size={16} />}
-                    >
-                        Back
-                    </Button>
-                )}
+            {(showBack || showNext) && (
+                <div className={styles.navigation}>
+                    {showBack && (
+                        <Button
+                            variant="secondary"
+                            size="md"
+                            onClick={onBack}
+                            leadingIcon={<Icon name="arrow-left" size={16} />}
+                        >
+                            Back
+                        </Button>
+                    )}
 
-                <div className={styles.spacer} />
+                    <div className={styles.spacer} />
 
-                <Button
-                    variant="primary"
-                    size="md"
-                    onClick={handleNextClick}
-                    trailingIcon={!isReviewStep ? <Icon name="arrow-right" size={16} /> : undefined}
-                >
-                    {getNextLabel()}
-                </Button>
-            </div>
+                    {showNext && (
+                        <Button
+                            variant="primary"
+                            size="md"
+                            onClick={handleNextClick}
+                            trailingIcon={!isReviewStep ? <Icon name="arrow-right" size={16} /> : undefined}
+                        >
+                            {getNextLabel()}
+                        </Button>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

@@ -4,57 +4,100 @@ import { useState, useCallback, useMemo } from 'react';
 import type {
     IncidentFormData,
     IncidentType,
-    FormStep,
+    StepId,
     StepErrors,
     FormState,
     StepConfig,
 } from './types';
 import { initialFormData } from './types';
-import { validateStep, stepHasErrors, validateForm } from './validation';
+import { validateStep, stepHasErrors, validateForm, isStepFullyComplete } from './validation';
 
-// Step configuration
-const STEP_CONFIGS: StepConfig[] = [
-    { id: 0, title: 'Report an Incident' },
-    { id: 1, title: 'What Happened?' },
-    { id: 2, title: 'When & Where?' },
-    {
-        id: 3,
-        title: 'Was Anyone Injured?',
-        isConditional: true,
-        condition: (data) => data.selectedType === 'unsure' || data.selectedType === null,
-    },
-    {
-        id: 4,
-        title: 'Injury Details',
-        isConditional: true,
-        condition: (data) => data.wasInjured === true || data.selectedType === 'first-aid',
-    },
-    {
-        id: 5,
-        title: 'First Aid Specifics',
-        isConditional: true,
-        condition: (data) => data.selectedType === 'first-aid',
-    },
-    { id: 6, title: 'Contributing Factors' },
-    { id: 7, title: 'Evidence' },
-    { id: 8, title: 'Corrective Action' },
-    { id: 9, title: 'Review & Submit' },
-];
+// Step metadata (title only — sequencing is done by the arrays below)
+const STEP_META: Record<StepId, string> = {
+    'entry':               'Report an Incident',
+    'fir-reference':       'FIR Reference',
+    'what-happened':       'What Happened?',
+    'when-where':          'When & Where?',
+    'injury-check':        'Was Anyone Injured?',
+    'injured-employee':    'Injured Employee',
+    'witnesses':           'Witnesses',
+    'reason-and-loss':     'Reason & Loss',
+    'observations':        'Observations',
+    'event-details':       'Event Details',
+    'corrective-actions':  'Corrective Actions',
+    'investigation-team':  'Investigation Team',
+    'evidence':            'Evidence',
+    'review':              'Review & Submit',
+};
+
+// Explicit step sequences per incident type — 'review' is always the final step
+const SEQUENCES: Record<IncidentType | 'unsure', StepId[]> = {
+    'near-miss': ['entry', 'what-happened', 'when-where', 'observations', 'evidence', 'review'],
+    'first-aid': ['entry', 'what-happened', 'when-where', 'injured-employee', 'observations', 'corrective-actions', 'evidence', 'review'],
+    'fir':       ['entry', 'what-happened', 'when-where', 'injured-employee', 'witnesses', 'reason-and-loss', 'evidence', 'review'],
+    'adr':       ['entry', 'fir-reference', 'what-happened', 'when-where', 'injured-employee', 'witnesses', 'reason-and-loss', 'observations', 'event-details', 'corrective-actions', 'investigation-team', 'evidence', 'review'],
+    'unsure':    ['entry', 'what-happened', 'when-where', 'injury-check'], // tail appended dynamically
+};
+
+// Tails appended after injury-check for the Not Sure flow
+const NOT_SURE_TAILS: Record<IncidentType, StepId[]> = {
+    'near-miss': ['observations', 'evidence', 'review'],
+    'first-aid': ['injured-employee', 'observations', 'corrective-actions', 'evidence', 'review'],
+    'fir':       ['injured-employee', 'witnesses', 'reason-and-loss', 'evidence', 'review'],
+    'adr':       [], // ADR is not reachable via Not Sure
+};
+
+function inferTypeFromQ1Q2(
+    wasInjured: boolean | null,
+    treatmentLocation: 'on-site' | 'hospital' | null,
+): IncidentType {
+    if (wasInjured === false) return 'near-miss';
+    if (wasInjured === true) {
+        if (treatmentLocation === 'on-site') return 'first-aid';
+        if (treatmentLocation === 'hospital') return 'fir';
+    }
+    return 'near-miss';
+}
+
+function buildActiveSteps(
+    selectedType: string | null,
+    wasInjured: boolean | null,
+    treatmentLocation: 'on-site' | 'hospital' | null,
+): StepId[] {
+    const type = (selectedType ?? 'unsure') as IncidentType | 'unsure';
+
+    if (type !== 'unsure') {
+        return SEQUENCES[type];
+    }
+
+    // Not Sure: base + dynamic tail once Q1+Q2 are answered
+    const base = SEQUENCES['unsure'];
+
+    if (wasInjured === false) {
+        return [...base, ...NOT_SURE_TAILS['near-miss']];
+    }
+    if (wasInjured === true && treatmentLocation === 'on-site') {
+        return [...base, ...NOT_SURE_TAILS['first-aid']];
+    }
+    if (wasInjured === true && treatmentLocation === 'hospital') {
+        return [...base, ...NOT_SURE_TAILS['fir']];
+    }
+
+    return base;
+}
 
 interface UseIncidentFormOptions {
     presetType?: IncidentType | null;
 }
 
 interface UseIncidentFormReturn {
-    // State
     data: IncidentFormData;
-    currentStep: FormStep;
+    currentStep: StepId;
     errors: StepErrors;
     presetType: IncidentType | null;
     isSubmitted: boolean;
     selectedType: string | null;
 
-    // Computed
     stepConfig: StepConfig;
     activeSteps: StepConfig[];
     totalSteps: number;
@@ -63,217 +106,221 @@ interface UseIncidentFormReturn {
     canGoNext: boolean;
     isFirstStep: boolean;
     isLastStep: boolean;
-    isReviewStep: boolean;
+    isFormValid: boolean;
+    stepStatuses: Record<StepId, 'complete' | 'incomplete'>;
     inferredType: IncidentType;
 
-    // Actions
     updateField: <K extends keyof IncidentFormData>(field: K, value: IncidentFormData[K]) => void;
-    goToStep: (step: FormStep) => void;
+    goToStep: (step: StepId) => void;
     goNext: () => boolean;
     goBack: () => void;
+    goToFirstError: () => void;
     submit: () => boolean;
     reset: () => void;
     validateCurrentStep: () => boolean;
     setSelectedType: (type: string) => void;
+    selectTypeAndAdvance: (type: string) => void;
 }
 
 export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncidentFormReturn {
     const { presetType = null } = options;
 
-    const [state, setState] = useState<FormState & { selectedType: string | null }>({
+    const [state, setState] = useState<FormState & { selectedType: string | null; visitedSteps: Set<StepId> }>({
         data: initialFormData,
-        currentStep: 0,
+        currentStep: 'entry',
         errors: {},
         presetType,
         isSubmitted: false,
         selectedType: presetType ?? null,
+        visitedSteps: new Set<StepId>(['entry']),
     });
 
-    // Get active steps (excluding conditionally skipped steps)
-    const activeSteps = useMemo(() => {
-        return STEP_CONFIGS.filter((step) => {
-            if (!step.isConditional) return true;
-            return step.condition?.(state.data) ?? true;
-        });
-    }, [state.data]);
+    const inferredType = useMemo((): IncidentType => {
+        const sel = state.selectedType;
+        if (sel && sel !== 'unsure') return sel as IncidentType;
+        if (presetType) return presetType;
+        return inferTypeFromQ1Q2(state.data.wasInjured, state.data.treatmentLocation);
+    }, [state.selectedType, presetType, state.data.wasInjured, state.data.treatmentLocation]);
 
-    // Current step config
-    const stepConfig = useMemo(() => {
-        return STEP_CONFIGS.find((s) => s.id === state.currentStep) ?? STEP_CONFIGS[0];
-    }, [state.currentStep]);
+    const activeStepIds = useMemo(
+        () => buildActiveSteps(state.selectedType, state.data.wasInjured, state.data.treatmentLocation),
+        [state.selectedType, state.data.wasInjured, state.data.treatmentLocation],
+    );
 
-    // Current step index in active steps
-    const currentStepIndex = useMemo(() => {
-        return activeSteps.findIndex((s) => s.id === state.currentStep);
-    }, [activeSteps, state.currentStep]);
+    const activeSteps = useMemo(
+        (): StepConfig[] => activeStepIds.map(id => ({ id, title: STEP_META[id] })),
+        [activeStepIds],
+    );
 
-    // Navigation state
+    const stepConfig = useMemo(
+        (): StepConfig => ({ id: state.currentStep, title: STEP_META[state.currentStep] }),
+        [state.currentStep],
+    );
+
+    const currentStepIndex = useMemo(
+        () => activeStepIds.indexOf(state.currentStep),
+        [activeStepIds, state.currentStep],
+    );
+
     const totalSteps = activeSteps.length;
     const canGoBack = currentStepIndex > 0;
     const canGoNext = currentStepIndex < totalSteps - 1;
-    const isFirstStep = state.currentStep === 0;
-    const isLastStep = state.currentStep === 9;
-    const isReviewStep = state.currentStep === 9;
+    const isFirstStep = state.currentStep === 'entry';
+    const isLastStep = currentStepIndex === totalSteps - 1 && !isFirstStep;
 
-    // Infer incident type based on form data
-    const inferredType = useMemo((): IncidentType => {
-        // If selected type is provided and not "unsure", use it
-        if (state.selectedType && state.selectedType !== 'unsure') {
-            return state.selectedType as IncidentType;
+    const isFormValid = useMemo(
+        () => !stepHasErrors(validateForm(state.data, inferredType)),
+        [state.data, inferredType],
+    );
+
+    const stepStatuses = useMemo((): Record<StepId, 'complete' | 'incomplete'> => {
+        const result = {} as Record<StepId, 'complete' | 'incomplete'>;
+        for (const id of activeStepIds) {
+            const visited = state.visitedSteps.has(id);
+            const fullyComplete = isStepFullyComplete(id, state.data, inferredType);
+            result[id] = visited && fullyComplete ? 'complete' : 'incomplete';
         }
+        return result;
+    }, [activeStepIds, state.data, inferredType, state.visitedSteps]);
 
-        // If preset type is provided and not "not sure", use it
-        if (presetType) {
-            return presetType;
-        }
-
-        // No injury = Near Miss
-        if (state.data.wasInjured === false) {
-            return 'near-miss';
-        }
-
-        // Injury with treatment level determines category
-        if (state.data.wasInjured === true && state.data.treatment) {
-            switch (state.data.treatment) {
-                case 'first-aid':
-                    return 'first-aid';
-                case 'medical':
-                    return 'fir';
-                case 'hospital':
-                    return 'adr';
-            }
-        }
-
-        // Default to near-miss if undetermined
-        return 'near-miss';
-    }, [state.selectedType, presetType, state.data.wasInjured, state.data.treatment]);
-
-    // Update a single field
     const updateField = useCallback(<K extends keyof IncidentFormData>(
         field: K,
-        value: IncidentFormData[K]
+        value: IncidentFormData[K],
     ) => {
-        setState((prev) => {
-            // Create new errors object without the cleared field
+        setState(prev => {
             const newErrors = { ...prev.errors };
-            delete newErrors[field];
+            delete newErrors[field as string];
+            return { ...prev, data: { ...prev.data, [field]: value }, errors: newErrors };
+        });
+    }, []);
 
+    const setSelectedType = useCallback((type: string) => {
+        setState(prev => ({
+            ...prev,
+            selectedType: type,
+            data: { ...prev.data, selectedType: type },
+        }));
+    }, []);
+
+    // Atomically sets the type and advances to the next step in one state update,
+    // avoiding the stale-closure issue that arises when calling setSelectedType + goNext separately.
+    const selectTypeAndAdvance = useCallback((type: string) => {
+        setState(prev => {
+            const nextIds = buildActiveSteps(type, prev.data.wasInjured, prev.data.treatmentLocation);
+            const idx = nextIds.indexOf(prev.currentStep);
+            const nextStep = idx >= 0 && idx < nextIds.length - 1 ? nextIds[idx + 1] : prev.currentStep;
             return {
                 ...prev,
-                data: {
-                    ...prev.data,
-                    [field]: value,
-                },
-                errors: newErrors,
+                selectedType: type,
+                data: { ...prev.data, selectedType: type },
+                currentStep: nextStep,
+                errors: {},
+                visitedSteps: new Set([...prev.visitedSteps, nextStep]),
             };
         });
     }, []);
 
-    // Set selected incident type from entry step
-    const setSelectedType = useCallback((type: string) => {
-        setState((prev) => ({
-            ...prev,
-            selectedType: type,
-            data: {
-                ...prev.data,
-                selectedType: type,
-                // Auto-set treatment for explicit first-aid selection
-                treatment: type === 'first-aid' ? 'first-aid' : prev.data.treatment,
-            },
-        }));
-    }, []);
-
-    // Validate current step
     const validateCurrentStep = useCallback((): boolean => {
-        const errors = validateStep(state.currentStep, state.data);
-        setState((prev) => ({
-            ...prev,
-            errors,
-        }));
+        const errors = validateStep(state.currentStep, state.data, inferredType);
+        setState(prev => ({ ...prev, errors }));
         return !stepHasErrors(errors);
-    }, [state.currentStep, state.data]);
+    }, [state.currentStep, state.data, inferredType]);
 
-    // Go to a specific step
-    const goToStep = useCallback((step: FormStep) => {
-        setState((prev) => ({
+    const goToStep = useCallback((step: StepId) => {
+        setState(prev => ({
             ...prev,
             currentStep: step,
             errors: {},
+            visitedSteps: new Set([...prev.visitedSteps, step]),
         }));
     }, []);
 
-    // Go to next step
     const goNext = useCallback((): boolean => {
-        // Validate current step first
-        const errors = validateStep(state.currentStep, state.data);
+        const errors = validateStep(state.currentStep, state.data, inferredType);
         if (stepHasErrors(errors)) {
-            setState((prev) => ({
-                ...prev,
-                errors,
-            }));
+            setState(prev => ({ ...prev, errors }));
             return false;
         }
 
-        // Find next active step
-        const currentIdx = activeSteps.findIndex((s) => s.id === state.currentStep);
-        if (currentIdx < activeSteps.length - 1) {
-            const nextStep = activeSteps[currentIdx + 1];
-            setState((prev) => ({
+        const currentIds = buildActiveSteps(
+            state.selectedType,
+            state.data.wasInjured,
+            state.data.treatmentLocation,
+        );
+        const idx = currentIds.indexOf(state.currentStep);
+        if (idx < currentIds.length - 1) {
+            const nextStep = currentIds[idx + 1];
+            if (nextStep === 'review' && stepHasErrors(validateForm(state.data, inferredType))) {
+                return false;
+            }
+            setState(prev => ({
                 ...prev,
-                currentStep: nextStep.id,
+                currentStep: nextStep,
                 errors: {},
+                visitedSteps: new Set([...prev.visitedSteps, nextStep]),
             }));
             return true;
         }
         return false;
-    }, [state.currentStep, state.data, activeSteps]);
+    }, [state.currentStep, state.data, state.selectedType, inferredType]);
 
-    // Go to previous step
     const goBack = useCallback(() => {
-        const currentIdx = activeSteps.findIndex((s) => s.id === state.currentStep);
-        if (currentIdx > 0) {
-            const prevStep = activeSteps[currentIdx - 1];
-            setState((prev) => ({
+        const currentIds = buildActiveSteps(
+            state.selectedType,
+            state.data.wasInjured,
+            state.data.treatmentLocation,
+        );
+        const idx = currentIds.indexOf(state.currentStep);
+        if (idx > 0) {
+            const prevStep = currentIds[idx - 1];
+            setState(prev => ({
                 ...prev,
-                currentStep: prevStep.id,
+                currentStep: prevStep,
                 errors: {},
+                visitedSteps: new Set([...prev.visitedSteps, prevStep]),
             }));
         }
-    }, [activeSteps, state.currentStep]);
+    }, [state.currentStep, state.data, state.selectedType]);
 
-    // Submit the form
+    const goToFirstError = useCallback(() => {
+        const stepsToCheck = activeStepIds.filter(id => id !== 'entry' && id !== 'review');
+        for (const stepId of stepsToCheck) {
+            const errors = validateStep(stepId, state.data, inferredType);
+            if (stepHasErrors(errors)) {
+                setState(prev => ({
+                    ...prev,
+                    currentStep: stepId,
+                    errors,
+                    visitedSteps: new Set([...prev.visitedSteps, stepId]),
+                }));
+                return;
+            }
+        }
+    }, [activeStepIds, state.data, inferredType]);
+
     const submit = useCallback((): boolean => {
-        const errors = validateForm(state.data);
+        const errors = validateForm(state.data, inferredType);
         if (stepHasErrors(errors)) {
-            setState((prev) => ({
-                ...prev,
-                errors,
-            }));
+            setState(prev => ({ ...prev, errors }));
             return false;
         }
-
-        // Mock submission - just set submitted flag
-        setState((prev) => ({
-            ...prev,
-            isSubmitted: true,
-        }));
+        setState(prev => ({ ...prev, isSubmitted: true }));
         return true;
-    }, [state.data]);
+    }, [state.data, inferredType]);
 
-    // Reset the form
     const reset = useCallback(() => {
         setState({
             data: initialFormData,
-            currentStep: 0,
+            currentStep: 'entry',
             errors: {},
             presetType,
             isSubmitted: false,
             selectedType: presetType ?? null,
+            visitedSteps: new Set<StepId>(['entry']),
         });
     }, [presetType]);
 
     return {
-        // State
         data: state.data,
         currentStep: state.currentStep,
         errors: state.errors,
@@ -281,7 +328,6 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
         isSubmitted: state.isSubmitted,
         selectedType: state.selectedType,
 
-        // Computed
         stepConfig,
         activeSteps,
         totalSteps,
@@ -290,18 +336,20 @@ export function useIncidentForm(options: UseIncidentFormOptions = {}): UseIncide
         canGoNext,
         isFirstStep,
         isLastStep,
-        isReviewStep,
+        isFormValid,
+        stepStatuses,
         inferredType,
 
-        // Actions
         updateField,
         goToStep,
         goNext,
         goBack,
+        goToFirstError,
         submit,
         reset,
         validateCurrentStep,
         setSelectedType,
+        selectTypeAndAdvance,
     };
 }
 

@@ -32,6 +32,7 @@ export interface AppHeaderProps {
     onFormSubmit?: () => void;
     isEntryStep?: boolean;
     isReviewStep?: boolean;
+    canSubmit?: boolean;
     submitLabel?: string;
 
     // Inner page variant props
@@ -61,6 +62,9 @@ function getStartNewItems(perms: RolePermissions): DropdownItem[] {
         { type: 'divider' },
         { type: 'header', label: 'Toolbox Talk' },
         { type: 'icon', value: 'toolbox-talk', label: 'Toolbox Talk', icon: 'speak', disabled: !perms.canSubmitToolboxTalk },
+        { type: 'divider' },
+        { type: 'header', label: 'Alerts' },
+        { type: 'icon', value: 'safety-alert', label: 'Safety Alert', icon: 'alert', disabled: !perms.canSendSafetyAlert },
     ];
 }
 
@@ -74,6 +78,7 @@ export default function AppHeader({
     onFormSubmit,
     isEntryStep = false,
     isReviewStep = false,
+    canSubmit,
     submitLabel = 'Submit Report',
     innerPageTitle,
     breadcrumbs = [],
@@ -241,11 +246,13 @@ export default function AppHeader({
                     <h1 className={`${styles.formTitle} text-body-strong`}>{formTitle}</h1>
                 </div>
 
-                <div className={styles.center}>
-                    <span className={`${styles.progressText} text-caption`}>
-                        Step {currentStep} of {totalSteps}
-                    </span>
-                </div>
+                {currentStep !== undefined && totalSteps !== undefined && (
+                    <div className={styles.center}>
+                        <span className={`${styles.progressText} text-caption`}>
+                            Step {currentStep} of {totalSteps}
+                        </span>
+                    </div>
+                )}
 
                 <div className={styles.right}>
                     <div className={styles.buttonGroup}>
@@ -260,7 +267,7 @@ export default function AppHeader({
                             size="sm"
                             variant="primary"
                             onClick={onFormSubmit}
-                            disabled={!isReviewStep}
+                            disabled={!(canSubmit !== undefined ? canSubmit : isReviewStep)}
                         >
                             {submitLabel}
                         </Button>
@@ -318,6 +325,8 @@ export default function AppHeader({
         setStartNewOpen(false);
         if (value === 'tool-audit') {
             router.push('/sdrone/tool-audit');
+        } else if (value === 'safety-alert') {
+            router.push('/sdrone/safety-alert');
         }
     };
 
@@ -360,6 +369,7 @@ export default function AppHeader({
                     iconOnly
                     leadingIcon={<Icon name="sos" size={24} />}
                     aria-label="SOS"
+                    onClick={() => router.push('/sdrone/sos')}
                 />
             </div>
         </header>

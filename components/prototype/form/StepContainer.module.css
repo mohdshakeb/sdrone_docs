@@ -8,6 +8,18 @@
     border-radius: 12px;
 }
 
+/* Flat variant — used inside an outer card so no double border */
+.containerFlat {
+    border: none;
+    border-radius: 0;
+}
+
+/* Step number prefix — lighter weight/colour before the bold title */
+.stepPrefix {
+    color: var(--fg-subtle);
+    font-weight: 400;
+}
+
 .content {
     flex: 1;
     padding: var(--space-6);

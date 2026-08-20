@@ -4,13 +4,14 @@
 
 import type { AuditType, ToolChecklistEntry } from './types';
 import type { BadgeColor } from '@/components/ui/Badge';
+import { MOCK_EMPLOYEES } from '@/data/mock-data';
 
 // Audit type options for Select
 export const auditTypeOptions = [
     { value: 'etb', label: 'ETB' },
     { value: 'bcp-gci', label: 'BCP / GCI' },
     { value: 'workshop', label: 'Workshop' },
-    { value: 'others', label: 'Others' },
+    { value: 'rigging', label: 'Rigging & Lifting' },
 ];
 
 // Location options (reuse same sites as incident report)
@@ -20,15 +21,6 @@ export const locationOptions = [
     { value: 'site-c', label: 'Site C - Office Complex' },
     { value: 'site-d', label: 'Site D - Manufacturing Plant' },
     { value: 'site-e', label: 'Site E - Distribution Center' },
-];
-
-// CSE name options
-export const cseNameOptions = [
-    { value: 'cse-ahmed', label: 'Ahmed Al-Rashid' },
-    { value: 'cse-james', label: 'James Mitchell' },
-    { value: 'cse-priya', label: 'Priya Sharma' },
-    { value: 'cse-omar', label: 'Omar Hassan' },
-    { value: 'cse-sarah', label: 'Sarah Chen' },
 ];
 
 // Tool definition (before adding to checklist)
@@ -73,12 +65,15 @@ const toolSetsByAuditType: Record<AuditType, ToolDefinition[]> = {
         { toolId: 'ws-7', toolName: 'Hydraulic Press', specification: '20-tonne, manual pump', checkpoint: 'Ram seals intact, gauge functional, safety guard in place' },
         { toolId: 'ws-8', toolName: 'Welding Machine (MIG)', specification: '250A, CO\u2082/Ar mix', checkpoint: 'Earth clamp secure, torch tip clean, wire feed smooth, gas flow tested' },
     ],
-    'others': [
-        { toolId: 'oth-1', toolName: 'First Aid Kit', specification: 'Workplace-rated, \u226525 persons', checkpoint: 'Seal intact, items in-date, inventory complete' },
-        { toolId: 'oth-2', toolName: 'Fire Extinguisher (ABC)', specification: '9 kg dry powder', checkpoint: 'Pressure gauge in green, pin sealed, hose intact, service tag current' },
-        { toolId: 'oth-3', toolName: 'Safety Harness', specification: 'EN 361, 140 kg rated', checkpoint: 'Webbing no cuts/frays, buckles functional, D-ring undamaged, inspection tag current' },
-        { toolId: 'oth-4', toolName: 'Gas Detector (4-Gas)', specification: 'O\u2082, LEL, CO, H\u2082S', checkpoint: 'Bump tested, calibration current, sensors within life, alarm audible' },
-        { toolId: 'oth-5', toolName: 'Two-Way Radio Set', specification: 'UHF 400\u2013470 MHz, 5W', checkpoint: 'Battery charged, antenna intact, TX/RX clear, charger functional' },
+    'rigging': [
+        { toolId: 'rig-1', toolName: 'Chain Block (Lever Hoist)', specification: '3-tonne rated, Grade 80 chain', checkpoint: 'Chain no kinks/wear, hooks undamaged, latch springs functional, load test tag current' },
+        { toolId: 'rig-2', toolName: 'Wire Rope Sling', specification: '6\u00d719 construction, 2-tonne WLL', checkpoint: 'No broken wires, no kinks, ferrules/end fittings intact, WLL tag legible' },
+        { toolId: 'rig-3', toolName: 'Polyester Round Sling', specification: '2-tonne WLL, EN 1492-2', checkpoint: 'No cuts or abrasion, label readable, colour-code intact, no chemical damage' },
+        { toolId: 'rig-4', toolName: 'Bow Shackle Set', specification: 'Grade S, 1\u20135 tonne WLL', checkpoint: 'Pins fully seated, no deformation, WLL stamped, safety wire fitted' },
+        { toolId: 'rig-5', toolName: 'D-Shackle Set', specification: 'Grade S, 1\u20133.25 tonne WLL', checkpoint: 'Pins fully seated, no deformation or cracks, WLL stamped, safety wire fitted' },
+        { toolId: 'rig-6', toolName: 'Lifting Eye Bolt Set', specification: 'M12\u2013M24, Grade 8.8', checkpoint: 'Full thread engagement, no deformation, rated WLL visible, shoulder seated flush' },
+        { toolId: 'rig-7', toolName: 'Safety Hook with Latch', specification: '1-tonne WLL, swivel type', checkpoint: 'Latch spring snaps closed, pin undamaged, no opening deformation, inspection tag current' },
+        { toolId: 'rig-8', toolName: 'Spreader Beam', specification: '2-tonne SWL, adjustable 1\u20133 m', checkpoint: 'Pin holes undamaged, length markings legible, SWL plate intact, no visible cracks' },
     ],
 };
 
@@ -103,13 +98,16 @@ export const auditTypeLabels: Record<string, string> = {
     'etb': 'ETB',
     'bcp-gci': 'BCP / GCI',
     'workshop': 'Workshop',
-    'others': 'Others',
+    'rigging': 'Rigging & Lifting',
 };
+
+// CSE name options from employee roster
+export const cseNameOptions = MOCK_EMPLOYEES.map(emp => ({ value: emp.id, label: emp.name }));
 
 // Audit type badge colors
 export const auditTypeBadgeColors: Record<string, BadgeColor> = {
     'etb': 'information',
     'bcp-gci': 'positive',
     'workshop': 'notice',
-    'others': 'neutral',
+    'rigging': 'neutral',
 };

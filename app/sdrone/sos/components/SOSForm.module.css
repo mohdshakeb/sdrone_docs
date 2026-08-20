@@ -1,0 +1,53 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    padding: var(--space-6) var(--space-4);
+}
+
+/* Reporter context strip */
+.contextStrip {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background-color: var(--bg-emphasis);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
+}
+
+.contextItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--fg-default);
+}
+
+.contextRole {
+    color: var(--fg-subtle);
+    margin-left: var(--space-1);
+}
+
+.contextHint {
+    color: var(--fg-muted);
+    font-style: italic;
+}
+
+/* Form fields */
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+/* Send button */
+.sendWrapper {
+    display: flex;
+    justify-content: stretch;
+    padding-top: var(--space-2);
+}
+
+.sendWrapper > * {
+    width: 100%;
+    justify-content: center;
+}

@@ -20,6 +20,10 @@ export { default as TimeInput } from './TimeInput';
 // Modal Variants
 export { ListModal, InfoModal, ActionModal } from './ModalVariants';
 
+// Mobile-specific UI components
+export { default as SelectBottomSheet } from './SelectBottomSheet';
+export { default as ScrollArea } from './ScrollArea';
+
 // Deprecated Components (use Dropdown instead)
 export { default as DatePickerDropdown } from './DatePickerDropdown';
 export { default as FilterChipDropdown } from './FilterChipDropdown';
