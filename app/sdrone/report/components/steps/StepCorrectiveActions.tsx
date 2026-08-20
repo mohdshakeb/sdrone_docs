@@ -40,6 +40,13 @@ export const StepCorrectiveActions: React.FC<StepCorrectiveActionsProps> = ({
 }) => {
     const isADR = inferredType === 'adr';
 
+    React.useEffect(() => {
+        if (isADR && data.correctiveActions.length === 0) {
+            onUpdate('correctiveActions', [createEmptyAction()]);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isADR]);
+
     // First Aid: simple text field
     if (!isADR) {
         return (
@@ -65,13 +72,6 @@ export const StepCorrectiveActions: React.FC<StepCorrectiveActionsProps> = ({
     const actions = data.correctiveActions.length > 0
         ? data.correctiveActions
         : [createEmptyAction()];
-
-    React.useEffect(() => {
-        if (data.correctiveActions.length === 0) {
-            onUpdate('correctiveActions', [createEmptyAction()]);
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const updateAction = (index: number, field: keyof CorrectiveAction, value: string) => {
         const updated = actions.map((a, i) =>
